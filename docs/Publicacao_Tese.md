@@ -145,11 +145,14 @@ Não foi encontrada diferença estatisticamente significativa no consumo diário
 
 
 *   **Figura 1: Distribuição do Consumo Diário de Cafeína (Consumo Diário Total de Cafeína (mg)).**
-    *   Histograma ou boxplot mostrando a distribuição da variável Consumo Diário Total de Cafeína (mg) para a amostra total, evidenciando a assimetria e outliers. (Ver `notebooks/outputs/figura1_distribuicao_cafeina.png`)
+    ![Figura 1: Distribuição do Consumo Diário de Cafeína (Consumo Diário Total de Cafeína (mg))](notebooks/outputs/figura1_distribuicao_cafeina.png)
+    *   Histograma ou boxplot mostrando a distribuição da variável Consumo Diário Total de Cafeína (mg) para a amostra total, evidenciando a assimetria e outliers.
 *   **Figura 2: Consumo Diário de Cafeína (Consumo Diário Total de Cafeína (mg)) por Nível de Experiência do Jogador.**
-    *   Boxplots comparando Consumo Diário Total de Cafeína (mg) entre os grupos Amador/Casual e Semi-Profissional. (Ver `notebooks/outputs/figura2_cafeina_por_nivel.png`)
+    ![Figura 2: Consumo Diário de Cafeína (Consumo Diário Total de Cafeína (mg)) por Nível de Experiência do Jogador](notebooks/outputs/figura2_cafeina_por_nivel.png)
+    *   Boxplots comparando Consumo Diário Total de Cafeína (mg) entre os grupos Amador/Casual e Semi-Profissional.
 *   **Figura 3: Diagrama de Dispersão - Consumo de Cafeína vs. Horas de Jogo.**
-    *   Scatter plot mostrando a relação entre Consumo Diário Total de Cafeína (mg) e Horas Médias de Jogo Principal por Dia. (Ver `notebooks/outputs/figura3_cafeina_vs_horas_jogo.png`)
+    ![Figura 3: Diagrama de Dispersão - Consumo de Cafeína vs. Horas de Jogo](notebooks/outputs/figura3_cafeina_vs_horas_jogo.png)
+    *   Scatter plot mostrando a relação entre Consumo Diário Total de Cafeína (mg) e Horas Médias de Jogo Principal por Dia.
 
 Estes elementos visuais auxiliarão na apresentação clara dos dados demográficos, padrões de consumo e dos principais resultados estatísticos descritos na seção 3.3.
 
