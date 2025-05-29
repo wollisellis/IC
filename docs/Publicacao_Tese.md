@@ -132,22 +132,16 @@ Table: Padrões de Consumo de Cafeína e Resultados dos Testes de Hipóteses
 
 *Parte B: Resumo dos testes de hipóteses*
 
-<table>
-<caption>Table: Resumo dos testes de hipóteses</caption>
-<thead>
-<tr><th>Hipótese</th><th>Variáveis</th><th>Teste</th><th>Estatística/Coeficiente</th><th>p-valor</th><th>N</th></tr>
-</thead>
-<tbody>
-<tr><td>H1</td><td>Nível de Experiência do Jogador vs. Consumo Diário Total de Cafeína (mg)</td><td>Kruskal-Wallis (3 grupos)</td><td>H = 7.44</td><td>0.0242</td><td>181</td></tr>
-<tr><td>H1 (foco)</td><td>Nível de Experiência do Jogador (Amador/Casual vs. Semi-Profissional) vs. Consumo Diário Total de Cafeína (mg)</td><td>Mann-Whitney U</td><td>U = 2853.00</td><td>0.0229</td><td>146, 31</td></tr>
-<tr><td>H2</td><td>Consumo Diário Total de Cafeína (mg) vs. Horas Médias de Jogo Principal por Dia</td><td>Correlação de Spearman</td><td>ρ = 0.068</td><td>0.3693</td><td>175</td></tr>
-<tr><td>H3 (Insônia)</td><td>Consumo Diário Total de Cafeína (mg) vs. Ocorrência de Insônia (Sim/Não)</td><td>Mann-Whitney U (unilateral)</td><td>U = 4852.00</td><td>0.0152</td><td>94, 87</td></tr>
-<tr><td>H3 (Dor de Estômago)</td><td>Consumo Diário Total de Cafeína (mg) vs. Ocorrência de Dor de Estômago (Sim/Não)</td><td>Mann-Whitney U (unilateral)</td><td>U = 4509.50</td><td>0.0092</td><td>71, 105</td></tr>
-<tr><td>H4</td><td>Consumo Diário Total de Cafeína (mg) vs. Consumo de Cafeína com Intenção de Melhorar Performance (Sim/Não)</td><td>Mann-Whitney U (unilateral)</td><td>U = 3122.50</td><td>0.0003</td><td>31, 144</td></tr>
-<tr><td>H5</td><td>Plataforma Principal de Jogo vs. Ocorrência de Insônia (Sim/Não)</td><td>Teste Exato de Fisher</td><td>N/A</td><td>0.9823</td><td>179</td></tr>
-<tr><td>H6</td><td>Gênero do Participante (Masc vs. Fem) vs. Consumo Diário Total de Cafeína (mg)</td><td>Mann-Whitney U (bilateral)</td><td>U = 2300.00</td><td>0.4582</td><td>136, 37</td></tr>
-</tbody>
-</table>
+| Hipótese      | Variáveis                                                                        | Teste                           | Estatística/Coeficiente   | p-valor   | N         |
+|----------------|----------------------------------------------------------------------------------|---------------------------------|---------------------------|-----------|-----------|
+| H1             | Nível de Experiência do Jogador vs. Consumo Diário Total de Cafeína (mg)             | Kruskal-Wallis (3 grupos)       | H = 7.44                  | 0.0242    | 181       |
+| H1 (foco)      | Nível de Experiência do Jogador (Amador/Casual vs. Semi-Profissional) vs. Consumo Diário Total de Cafeína (mg) | Mann-Whitney U                  | U = 2853.00               | 0.0229    | 146, 31   |
+| H2             | Consumo Diário Total de Cafeína (mg) vs. Horas Médias de Jogo Principal por Dia        | Correlação de Spearman          | ρ = 0.068                 | 0.3693    | 175       |
+| H3 (Insônia)   | Consumo Diário Total de Cafeína (mg) vs. Ocorrência de Insônia (Sim/Não)           | Mann-Whitney U (unilateral)     | U = 4852.00               | 0.0152    | 94, 87    |
+| H3 (Dor de Estômago) | Consumo Diário Total de Cafeína (mg) vs. Ocorrência de Dor de Estômago (Sim/Não)   | Mann-Whitney U (unilateral)     | U = 4509.50               | 0.0092    | 71, 105   |
+| H4             | Consumo Diário Total de Cafeína (mg) vs. Consumo de Cafeína com Intenção de Melhorar Performance (Sim/Não) | Mann-Whitney U (unilateral)     | U = 3122.50               | 0.0003    | 31, 144   |
+| H5             | Plataforma Principal de Jogo vs. Ocorrência de Insônia (Sim/Não)                 | Teste Exato de Fisher           | N/A                       | 0.9823    | 179       |
+| H6             | Gênero do Participante (Masc vs. Fem) vs. Consumo Diário Total de Cafeína (mg)      | Mann-Whitney U (bilateral)      | U = 2300.00               | 0.4582    | 136, 37   |
 
 *   **Figura 1: Distribuição do Consumo Diário Total de Cafeína em Jogadores de Esports (mg).**
     ![Figura 1: Distribuição do Consumo Diário Total de Cafeína em Jogadores de Esports](notebooks/outputs/figura1_distribuicao_cafeina.png)
