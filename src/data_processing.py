@@ -3,6 +3,7 @@ import numpy as np
 from datetime import datetime
 import re
 import json
+import os
 
 # Utility functions for extracting volume and dose values
 def extract_vol_ml(text):
@@ -110,25 +111,38 @@ def create_dummies(df: pd.DataFrame, column: str, prefix: str) -> pd.DataFrame:
 
 def generate_codebook(df: pd.DataFrame, codebook_path: str) -> None:
     """Generate a detailed codebook from processed DataFrame."""
+    # abs_codebook_path = os.path.abspath(codebook_path) # REMOVED
+    # print(f"--- DEBUG: Attempting to write codebook to absolute path: {abs_codebook_path} ---") # REMOVED
+    
     with open(codebook_path, 'w', encoding='utf-8') as f:
-        # Header
         f.write('VariableName\tType\tUniqueValues\n')
         for col in df.columns:
             dtype = str(df[col].dtype)
-            # Capture unique values (convert to list)
-            uniques = df[col].dropna().unique().tolist()
-            # If too many unique values, sample first 20
-            if len(uniques) > 20:
-                uniques = uniques[:20] + ['...']
-            # Serialize unique values as JSON string to preserve types
-            uniques_str = json.dumps(uniques, ensure_ascii=False)
-            f.write(f'{col}\t{dtype}\t"{uniques_str}"\n')
+            
+            uniques_list = []
+            if pd.api.types.is_integer_dtype(df[col].dtype) and df[col].hasnans:
+                uniques_list = [int(x) if pd.notna(x) else None for x in df[col].unique()]
+            else:
+                uniques_list = df[col].dropna().unique().tolist()
+
+            if len(uniques_list) > 20:
+                uniques_list_display = uniques_list[:10] + ['...'] + uniques_list[-10:]
+            else:
+                uniques_list_display = uniques_list
+            
+            try:
+                uniques_str = json.dumps(uniques_list_display, ensure_ascii=False, default=str)
+            except TypeError:
+                uniques_str = "[Error serializing unique values]"
+
+            f.write(f"{col}\\t{dtype}\\t{uniques_str}\\n")
 
 
 def export_processed(df: pd.DataFrame, csv_path: str, codebook_path: str) -> None:
     """Export processed DataFrame to CSV and generate a detailed codebook."""
-    # Export CSV
+    # Export CSV principal
     df.to_csv(csv_path, index=False, encoding='utf-8')
+    
     # Generate codebook
     generate_codebook(df, codebook_path)
 
@@ -770,6 +784,8 @@ def process_all(input_path: str, output_csv: str, codebook_txt: str) -> pd.DataF
     # 2.5.2. Qual foi o seu consumo diário total de cafeína estimado (mg/dia)? Usar MG_CAFEINA_DIA processado
     # Nota: pode-se adicionar SUPLEM_DOSE_CAFEINA_MG se necessário
     df['MG_CAFEINA_TOTAL_DIA'] = df['MG_CAFEINA_DIA']
+    if 'Pontuação' in df.columns: # Adicionar esta verificação e drop
+        df = df.drop(columns=['Pontuação'], errors='ignore')
 
     # --- Fim da Implementação Detalhada da Codificação ---
 
@@ -826,17 +842,19 @@ def process_all(input_path: str, output_csv: str, codebook_txt: str) -> pd.DataF
     cols_unnamed = [col for col in df.columns if 'Unnamed:' in col]
     if cols_unnamed:
         print(f"Removendo colunas 'Unnamed': {cols_unnamed}")
-        df = df.drop(columns=cols_unnamed)
+        df = df.drop(columns=cols_unnamed, errors='ignore')
     
+    df_final_para_export = df.copy()
+
     # Export outputs
-    export_processed(df, output_csv, codebook_txt)
-    return df 
+    export_processed(df_final_para_export, output_csv, codebook_txt)
+    return df_final_para_export
 
 if __name__ == '__main__':
     pass
     input_path = 'IC_Dados_Curados - Worksheet (1).csv'
     output_csv = 'IC_Dados_Processados.csv'
-    codebook_txt = 'docs/codebook.txt'
+    codebook_txt = 'docs/Livro_de_Codigos.txt'
     print(f"--- INÍCIO DA EXECUÇÃO DIRETA DE data_processing.py ---")
     print(f"Lendo de: {input_path}")
     print(f"Salvando processado em: {output_csv}")
