@@ -21,12 +21,16 @@ Este documento fornece prompts sugeridos para gerar as figuras do estudo "Padrõ
 
 **Contexto dos Dados para a Figura 1:**
 *   Arquivo de dados a ser usado: `IC_Dados_Processados.csv`.
-*   Coluna principal: `MG_CAFEINA_TOTAL_DIA`. Esta coluna contém valores numéricos que representam o consumo total diário de cafeína em miligramas para cada participante.
+*   Coluna principal: `MG_CAFEINA_TOTAL_DIA`.
+    *   **Tipo de Dado:** Numérico contínuo.
+    *   **Unidade:** Miligramas (mg).
+    *   **Descrição:** Representa o consumo total diário de cafeína estimado para cada participante.
+    *   **Características Gerais (da amostra total, N=181):** Média ≈ 276.37 mg, Desvio Padrão ≈ 218.69 mg. Espera-se uma distribuição assimétrica positiva com outliers em valores mais altos.
 
 **Sugestão de Prompt para IA (Opção 1: Histograma):**
 ```
 Analise o arquivo 'IC_Dados_Processados.csv'.
-Focando na coluna 'MG_CAFEINA_TOTAL_DIA' (valores numéricos do consumo diário de cafeína em mg),
+Focando na coluna 'MG_CAFEINA_TOTAL_DIA' (que contém o consumo diário de cafeína em mg, com média geral de aprox. 276 mg e DP de aprox. 219 mg, esperando-se assimetria positiva),
 Gere um histograma para esta coluna.
 Título do gráfico: 'Figura 1: Distribuição do Consumo Diário de Cafeína'
 Rótulo do eixo X: 'Consumo Diário Total de Cafeína (mg)'
@@ -37,7 +41,7 @@ Use um número de bins que ilustre adequadamente a forma da distribuição, sua 
 **Sugestão de Prompt para IA (Opção 2: Boxplot):**
 ```
 Analise o arquivo 'IC_Dados_Processados.csv'.
-Focando na coluna 'MG_CAFEINA_TOTAL_DIA' (valores numéricos do consumo diário de cafeína em mg),
+Focando na coluna 'MG_CAFEINA_TOTAL_DIA' (que contém o consumo diário de cafeína em mg, com média geral de aprox. 276 mg e DP de aprox. 219 mg, esperando-se assimetria positiva e outliers),
 Gere um boxplot vertical para esta coluna.
 Título do gráfico: 'Figura 1: Distribuição do Consumo Diário de Cafeína'
 Rótulo do eixo Y: 'Consumo Diário Total de Cafeína (mg)'
@@ -53,14 +57,20 @@ Certifique-se de que os outliers sejam claramente exibidos.
 
 **Contexto dos Dados para a Figura 2:**
 *   Arquivo de dados a ser usado: `IC_Dados_Processados.csv`.
-*   Coluna de valor: `MG_CAFEINA_TOTAL_DIA` (valores numéricos do consumo diário de cafeína em mg).
-*   Coluna de agrupamento: `NIVEL_JOGADOR_COD`. Esta coluna contém códigos numéricos: 1 para 'Amador/Casual', 2 para 'Semi-Profissional', e 3 para 'Profissional'. Para esta figura, focaremos apenas nos códigos 1 e 2.
+*   Coluna de valor: `MG_CAFEINA_TOTAL_DIA`.
+    *   **Tipo de Dado:** Numérico contínuo.
+    *   **Unidade:** Miligramas (mg).
+    *   **Descrição:** Consumo total diário de cafeína (Média geral ≈ 276.37 mg, DP ≈ 218.69 mg).
+*   Coluna de agrupamento: `NIVEL_JOGADOR_COD`.
+    *   **Tipo de Dado:** Categórico codificado (numérico).
+    *   **Códigos e Significados:** 1 = 'Amador/Casual', 2 = 'Semi-Profissional', 3 = 'Profissional'.
+    *   **Para esta figura:** Usar apenas os grupos com código 1 e 2.
 
 **Sugestão de Prompt para IA:**
 ```
 Analise o arquivo 'IC_Dados_Processados.csv'.
 Primeiro, filtre os dados para incluir apenas participantes onde a coluna 'NIVEL_JOGADOR_COD' é igual a 1 (representando 'Amador/Casual') ou igual a 2 (representando 'Semi-Profissional').
-Para estes dois grupos filtrados, gere boxplots comparativos mostrando a distribuição da coluna 'MG_CAFEINA_TOTAL_DIA' (consumo diário de cafeína em mg).
+Para estes dois grupos filtrados, gere boxplots comparativos mostrando a distribuição da coluna 'MG_CAFEINA_TOTAL_DIA' (valores numéricos em mg do consumo diário de cafeína).
 Título do gráfico: 'Figura 2: Consumo Diário de Cafeína por Nível de Experiência do Jogador'
 Rótulo do eixo X: 'Nível de Experiência do Jogador', com as categorias claramente identificadas como 'Amador/Casual' e 'Semi-Profissional'.
 Rótulo do eixo Y: 'Consumo Diário Total de Cafeína (mg)'
@@ -75,15 +85,21 @@ Certifique-se de que os outliers sejam exibidos em cada boxplot.
 
 **Contexto dos Dados para a Figura 3:**
 *   Arquivo de dados a ser usado: `IC_Dados_Processados.csv`.
-*   Coluna para o eixo X: `HORAS_JOGO_PRINCIPAL_MEDIA_DIA`. Esta coluna contém valores numéricos representando as horas médias que os participantes dedicam ao seu jogo principal por dia.
-*   Coluna para o eixo Y: `MG_CAFEINA_TOTAL_DIA`. Esta coluna contém valores numéricos do consumo total diário de cafeína em miligramas.
-*   Tratamento de Ausentes: Linhas com valores ausentes (NaN) em qualquer uma dessas duas colunas devem ser excluídas antes da plotagem.
+*   Coluna para o eixo X: `HORAS_JOGO_PRINCIPAL_MEDIA_DIA`.
+    *   **Tipo de Dado:** Numérico (pode ser tratado como contínuo ou discreto).
+    *   **Unidade:** Horas.
+    *   **Descrição:** Horas médias que os participantes dedicam ao seu jogo principal por dia (Média geral ≈ 2.48 horas, DP ≈ 1.70 horas).
+*   Coluna para o eixo Y: `MG_CAFEINA_TOTAL_DIA`.
+    *   **Tipo de Dado:** Numérico contínuo.
+    *   **Unidade:** Miligramas (mg).
+    *   **Descrição:** Consumo total diário de cafeína (Média geral ≈ 276.37 mg, DP ≈ 218.69 mg).
+*   Tratamento de Ausentes: Linhas com valores ausentes (NaN) em `HORAS_JOGO_PRINCIPAL_MEDIA_DIA` ou `MG_CAFEINA_TOTAL_DIA` devem ser excluídas antes da plotagem (afeta N=175 dos 181 participantes).
 
 **Sugestão de Prompt para IA:**
 ```
 Analise o arquivo 'IC_Dados_Processados.csv'.
-Considere as colunas 'HORAS_JOGO_PRINCIPAL_MEDIA_DIA' (horas de jogo) e 'MG_CAFEINA_TOTAL_DIA' (consumo de cafeína em mg).
-Antes de plotar, remova quaisquer participantes (linhas) que tenham valores ausentes (NaN) em 'HORAS_JOGO_PRINCIPAL_MEDIA_DIA' ou em 'MG_CAFEINA_TOTAL_DIA'.
+Considere a coluna 'HORAS_JOGO_PRINCIPAL_MEDIA_DIA' (valores numéricos, horas de jogo por dia, média geral aprox. 2.48h) e a coluna 'MG_CAFEINA_TOTAL_DIA' (valores numéricos, consumo de cafeína em mg, média geral aprox. 276mg).
+Antes de plotar, remova quaisquer participantes (linhas) que tenham valores ausentes (NaN) em 'HORAS_JOGO_PRINCIPAL_MEDIA_DIA' ou em 'MG_CAFEINA_TOTAL_DIA'. (Esperamos cerca de 175 pontos de dados após esta remoção).
 Gere um diagrama de dispersão (scatter plot) para visualizar a relação entre estas duas variáveis.
 Eixo X: deve representar os valores da coluna 'HORAS_JOGO_PRINCIPAL_MEDIA_DIA'.
 Eixo Y: deve representar os valores da coluna 'MG_CAFEINA_TOTAL_DIA'.
