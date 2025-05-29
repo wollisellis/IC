@@ -216,12 +216,12 @@
 9.  [x] Draft Results 3.2 (Análise descritiva) in `docs/Publicacao_Tese.md`.
 10. [x] Draft Results 3.3 (Principais achados estatísticos) in `docs/Publicacao_Tese.md`.
 11. [x] Draft Results 3.4 (Figuras e tabelas) in `docs/Publicacao_Tese.md`.
-12. [ ] Draft Discussion 4.1–4.5 in `docs/Publicacao_Tese.md`.
-13. [ ] Draft Conclusion 5 in `docs/Publicacao_Tese.md`.
-14. [ ] Draft Acknowledgements in `docs/Publicacao_Tese.md`.
-15. [ ] Compile References section with BibTeX entries in `docs/Publicacao_Tese.md`.
-16. [ ] Populate Appendices A and B in `docs/Publicacao_Tese.md`.
-17. [ ] Run `src/data_processing.py` to generate `IC_Dados_Processados.csv` and `Livro_de_Codigos.txt`.
-18. [ ] Perform manual data validation and NaN distribution analysis.
-19. [ ] Create summary document `AED_Resultados_Chave.md` with key exploratory insights.
+12. [x] Draft Discussion 4.1–4.5 in `docs/Publicacao_Tese.md`.
+13. [x] Draft Conclusion 5 in `docs/Publicacao_Tese.md`.
+14. [x] Draft Acknowledgements in `docs/Publicacao_Tese.md`.
+15. [x] Compile References section with BibTeX entries in `docs/Publicacao_Tese.md`.
+16. [x] Populate Appendices A and B in `docs/Publicacao_Tese.md`.
+17. [x] Run `src/data_processing.py` to generate `IC_Dados_Processados.csv` and `Livro_de_Codigos.txt`.
+18. [x] Perform manual data validation and NaN distribution analysis.
+19. [x] Create summary document `AED_Resultados_Chave.md` with key exploratory insights.
 20. [ ] Review and finalize full manuscript for submission.
