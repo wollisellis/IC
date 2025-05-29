@@ -212,10 +212,10 @@
 5.  [ ] Draft Methods 2.6 (Considerações éticas) in `docs/Publicacao_Tese.md`.
 6.  [ ] Create notebook `notebooks/analise_exploratoria.ipynb` for exploratory analysis.
 7.  [ ] Create notebook `notebooks/analise_estatistica.ipynb` for statistical tests.
-8.  [ ] Draft Results 3.1 (Descrição da amostra) in `docs/Publicacao_Tese.md`.
-9.  [ ] Draft Results 3.2 (Análise descritiva) in `docs/Publicacao_Tese.md`.
-10. [ ] Draft Results 3.3 (Principais achados estatísticos) in `docs/Publicacao_Tese.md`.
-11. [ ] Draft Results 3.4 (Figuras e tabelas) in `docs/Publicacao_Tese.md`.
+8.  [x] Draft Results 3.1 (Descrição da amostra) in `docs/Publicacao_Tese.md`.
+9.  [x] Draft Results 3.2 (Análise descritiva) in `docs/Publicacao_Tese.md`.
+10. [x] Draft Results 3.3 (Principais achados estatísticos) in `docs/Publicacao_Tese.md`.
+11. [x] Draft Results 3.4 (Figuras e tabelas) in `docs/Publicacao_Tese.md`.
 12. [ ] Draft Discussion 4.1–4.5 in `docs/Publicacao_Tese.md`.
 13. [ ] Draft Conclusion 5 in `docs/Publicacao_Tese.md`.
 14. [ ] Draft Acknowledgements in `docs/Publicacao_Tese.md`.

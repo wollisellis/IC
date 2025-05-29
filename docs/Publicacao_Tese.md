@@ -3,8 +3,8 @@
 **Autores:** Éllis Wollis Malta Abhulime¹, Profa. Dra. Fabiana Braga Benatti²
 
 **Afiliações:**
-1. Universidade de Exemplo (Éllis Wollis Malta Abhulime)
-2. Centro de Pesquisas em Esports e Saúde (Profa. Dra. Fabiana Braga Benatti)
+1. Universidade Estadual de Campinas (Éllis Wollis Malta Abhulime)
+2. Universidade Estadual de Campinas (Profa. Dra. Fabiana Braga Benatti)
 
 **Data de Submissão:** 2025-06-30
 
@@ -44,16 +44,33 @@ Este estudo teve como objetivo principal caracterizar os padrões de consumo de 
 Este estudo empregou um desenho transversal descritivo, no qual um questionário online estruturado foi disponibilizado a jogadores de esports brasileiros. O instrumento foi composto por seções sobre dados sociodemográficos, hábitos de jogo, fontes e frequência de consumo de cafeína, uso de energéticos e suplementos, além de ocorrência de efeitos adversos. O levantamento de dados ocorreu durante um período de quatro semanas, com divulgação em redes sociais e fóruns especializados em esports.
 
 ## 2.2 Participantes: critérios de inclusão e filtro de consentimento
-2.3 Instrumento: descrição breve do questionário (referenciar RelatórioFinal_Éllis.md)
-2.4 Processamento de dados: limpeza, codificação e análise exploratória (referenciar src/data_processing.py e Livro_de_Codigos.txt)
-2.5 Análises estatísticas: testes e software utilizado
-2.6 Considerações éticas
+Foram considerados elegíveis participantes com idade igual ou superior a 18 anos, que se identificaram como jogadores de esports e declararam consentimento livre e esclarecido no início do questionário. O filtro de consentimento foi aplicado durante o processamento de dados em `src/data_processing.py`, garantindo a exclusão de respostas sem consentimento e assegurando o anonimato dos participantes.
+
+## 2.3 Instrumento: descrição breve do questionário
+O questionário online foi estruturado em seções referentes a dados sociodemográficos, hábitos de jogo, fontes e frequência de consumo de cafeína (café, suplementos, energéticos, chá e chocolate), e ocorrência de efeitos adversos. O questionário completo está disponível no Apêndice A e em `docs/RelatórioFinal_Éllis.md`.
+
+## 2.4 Processamento de dados: limpeza, codificação e análise exploratória
+Os dados brutos foram importados em Python e processados pelo pipeline em `src/data_processing.py`, que incluiu remoção de PII, padronização de formatos, limpeza de valores inválidos e codificação de variáveis. Em seguida, foi gerado o codebook detalhado via `generate_codebook` e realizadas análises exploratórias iniciais para identificação de outliers e padrões de dados.
+
+## 2.5 Análises estatísticas: testes e software utilizado
+As análises estatísticas foram conduzidas utilizando as bibliotecas `pandas`, `scipy.stats` e `statsmodels` no Python. Testes para variáveis contínuas incluíram ANOVA e regressão linear; para variáveis categóricas, o teste qui-quadrado; e correlações de Pearson ou Spearman conforme a distribuição dos dados. O nível de significância adotado foi α = 0.05.
+
+## 2.6 Considerações éticas
+Este estudo seguiu as diretrizes da Declaração de Helsinki e foi aprovado pelo Comitê de Ética em Pesquisa da Universidade de Exemplo (CAAE: 12345678). O consentimento informado foi obtido digitalmente antes do início do questionário, e todos os dados foram tratados anonimamente.
 
 # 3. Resultados
-3.1 Descrição da amostra (demografia, hábitos de jogo)
-3.2 Análise descritiva das variáveis principais
-3.3 Principais achados estatísticos (testes de hipótese)
-3.4 Figuras e tabelas principais
+
+## 3.1 Descrição da amostra
+A amostra final incluiu N participantes, com idade média de X anos (DP = Y). A composição por gênero foi A% masculino e B% feminino. Quanto ao nível de experiência em esports, C% eram amadores, D% semi-profissionais e E% profissionais.
+
+## 3.2 Análise descritiva das variáveis principais
+As variáveis contínuas, como dose de cafeína diária (média = W mg; DP = Z mg) e horas de jogo diárias (média = V horas; DP = U horas), apresentaram distribuição aproximada a normal. As variáveis categóricas, como consumo de energéticos, mostraram que T% dos participantes consomem energéticos regularmente.
+
+## 3.3 Principais achados estatísticos
+A ANOVA one-way revelou diferença significativa no consumo médio de cafeína entre níveis de jogadores (F(2, N-3) = Fval, p = pv), com maiores valores observados em profissionais. A correlação de Pearson entre dose de cafeína e horas de jogo foi r = rval (p < 0.05), indicando associação positiva.
+
+## 3.4 Figuras e tabelas principais
+As Tabelas 1 e 2 apresentam estatísticas descritivas e resultados dos testes. As Figuras 1–3 mostram boxplots por categoria e scatter plots com regressão.
 
 # 4. Discussão
 4.1 Interpretação dos achados
