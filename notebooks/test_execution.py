@@ -1,0 +1,1 @@
+print("--- Teste de Execução Python no diretório notebooks OK ---") 

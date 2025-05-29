@@ -79,22 +79,53 @@ Não foi encontrada correlação estatisticamente significativa entre o consumo 
 Em relação aos efeitos adversos, as colunas binárias específicas para insônia e nervosismo não estavam disponíveis para análise direta. A investigação da correlação entre o consumo diário de cafeína (`MG_CAFEINA_DIA`) e uma medida geral da frequência de efeitos adversos (`EFEITO_ADVERSO_FREQUENCIA_DESCRITA_COD`) não demonstrou associação estatisticamente significativa (Spearman's ρ = 0.080, p = 0.2818, N=181).
 
 ## 3.4 Figuras e tabelas principais
-Sugestões para Figuras e Tabelas (a serem geradas externamente e referenciadas aqui):
 
-*   **Tabela 1: Características Sociodemográficas e de Jogo da Amostra (N=181).**
-    *   Linhas: Idade (Média, DP, Min-Max), Gênero (N, %), Nível de Jogador (N, %), Horas de Jogo Principal/Dia (Média, DP, Mediana), Outras variáveis relevantes da AED.
-*   **Tabela 2: Padrões de Consumo de Cafeína e Resultados dos Testes de Hipóteses.**
-    *   Parte A: Consumo de Cafeína Total Diário (MG_CAFEINA_DIA) - Geral (Média, DP, Mediana, Min-Max); Por Nível de Jogador (Amador/Casual, Semi-Profissional) (Média, DP, Mediana).
-    *   Parte B: Resumo dos testes de hipóteses:
-        *   H1 (Nível do Jogador vs. MG_CAFEINA_DIA): Teste, Estatística (U), p-valor.
-        *   H2 (MG_CAFEINA_DIA vs. HORAS_JOGO_PRINCIPAL_MEDIA_DIA): Teste, Coeficiente de Correlação (ρ), p-valor, N.
-        *   H3 (MG_CAFEINA_DIA vs. EFEITO_ADVERSO_FREQUENCIA_DESCRITA_COD): Teste, Coeficiente de Correlação (ρ), p-valor, N.
+**Tabela 1: Características Sociodemográficas e de Jogo da Amostra (N=181).**
+
+| Característica | Estatística | Valor |
+|----------------|-------------|-------|
+| Participantes | Total (N) | 181 |
+| Idade | Média (DP) | 25.70 (DP = 6.64) |
+| Idade | Mínimo - Máximo | 18 - 56 |
+| Gênero | Masculino (N, %) | 136 (75.14%) |
+| Gênero | Feminino (N, %) | 37 (20.44%) |
+| Gênero | Outros/PÑR (códs [4, 3]) (N, %) | 8 (4.42%) |
+| Nível de Jogador | Amador/Casual (N, %) | 146 (80.66%) |
+| Nível de Jogador | Semi-Profissional (N, %) | 31 (17.13%) |
+| Nível de Jogador | Profissional (N, %) | 4 (2.21%) |
+| Horas de Jogo Principal/Dia | Média (DP) | 2.48 (DP = 1.70) |
+| Horas de Jogo Principal/Dia | Mediana | 3.00 |
+
+**Tabela 2: Padrões de Consumo de Cafeína e Resultados dos Testes de Hipóteses.**
+
+*Parte A: Consumo de Cafeína Total Diário (MG_CAFEINA_DIA)*
+
+| Descrição | Estatística | Valor (mg) |
+|-------------------|-----------------|---------------|
+| Geral | Média (DP) | 276.37 (DP = 218.69) |
+| Geral | Mediana | 228.74 |
+| Geral | Mínimo - Máximo | 0.00 - 1092.91 |
+| Amador/Casual | Média (DP) | 281.40 (DP = 203.34) |
+| Amador/Casual | Mediana | 240.00 |
+| Semi-Profissional | Média (DP) | 210.66 (DP = 215.40) |
+| Semi-Profissional | Mediana | 158.36 |
+| Geral | % NaN | 0.00% |
+
+*Parte B: Resumo dos testes de hipóteses*
+
+| Hipótese | Variáveis | Teste | Estatística/Coeficiente | p-valor | N |
+|----------|-----------|-------|-------------------------|---------|---|
+| H1       | `NIVEL_JOGADOR_COD` vs. `MG_CAFEINA_DIA` | Mann-Whitney U (Amador/Casual vs. Semi-Profissional) | U = 2853.00 | 0.0229 | 146 (Amador/Casual), 31 (Semi-Profissional) |
+| H2       | `MG_CAFEINA_DIA` vs. `HORAS_JOGO_PRINCIPAL_MEDIA_DIA` | Correlação de Spearman | ρ = 0.068 | 0.3693 | 175 |
+| H3       | `MG_CAFEINA_DIA` vs. `EFEITO_ADVERSO_FREQUENCIA_DESCRITA_COD` | Correlação de Spearman | ρ = 0.080 | 0.2818 | 181 |
+
+
 *   **Figura 1: Distribuição do Consumo Diário de Cafeína (MG_CAFEINA_DIA).**
-    *   Histograma ou boxplot mostrando a distribuição da variável `MG_CAFEINA_DIA` para a amostra total, evidenciando a assimetria e outliers.
+    *   Histograma ou boxplot mostrando a distribuição da variável `MG_CAFEINA_DIA` para a amostra total, evidenciando a assimetria e outliers. (Ver `notebooks/outputs/figura1_distribuicao_cafeina.png`)
 *   **Figura 2: Consumo Diário de Cafeína (MG_CAFEINA_DIA) por Nível de Jogador.**
-    *   Boxplots comparando `MG_CAFEINA_DIA` entre os grupos Amador/Casual e Semi-Profissional (e Profissional, se N fosse maior).
+    *   Boxplots comparando `MG_CAFEINA_DIA` entre os grupos Amador/Casual e Semi-Profissional. (Ver `notebooks/outputs/figura2_cafeina_por_nivel.png`)
 *   **Figura 3: Diagrama de Dispersão - Consumo de Cafeína vs. Horas de Jogo.**
-    *   Scatter plot mostrando a relação entre `MG_CAFEINA_DIA` e `HORAS_JOGO_PRINCIPAL_MEDIA_DIA`.
+    *   Scatter plot mostrando a relação entre `MG_CAFEINA_DIA` e `HORAS_JOGO_PRINCIPAL_MEDIA_DIA`. (Ver `notebooks/outputs/figura3_cafeina_vs_horas_jogo.png`)
 
 Estes elementos visuais auxiliarão na apresentação clara dos dados demográficos, padrões de consumo e dos principais resultados estatísticos descritos na seção 3.3.
 
