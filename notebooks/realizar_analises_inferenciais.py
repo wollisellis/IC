@@ -4,10 +4,11 @@ Script para realizar análises estatísticas inferenciais para o estudo
 de consumo de cafeína em jogadores de e-sports.
 """
 import pandas as pd
-from scipy.stats import kruskal, pearsonr, spearmanr, mannwhitneyu
+from scipy.stats import kruskal, pearsonr, spearmanr, mannwhitneyu, chi2_contingency, fisher_exact
 import statsmodels.api as sm
 from statsmodels.formula.api import ols
 import scikit_posthocs as sp
+import numpy as np
 
 def carregar_dados(caminho_csv: str) -> pd.DataFrame:
     """Carrega os dados processados."""
@@ -276,6 +277,99 @@ def analisar_h7(df: pd.DataFrame):
     except Exception as e:
         print(f"    Erro ao executar Mann-Whitney U para H7: {e}")
 
+def analisar_h6(df: pd.DataFrame):
+    """
+    H6: Jogadores de diferentes plataformas principais (PC, console, mobile) 
+    reportam diferentes perfis de efeitos adversos.
+    Testa associação entre PLATAFORMA_PRINCIPAL_COD e EFEITO_ADVERSO_*_BIN.
+    """
+    print("\n--- Análise H6: Plataforma Principal vs. Efeitos Adversos ---")
+    
+    col_plataforma = 'PLATAFORMA_PRINCIPAL_COD'
+    if col_plataforma not in df.columns:
+        print(f"Coluna {col_plataforma} não encontrada. Pulando H6.")
+        return
+
+    # Efeitos adversos para analisar (aqueles com dados suficientes)
+    efeitos_colunas_binarias_h6 = {
+        'EFEITO_ADVERSO_INSONIA_BIN': 'Insônia',
+        'EFEITO_ADVERSO_TAQUICARDIA_BIN': 'Taquicardia',
+        'EFEITO_ADVERSO_TREMORES_BIN': 'Tremores',
+        'EFEITO_ADVERSO_DOR_ESTOMAGO_BIN': 'Dor no Estômago'
+    }
+    
+    # Mapeamento de códigos de plataforma para nomes (para logs mais claros)
+    # Com base nas contagens: PC (1), Celular/Mobile (2), Playstation (3), Xbox (4)
+    # Nintendo (5) e Outro (6) podem ter N muito baixo ou ser filtrados.
+    map_plataforma_nomes = {
+        1: 'PC',
+        2: 'Celular/Mobile',
+        3: 'Playstation',
+        4: 'Xbox',
+        5: 'Nintendo',
+        6: 'Outro' 
+    }
+
+    for col_efeito, nome_efeito in efeitos_colunas_binarias_h6.items():
+        print(f"\n  Analisando associação entre Plataforma e {nome_efeito} (coluna: {col_efeito})")
+        if col_efeito not in df.columns:
+            print(f"    Coluna de efeito {col_efeito} não encontrada. Pulando este efeito.")
+            continue
+
+        # Preparar dados para a tabela de contingência
+        df_h6_efeito = df[[col_plataforma, col_efeito]].copy()
+        df_h6_efeito.dropna(inplace=True) # Remove NaNs de ambas as colunas
+
+        if df_h6_efeito.empty or len(df_h6_efeito) < 10: # Mínimo de 10 observações para uma análise razoável
+            print(f"    Não há dados suficientes para {nome_efeito} e Plataforma após remover NaNs (N={len(df_h6_efeito)}). Pulando.")
+            continue
+        
+        # Filtrar para plataformas com N > 0 após dropna
+        # E opcionalmente com N mínimo (ex: N > 5) para estabilidade do teste qui-quadrado.
+        # Por agora, vamos deixar o teste lidar com Ns baixos e usar Fisher se necessário.
+        contagens_plataforma = df_h6_efeito[col_plataforma].value_counts()
+        plataformas_com_dados = contagens_plataforma[contagens_plataforma > 0].index.tolist()
+        
+        # Mapear códigos para nomes para a tabela de contingência
+        df_h6_efeito[col_plataforma] = df_h6_efeito[col_plataforma].map(map_plataforma_nomes)
+        
+        # Manter apenas plataformas que ainda existem após o dropna e têm nomes mapeados
+        df_h6_efeito = df_h6_efeito[df_h6_efeito[col_plataforma].notna()]
+
+        if df_h6_efeito[col_plataforma].nunique() < 2 or df_h6_efeito[col_efeito].nunique() < 2:
+            print(f"    Menos de duas categorias em Plataforma ou {nome_efeito} após filtros. Pulando teste.")
+            continue
+
+        try:
+            tabela_contingencia = pd.crosstab(df_h6_efeito[col_plataforma], df_h6_efeito[col_efeito])
+            print("    Tabela de Contingência (Plataforma vs. Efeito Adverso):")
+            print(tabela_contingencia)
+
+            # Verificar se alguma contagem esperada é < 5
+            chi2, p_valor, _, contagens_esperadas = chi2_contingency(tabela_contingencia)
+            usar_fisher = False
+            if np.any(contagens_esperadas < 5):
+                print("    Alguma contagem esperada < 5. Usando Teste Exato de Fisher.")
+                usar_fisher = True
+            
+            if usar_fisher:
+                odds_ratio, p_valor_fisher = fisher_exact(tabela_contingencia)
+                print(f"    Teste Exato de Fisher: Odds Ratio={odds_ratio:.2f}, p-valor={p_valor_fisher:.4f}")
+                p_final = p_valor_fisher
+            else:
+                print(f"    Teste Qui-Quadrado: Chi2={chi2:.2f}, p-valor={p_valor:.4f}")
+                p_final = p_valor
+
+            if p_final < 0.05:
+                print(f"    Resultado H6 ({nome_efeito}): Associação ESTATISTICAMENTE SIGNIFICATIVA encontrada entre Plataforma e {nome_efeito}.")
+            else:
+                print(f"    Resultado H6 ({nome_efeito}): NENHUMA associação estatisticamente significativa encontrada entre Plataforma e {nome_efeito}.")
+
+        except Exception as e:
+            print(f"    Erro ao executar teste de associação para {nome_efeito}: {e}")
+            print(f"    Dados para {col_plataforma}: {df_h6_efeito[col_plataforma].unique()}")
+            print(f"    Dados para {col_efeito}: {df_h6_efeito[col_efeito].unique()}")
+
 if __name__ == '__main__':
     caminho_do_arquivo_csv = 'C:/Users/nicol_qs45gn8/IC/IC_Dados_Processados.csv'
     df_processado = carregar_dados(caminho_do_arquivo_csv)
@@ -298,6 +392,7 @@ if __name__ == '__main__':
         analisar_h2(df_processado)
         analisar_h3(df_processado)
         analisar_h7(df_processado)
+        analisar_h6(df_processado)
     else:
         print("Análises não puderam ser executadas devido a erro no carregamento dos dados.")
 
