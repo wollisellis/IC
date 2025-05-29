@@ -2,6 +2,11 @@
 
 Este documento fornece prompts sugeridos para gerar as figuras do estudo "Padrões de Consumo de Cafeína em Jogadores de Esports: Um Estudo Transversal" utilizando uma ferramenta de Inteligência Artificial capaz de processar dados e criar visualizações estatísticas.
 
+**Nota Importante sobre Nomes de Variáveis:**
+*   Nos prompts abaixo, quando a instrução se refere a uma **"coluna"** do arquivo de dados (ex: "Gere um histograma para a coluna 'MG_CAFEINA_TOTAL_DIA'"), o nome técnico da variável, conforme consta no arquivo `IC_Dados_Processados.csv`, **deve ser usado**. Isso é essencial para que a IA possa localizar e processar os dados corretamente.
+*   Para entender a correspondência entre os nomes técnicos no dataset e os nomes descritivos usados no manuscrito (e nos títulos/rótulos dos gráficos aqui sugeridos), consulte o arquivo `docs/variaveis_map.md`.
+*   Os títulos dos gráficos, rótulos dos eixos e descrições de categorias nos prompts já utilizam linguagem natural e os nomes descritivos esperados para a visualização final.
+
 **Pré-requisitos para a IA:**
 *   Acesso ao arquivo de dados `IC_Dados_Processados.csv` (localizado na raiz do projeto).
 *   Capacidade de ler arquivos CSV (e interpretá-los como um pandas DataFrame ou estrutura similar).
@@ -10,9 +15,9 @@ Este documento fornece prompts sugeridos para gerar as figuras do estudo "Padrõ
 
 ---
 
-## Figura 1: Distribuição do Consumo Diário de Cafeína (MG_CAFEINA_TOTAL_DIA)
+## Figura 1: Distribuição do Consumo Diário de Cafeína
 
-**Descrição conforme `Publicacao_Tese.md`:** Histograma ou boxplot mostrando a distribuição da variável `MG_CAFEINA_TOTAL_DIA` para a amostra total, evidenciando a assimetria e outliers.
+**Descrição conforme `Publicacao_Tese.md`:** Histograma ou boxplot mostrando a distribuição da variável Consumo Diário Total de Cafeína (mg) para a amostra total, evidenciando a assimetria e outliers.
 
 **Sugestão de Prompt para IA (Opção 1: Histograma):**
 ```
@@ -36,17 +41,17 @@ Certifique-se de que os outliers sejam exibidos.
 
 ---
 
-## Figura 2: Consumo Diário de Cafeína (MG_CAFEINA_TOTAL_DIA) por Nível de Jogador
+## Figura 2: Consumo Diário de Cafeína por Nível de Experiência do Jogador
 
-**Descrição conforme `Publicacao_Tese.md`:** Boxplots comparando `MG_CAFEINA_TOTAL_DIA` entre os grupos Amador/Casual e Semi-Profissional.
+**Descrição conforme `Publicacao_Tese.md`:** Boxplots comparando o Consumo Diário Total de Cafeína (mg) entre os grupos Amador/Casual e Semi-Profissional (Nível de Experiência do Jogador).
 
 **Sugestão de Prompt para IA:**
 ```
 Analise o arquivo 'IC_Dados_Processados.csv'.
-Filtre os dados para incluir apenas onde 'NIVEL_JOGADOR_COD' é 1 (Amador/Casual) ou 2 (Semi-Profissional).
+Filtre os dados da coluna 'NIVEL_JOGADOR_COD' para incluir apenas os valores 1 (que corresponde a Amador/Casual) e 2 (que corresponde a Semi-Profissional).
 Gere boxplots comparativos da coluna 'MG_CAFEINA_TOTAL_DIA' para estes dois grupos.
-Título do gráfico: 'Figura 2: Consumo Diário de Cafeína por Nível de Jogador'
-Rótulo do eixo X: 'Nível do Jogador' (com categorias 'Amador/Casual' e 'Semi-Profissional')
+Título do gráfico: 'Figura 2: Consumo Diário de Cafeína por Nível de Experiência do Jogador'
+Rótulo do eixo X: 'Nível de Experiência do Jogador' (com categorias 'Amador/Casual' e 'Semi-Profissional')
 Rótulo do eixo Y: 'Consumo Diário Total de Cafeína (mg)'
 Exiba os outliers em cada boxplot.
 ```
@@ -55,7 +60,7 @@ Exiba os outliers em cada boxplot.
 
 ## Figura 3: Diagrama de Dispersão - Consumo de Cafeína vs. Horas de Jogo
 
-**Descrição conforme `Publicacao_Tese.md`:** Scatter plot mostrando a relação entre `MG_CAFEINA_TOTAL_DIA` e `HORAS_JOGO_PRINCIPAL_MEDIA_DIA`.
+**Descrição conforme `Publicacao_Tese.md`:** Scatter plot mostrando a relação entre o Consumo Diário Total de Cafeína (mg) e as Horas Médias de Jogo Principal por Dia.
 
 **Sugestão de Prompt para IA:**
 ```
@@ -66,12 +71,12 @@ Eixo Y: coluna 'MG_CAFEINA_TOTAL_DIA'
 Título do gráfico: 'Figura 3: Consumo de Cafeína vs. Horas de Jogo'
 Rótulo do eixo X: 'Horas Médias de Jogo Principal por Dia'
 Rótulo do eixo Y: 'Consumo Diário Total de Cafeína (mg)'
-Remova quaisquer linhas com valores NaN em 'HORAS_JOGO_PRINCIPAL_MEDIA_DIA' ou 'MG_CAFEINA_TOTAL_DIA' antes de plotar.
+Remova quaisquer linhas com valores NaN nas colunas 'HORAS_JOGO_PRINCIPAL_MEDIA_DIA' ou 'MG_CAFEINA_TOTAL_DIA' antes de plotar.
 ```
 
 ---
 
-**Nota Importante:**
+**Nota Importante sobre Ferramentas de IA:**
 A eficácia destes prompts dependerá significativamente das capacidades da IA específica que você utilizar. IAs geradoras de imagens de propósito geral (como DALL-E, Midjourney) provavelmente **não** conseguirão interpretar estes prompts para gerar gráficos estatisticamente precisos a partir dos seus dados. Estes prompts são mais adequados para IAs com funcionalidades de análise de dados e visualização incorporadas, ou como um guia detalhado para você recriar os gráficos em ferramentas como Python (com Matplotlib/Seaborn), R (com ggplot2), ou Excel, se necessário.
 
 Para garantir a precisão científica, a consistência com os resultados do estudo e a possibilidade de ajustes finos (como fontes, cores, tamanhos específicos para publicação), a melhor abordagem continua sendo a geração dos gráficos via código (como o utilizado em `notebooks/gerar_descritivas.py`). Esse código pode ser ajustado para atender a requisitos de estilo específicos de periódicos ou da sua instituição. 

@@ -207,7 +207,7 @@ def analisar_h3(df: pd.DataFrame):
 
         try:
             # Teste unilateral: consumo de cafeína é MAIOR no grupo COM efeito
-            stat, p_valor = mannwhitneyu(grupo_com_efeito, grupo_sem_efeito, alternative='greater')
+            stat, p_valor = mannwhitneyu(grupo_com_efeito, grupo_sem_efeito, alternative='greater') 
             print(f"    Grupo COM {nome_efeito} (N={len(grupo_com_efeito)}): Média Cafeína={grupo_com_efeito.mean():.2f} mg (DP={grupo_com_efeito.std():.2f}) mg")
             print(f"    Grupo SEM {nome_efeito} (N={len(grupo_sem_efeito)}): Média Cafeína={grupo_sem_efeito.mean():.2f} mg (DP={grupo_sem_efeito.std():.2f}) mg")
             print(f"    Teste Mann-Whitney U (unilateral: COM {nome_efeito} > SEM {nome_efeito}): Estatística U={stat:.2f}, p-valor={p_valor:.4f}")
@@ -441,7 +441,7 @@ def main():
             print(f"Presença de NaNs em '{nome_col}': {dados_col.isnull().sum()} / {len(df)}")
         else:
             print(f"Coluna '{nome_col}' não encontrada no DataFrame.")
-    print("--------------------------------------------------")
+        print("--------------------------------------------------")
 
     analisar_h1(df.copy())
     analisar_h2(df.copy())
