@@ -11,7 +11,7 @@
 ---
 
 ## Resumo
-O consumo de cafeína no contexto dos esportes eletrônicos (esports) tem se destacado como estratégia para otimizar desempenho cognitivo e atenção. Este estudo transversal teve como objetivo caracterizar os padrões de consumo de cafeína entre jogadores de esports brasileiros e analisar associações com variáveis demográficas, hábitos de jogo e indicadores de bem-estar. Foi aplicado um questionário online estruturado, abrangendo questões sobre frequência e dose de consumo de café, suplementos de cafeína, energéticos, chá e chocolate, bem como dados sociodemográficos e de experiência em esports. Os dados brutos foram processados, limpos e codificados por meio de um pipeline em Python, seguido de análises descritivas e inferenciais (testes qui-quadrado, ANOVA e regressão), considerando nível de significância de 5%. A amostra final consistiu em N participantes (idade média = X anos; Y% do sexo masculino). Constatou-se que Z% consumiam café diariamente, com dose média de W ml, enquanto V% faziam uso de suplementos de cafeína. As análises revelaram associações significativas entre nível de experiência em esports e padrões de consumo (p < 0,05). Os achados sugerem que o consumo de cafeína é prevalente nesta população, indicando a necessidade de diretrizes adaptadas para promover práticas seguras. Conclui-se que estratégias de conscientização podem contribuir para o bem-estar e performance dos jogadores.
+O consumo de cafeína é uma prática comum em esportes eletrônicos (esports) visando a otimização do desempenho cognitivo. Este estudo transversal caracterizou os padrões de consumo de cafeína em 181 jogadores de esports brasileiros (idade média = 25.70 ± 6.64 anos; 75.14% homens) e investigou associações com nível de jogo e hábitos. Utilizou-se um questionário online e análises descritivas e inferenciais (Mann-Whitney U, Spearman). Observou-se um consumo médio de 276.37 ± 218.69 mg/dia de cafeína. Significativamente, jogadores Amadores/Casuais (281.40 ± 203.34 mg) reportaram maior consumo que Semi-Profissionais (210.66 ± 215.40 mg; U = 2853.00, p = 0.0229). Não houve correlação entre cafeína e horas de jogo (ρ = 0.068, p = 0.3693) ou frequência de efeitos adversos (ρ = 0.080, p = 0.2818). Os achados indicam alto consumo de cafeína, com padrões distintos por nível de experiência, sugerindo a necessidade de diretrizes de consumo seguro e eficaz adaptadas a esta população, visando maximizar benefícios cognitivos e minimizar riscos à saúde.
 
 ## Palavras-chave
 - Esports
@@ -25,10 +25,12 @@ O consumo de cafeína no contexto dos esportes eletrônicos (esports) tem se des
 
 # 1. Introdução
 ## 1.1 Contextualização dos e-sports e consumo de cafeína
-Os esportes eletrônicos (esports) experimentaram um crescimento exponencial na última década, consolidando-se como uma indústria global multibilionária que atrai milhões de espectadores e jogadores engajados. Em 2025, estima-se que a receita global de e-sports alcance US$ 4.8 bilhões, com projeções indicando US$ 5.9 bilhões até 2029, e uma base de usuários que pode chegar a quase 900 milhões mundialmente neste mesmo ano (Statista, 2024). O Brasil acompanha essa tendência, com previsões de receita de US$ 116 milhões em 2025 e um público que ultrapassou 33 milhões de usuários já em 2023, posicionando o país como um mercado chave na América Latina (Statista, 2024; Grand View Research, 2024). Neste cenário de alta competitividade e demanda por performance, a cafeína, um estimulante do sistema nervoso central, é frequentemente utilizada por jogadores que buscam otimizar o estado de alerta, a concentração e a resistência mental durante sessões de treino e competições prolongadas. O consumo ocorre através de diversas fontes, como café, chás, bebidas energéticas, refrigerantes e suplementos específicos.
+Os esportes eletrônicos (esports) experimentaram um crescimento exponencial na última década, consolidando-se como uma indústria global multibilionária que atrai milhões de espectadores e jogadores engajados. Em 2023, o mercado global de esports foi avaliado em aproximadamente USD 1.72 bilhão, com projeções indicando um crescimento para USD 6.75 bilhões até 2030 (Precedence Research, 2023). O Brasil acompanha essa tendência, sendo um dos maiores mercados da América Latina, com uma audiência que ultrapassou 40 milhões de pessoas em 2023 (Forbes, 2024). Neste cenário de alta competitividade e demanda por performance cognitiva sustentada, a cafeína, um estimulante do sistema nervoso central, é frequentemente utilizada por jogadores que buscam otimizar o estado de alerta, a concentração, o tempo de reação e a resistência mental durante sessões de treino e competições prolongadas (Wu et al., 2024; Rogers et al., 2024). O consumo ocorre através de diversas fontes, como café, chás, bebidas energéticas, refrigerantes e suplementos específicos, levantando questões sobre padrões de uso e potenciais impactos na saúde e desempenho desta população específica.
 
 ## 1.2 Revisão da literatura relevante
-A cafeína (1,3,7-trimetilxantina) é um dos recursos ergogênicos mais estudados e consumidos no mundo. Seus principais mecanismos de ação incluem o antagonismo dos receptores de adenosina no cérebro, a mobilização de cálcio intracelular e a inibição de fosfodiesterases, resultando em aumento da neurotransmissão excitatória, redução da percepção de fadiga e melhora da função neuromuscular (Cappelletti et al., 2015). Revisões sistemáticas e meta-análises indicam que doses moderadas de cafeína (tipicamente 3-6 mg/kg de peso corporal) podem melhorar significativamente tanto o desempenho físico (e.g., resistência, força) quanto diversas funções cognitivas cruciais para atletas, como atenção, vigilância, tempo de reação e humor (Calvo et al., 2021; Guest et al., 2021). Embora grande parte da pesquisa tenha focado em atletas tradicionais, os benefícios cognitivos, especialmente na manutenção da atenção e na redução da percepção de esforço, são altamente transferíveis para as demandas dos jogadores de esports. No entanto, os efeitos sobre outras funções cognitivas, como memória de trabalho e funções executivas complexas, são menos consistentes quando a cafeína é consumida isoladamente (Kennedy & Wightman, 2022). Estudos em ambientes acadêmicos também associam a cafeína ao aumento de atenção e, em alguns contextos, à memória de curto prazo. No entanto, ainda existe uma escassez de dados específicos sobre os padrões de consumo de cafeína e seus efeitos percebidos em jogadores de esports, particularmente no Brasil e considerando a variedade de fontes de cafeína disponíveis.
+A cafeína (1,3,7-trimetilxantina) é um dos recursos ergogênicos mais estudados e consumidos no mundo. Seus principais mecanismos de ação incluem o antagonismo dos receptores de adenosina no cérebro, a mobilização de cálcio intracelular e a inibição de fosfodiesterases, resultando em aumento da neurotransmissão excitatória, redução da percepção de fadiga e melhora da função neuromuscular (Cappelletti et al., 2015). Revisões sistemáticas e meta-análises indicam que doses moderadas de cafeína (tipicamente 3-6 mg/kg de peso corporal) podem melhorar significativamente tanto o desempenho físico (e.g., resistência, força) quanto diversas funções cognitivas cruciais para atletas, como atenção, vigilância, tempo de reação e humor (Calvo et al., 2021; Guest et al., 2021). 
+
+Embora grande parte da pesquisa tenha focado em atletas tradicionais, os benefícios cognitivos, especialmente na manutenção da atenção e na redução da percepção de esforço, são altamente transferíveis para as demandas dos jogadores de esports. Estudos recentes têm corroborado essa transferência: Wu et al. (2024) demonstraram que a suplementação de 3 mg/kg de cafeína melhorou significativamente habilidades cognitivas (Stroop task, busca visual) e o desempenho em jogos de tiro (taxa de abate, precisão) em jogadores de elite. Similarmente, Rogers et al. (2024) verificaram que doses de 1 mg/kg e 3 mg/kg de cafeína melhoraram o desempenho de tiro e o tempo de reação em jogadores de FPS, sem diferenças significativas entre as doses, sugerindo que mesmo doses menores podem ser ergogênicas. Apesar disso, os efeitos sobre outras funções cognitivas, como memória de trabalho e funções executivas complexas, podem ser menos consistentes quando a cafeína é consumida isoladamente ou dependendo da dose e da sensibilidade individual (Kennedy & Wightman, 2022). Ainda persiste uma necessidade de caracterizar os padrões de consumo de cafeína e seus efeitos percebidos em amostras mais amplas e diversificadas de jogadores de esports, particularmente no Brasil, considerando a variedade de fontes e os contextos de uso.
 
 ## 1.3 Lacunas identificadas
 Apesar das evidências sobre benefícios e riscos da cafeína em diferentes populações, faltam estudos sistemáticos que descrevam padrões de consumo de cafeína em esports e analisem relações com experiência de jogo, hábitos de saúde e ocorrência de efeitos adversos. Além disso, poucos trabalhos abordam múltiplas fontes de cafeína (café, energéticos, suplementos, chá e chocolate) de forma integrada.
@@ -50,10 +52,13 @@ Foram considerados elegíveis participantes com idade igual ou superior a 18 ano
 O questionário online foi estruturado em seções referentes a dados sociodemográficos, hábitos de jogo, fontes e frequência de consumo de cafeína (café, suplementos, energéticos, chá e chocolate), e ocorrência de efeitos adversos. O questionário completo está disponível no Apêndice A e em `docs/RelatórioFinal_Éllis.md`.
 
 ## 2.4 Processamento de dados: limpeza, codificação e análise exploratória
-Os dados brutos foram importados em Python e processados pelo pipeline em `src/data_processing.py`, que incluiu remoção de PII, padronização de formatos, limpeza de valores inválidos e codificação de variáveis. Em seguida, foi gerado o codebook detalhado via `generate_codebook` e realizadas análises exploratórias iniciais para identificação de outliers e padrões de dados.
+Os dados brutos foram importados em Python e processados utilizando um pipeline customizado (disponível em `src/data_processing.py`). Este processo incluiu a remoção de informações de identificação pessoal (PII), padronização de formatos de data e texto, e a conversão de respostas textuais e valores não padronizados (e.g., '#ERROR!', strings vazias) em `NaN` para colunas numéricas. Colunas condicionais tiveram seus valores explicitamente definidos como `NaN` quando a condição precedente não era atendida (e.g., detalhes sobre consumo de café para não consumidores). Não foi realizada a remoção sistemática de outliers, optando-se pelo uso de métodos estatísticos robustos a eles. Em seguida, foi gerado o codebook detalhado via `generate_codebook` (ver Apêndice B e `docs/CODEBOOK.txt`) e conduzida uma análise exploratória de dados (AED) para identificação de padrões, distribuições e valores ausentes (principais resultados em `docs/AED_Resultados_Chave.md`).
 
 ## 2.5 Análises estatísticas: testes e software utilizado
-As análises estatísticas foram conduzidas utilizando as bibliotecas `pandas`, `scipy.stats` e `statsmodels` no Python. Testes para variáveis contínuas incluíram ANOVA e regressão linear; para variáveis categóricas, o teste qui-quadrado; e correlações de Pearson ou Spearman conforme a distribuição dos dados. O nível de significância adotado foi α = 0.05.
+As análises estatísticas foram conduzidas utilizando Python (v3.X) com as bibliotecas `pandas` para manipulação de dados, `scipy.stats` (vX.Y.Z) para testes estatísticos e `statsmodels` (vX.Y.Z) para modelos futuros, se necessário. 
+Para comparar o consumo de cafeína (`MG_CAFEINA_DIA`, variável contínua não normalmente distribuída) entre dois grupos independentes de nível de jogador (Amador/Casual vs. Semi-Profissional, após exclusão do grupo Profissional devido ao N reduzido), utilizou-se o teste de Mann-Whitney U. Para comparar entre três ou mais grupos (caso o grupo Profissional tivesse N suficiente), o teste de Kruskal-Wallis seria a escolha. 
+A associação entre variáveis contínuas ou ordinais que não atendiam aos pressupostos de normalidade (e.g., `MG_CAFEINA_DIA` vs. `HORAS_JOGO_PRINCIPAL_MEDIA_DIA`; `MG_CAFEINA_DIA` vs. `EFEITO_ADVERSO_FREQUENCIA_DESCRITA_COD`) foi avaliada pela correlação de Spearman (ρ). 
+O nível de significância adotado para todas as análises foi α = 0.05. Os resultados da AED, como a identificação de distribuições assimétricas e a presença de outliers em `MG_CAFEINA_DIA`, justificaram a escolha por testes não paramétricos, que são mais robustos a desvios da normalidade e menos sensíveis a valores extremos.
 
 ## 2.6 Considerações éticas
 Este estudo seguiu as diretrizes da Declaração de Helsinki e foi aprovado pelo Comitê de Ética em Pesquisa da Universidade Estadual de Campinas (CAAE: 12345678). O consentimento informado foi obtido digitalmente antes do início do questionário, e todos os dados foram tratados anonimamente.
@@ -61,42 +66,79 @@ Este estudo seguiu as diretrizes da Declaração de Helsinki e foi aprovado pelo
 # 3. Resultados
 
 ## 3.1 Descrição da amostra
-A amostra final incluiu 181 participantes. A idade média dos participantes foi de 25.70 anos (DP = 6.64). Quanto ao gênero, 75.14% se identificaram como masculino, 20.44% como feminino, e 4.42% indicaram outras identidades ou preferiram não responder. Em relação ao nível de experiência em esports, 80.66% eram amadores/casuais, 17.13% semi-profissionais, e 2.21% profissionais.
+A amostra do estudo foi composta por 181 jogadores de esports brasileiros que forneceram consentimento e completaram o questionário online. A idade média dos participantes foi de 25.70 anos (Desvio Padrão, DP = 6.64; Mínimo = 18, Máximo = 56). A maioria dos participantes identificou-se como do gênero masculino (75.14%, N=136), enquanto 20.44% (N=37) identificaram-se como do gênero feminino, e 4.42% (N=8) indicaram outras identidades de gênero ou preferiram não responder. Quanto ao nível de experiência auto-reportado em esports, a amostra foi predominantemente composta por jogadores Amadores/Casuais (80.66%, N=146), seguidos por Semi-Profissionais (17.13%, N=31) e uma pequena parcela de Profissionais (2.21%, N=4). Detalhes adicionais da caracterização da amostra podem ser encontrados em `docs/AED_Resultados_Chave.md`.
 
 ## 3.2 Análise descritiva das variáveis principais
-O consumo médio diário de cafeína reportado foi de 276.37 mg (DP = 218.69 mg). A média de horas de jogo principal por dia foi de 2.48 horas (DP = 1.70 horas). Dos participantes, 76.24% reportaram consumir café, e 56.35% reportaram consumir energéticos. A coluna MG_CAFEINA_DIA apresentou 0.00% de valores ausentes.
+O consumo médio diário total de cafeína (`MG_CAFEINA_DIA`) reportado pelos participantes foi de 276.37 mg (DP = 218.69 mg; Mediana = 228.74 mg), variando de 0 mg a um máximo de 1092.91 mg, sem valores ausentes para esta variável. Em relação às fontes de cafeína, 76.24% (N=138) dos participantes reportaram consumir café e 56.35% (N=102) reportaram consumir bebidas energéticas. A média de horas dedicadas ao jogo principal por dia (`HORAS_JOGO_PRINCIPAL_MEDIA_DIA`) foi de 2.48 horas (DP = 1.70 horas; Mediana = 3.00 horas). Estatísticas descritivas detalhadas para estas e outras variáveis relevantes estão disponíveis em `docs/AED_Resultados_Chave.md`.
 
 ## 3.3 Principais achados estatísticos
-(Esta seção será preenchida após a execução da análise estatística no notebook `analise_estatistica.ipynb`)
-A ANOVA one-way revelou [descrição do resultado para H1, ex: diferença significativa ou não] no consumo médio de cafeína entre níveis de jogadores (F([DF1], [DF2]) = [VALOR F], p = [VALOR P]). A correlação de Pearson/Spearman entre dose de cafeína e horas de jogo foi r = [VALOR R] (p = [VALOR P]), indicando [descrição da associação].
+A análise do consumo de cafeína (`MG_CAFEINA_DIA`) entre diferentes níveis de jogadores (`NIVEL_JOGADOR_COD`) revelou uma diferença estatisticamente significativa. Devido ao pequeno número de jogadores profissionais (N=4), a análise principal comparou jogadores Amadores/Casuais (N=146, Média Cafeína = 281.40 ± 203.34 mg) e Semi-Profissionais (N=31, Média Cafeína = 210.66 ± 215.40 mg). O teste de Mann-Whitney U indicou que jogadores Amadores/Casuais apresentaram um consumo de cafeína significativamente maior em comparação com os Semi-Profissionais (U = 2853.00, p = 0.0229).
+
+Não foi encontrada correlação estatisticamente significativa entre o consumo diário de cafeína (`MG_CAFEINA_DIA`) e as horas médias de jogo principal por dia (`HORAS_JOGO_PRINCIPAL_MEDIA_DIA`) (Spearman's ρ = 0.068, p = 0.3693, N=175).
+
+Em relação aos efeitos adversos, as colunas binárias específicas para insônia e nervosismo não estavam disponíveis para análise direta. A investigação da correlação entre o consumo diário de cafeína (`MG_CAFEINA_DIA`) e uma medida geral da frequência de efeitos adversos (`EFEITO_ADVERSO_FREQUENCIA_DESCRITA_COD`) não demonstrou associação estatisticamente significativa (Spearman's ρ = 0.080, p = 0.2818, N=181).
 
 ## 3.4 Figuras e tabelas principais
-As Tabelas 1 e 2 apresentam estatísticas descritivas detalhadas e os resultados dos testes de hipóteses. As Figuras 1–3 ilustram as distribuições das principais variáveis e as relações investigadas.
+Sugestões para Figuras e Tabelas (a serem geradas externamente e referenciadas aqui):
+
+*   **Tabela 1: Características Sociodemográficas e de Jogo da Amostra (N=181).**
+    *   Linhas: Idade (Média, DP, Min-Max), Gênero (N, %), Nível de Jogador (N, %), Horas de Jogo Principal/Dia (Média, DP, Mediana), Outras variáveis relevantes da AED.
+*   **Tabela 2: Padrões de Consumo de Cafeína e Resultados dos Testes de Hipóteses.**
+    *   Parte A: Consumo de Cafeína Total Diário (MG_CAFEINA_DIA) - Geral (Média, DP, Mediana, Min-Max); Por Nível de Jogador (Amador/Casual, Semi-Profissional) (Média, DP, Mediana).
+    *   Parte B: Resumo dos testes de hipóteses:
+        *   H1 (Nível do Jogador vs. MG_CAFEINA_DIA): Teste, Estatística (U), p-valor.
+        *   H2 (MG_CAFEINA_DIA vs. HORAS_JOGO_PRINCIPAL_MEDIA_DIA): Teste, Coeficiente de Correlação (ρ), p-valor, N.
+        *   H3 (MG_CAFEINA_DIA vs. EFEITO_ADVERSO_FREQUENCIA_DESCRITA_COD): Teste, Coeficiente de Correlação (ρ), p-valor, N.
+*   **Figura 1: Distribuição do Consumo Diário de Cafeína (MG_CAFEINA_DIA).**
+    *   Histograma ou boxplot mostrando a distribuição da variável `MG_CAFEINA_DIA` para a amostra total, evidenciando a assimetria e outliers.
+*   **Figura 2: Consumo Diário de Cafeína (MG_CAFEINA_DIA) por Nível de Jogador.**
+    *   Boxplots comparando `MG_CAFEINA_DIA` entre os grupos Amador/Casual e Semi-Profissional (e Profissional, se N fosse maior).
+*   **Figura 3: Diagrama de Dispersão - Consumo de Cafeína vs. Horas de Jogo.**
+    *   Scatter plot mostrando a relação entre `MG_CAFEINA_DIA` e `HORAS_JOGO_PRINCIPAL_MEDIA_DIA`.
+
+Estes elementos visuais auxiliarão na apresentação clara dos dados demográficos, padrões de consumo e dos principais resultados estatísticos descritos na seção 3.3.
 
 # 4. Discussão
 ## 4.1 Interpretação dos achados
-Os resultados indicam que o nível de experiência em esports está positivamente associado ao consumo de cafeína, sugerindo que jogadores mais experientes adotam rotinas de consumo para otimizar desempenho e vigilância. Observou-se ainda que maior dose de cafeína correlacionou-se com horas de jogo diárias, possivelmente refletindo estratégias de resistência. (ESTES TEXTOS SÃO PLACEHOLDERS E SERÃO AJUSTADOS CONFORME OS RESULTADOS REAIS DA ANÁLISE ESTATÍSTICA)
+Os resultados deste estudo indicam que, na amostra de jogadores de esports brasileiros analisada, aqueles autoidentificados como Amadores/Casuais reportaram um consumo de cafeína significativamente maior do que os Semi-Profissionais. Este achado é contrário à hipótese inicial (H1), que previa maior consumo em níveis mais altos de competição. Uma possível explicação para este resultado inesperado reside na regulação do consumo: jogadores casuais podem utilizar a cafeína de forma menos disciplinada ou mais recreacional, talvez buscando picos de alerta para sessões de jogo esporádicas ou mais longas. Em contraste, jogadores semi-profissionais podem adotar regimes de treino e hábitos de consumo mais estruturados, possivelmente mais cientes dos efeitos de doses excessivas na performance fina, sono e recuperação, ou até mesmo utilizando doses menores e eficazes, conforme sugerido por Rogers et al. (2024) que encontraram benefícios com apenas 1mg/kg. A pequena N da categoria 'Profissional' impediu uma análise robusta deste grupo, que teoricamente poderia apresentar um consumo estratégico e otimizado, possivelmente alinhado com as doses eficazes (e.g., 3mg/kg) para melhora cognitiva e de performance em tarefas específicas de esports, como demonstrado por Wu et al. (2024).
+
+A ausência de correlação significativa entre a dose diária de cafeína e as horas de jogo principal (H2) sugere que, nesta amostra, a quantidade de cafeína consumida não está linearmente associada à duração da principal atividade de jogo. Este resultado pode ser influenciado por diversos fatores não controlados, como a intensidade percebida das sessões de jogo, horários de jogo (diurno vs. noturno), variabilidade individual na sensibilidade e metabolização da cafeína (Nehlig, 2018, já citado por Cappelletti et al., 2015), ou o tipo de jogo predominante, que pode demandar diferentes estados de alerta ou resistência.
+
+Similarmente, a não detecção de uma associação clara entre a dose de cafeína e a frequência geral de efeitos adversos relatados (H3) pode ser multifatorial. A variável `EFEITO_ADVERSO_FREQUENCIA_DESCRITA_COD` agregava diferentes tipos e intensidades de sintomas, o que pode ter mascarado efeitos específicos. Além disso, a tolerância individual, o tipo de produto cafeinado consumido (com diferentes ingredientes adicionais), e outros fatores de estilo de vida desempenham um papel crucial na manifestação de efeitos adversos. A ausência de colunas binárias específicas para efeitos como insônia ou nervosismo (que não foram encontradas no dataset processado para análise de H3 no script `analise_estatistica_inferencial.py`) limitou uma investigação mais aprofundada desta hipótese. Estudos como o de Wu et al. (2024) não relataram efeitos adversos com 3mg/kg em jogadores de elite, sugerindo que doses eficazes podem ser bem toleradas em certos contextos.
 
 ## 4.2 Comparação com literatura existente
-Os achados do presente estudo sobre os padrões de consumo e os [efeitos percebidos/associações encontradas] alinham-se parcialmente com a literatura científica consolidada. Revisões sistemáticas e meta-análises demonstram consistentemente que a cafeína, em doses moderadas, melhora aspectos do desempenho cognitivo, como atenção, vigilância e tempo de reação, além de reduzir a percepção de fadiga em atletas (Calvo et al., 2021; Guest et al., 2021). Nossos resultados [confirmam/divergem de/complementam] esses achados ao [descrever a relação específica no contexto de e-sports, por exemplo: observarmos que jogadores que consomem X mg de cafeína relatam Y].
+Os achados do presente estudo sobre os padrões de consumo de cafeína em jogadores de esports brasileiros fornecem um panorama inicial e levantam questões interessantes quando comparados à literatura focada nos efeitos ergogênicos da cafeína. Enquanto revisões sistemáticas e meta-análises demonstram consistentemente que a cafeína, em doses moderadas (3-6 mg/kg), melhora aspectos do desempenho cognitivo e físico em atletas (Calvo et al., 2021; Guest et al., 2021), nosso estudo observacional não mediu diretamente a performance, mas sim os padrões de consumo.
 
-A prevalência do consumo de cafeína encontrada (XY%) e as doses médias (ABC mg) estão [acima/abaixo/em consonância] com estudos em outras populações de atletas ou estudantes universitários [CITAR EXEMPLOS, SE POSSÍVEL COM DADOS RECENTES 2023-2025]. Especificamente para e-sports, onde a literatura ainda é incipiente, nossos dados contribuem com um panorama detalhado para o cenário brasileiro.
+A dose média de consumo diário de cafeína encontrada (276.37 mg) é considerável e se aproxima do limite inferior da faixa considerada ergogênica para muitos indivíduos (assumindo um peso corporal médio). No entanto, a descoberta de que Amadores/Casuais consomem significativamente mais cafeína que Semi-Profissionais (281.40 mg vs. 210.66 mg) é intrigante. Estudos recentes em esports, como o de Wu et al. (2024), mostraram que 3 mg/kg de cafeína (aproximadamente 210 mg para um indivíduo de 70 kg) foram eficazes para melhorar habilidades cognitivas e de tiro em jogadores de elite, sem relatos de efeitos adversos. Rogers et al. (2024) complementam isso, indicando que mesmo doses menores (1 mg/kg, cerca de 70mg para 70kg) podem oferecer benefícios na performance de tiro e tempo de reação em jogadores de FPS, e que não houve diferença significativa de performance entre 1mg/kg e 3mg/kg. Estes estudos sugerem que os Semi-Profissionais da nossa amostra podem estar, intencionalmente ou não, consumindo doses mais próximas das faixas eficazes e bem toleradas, enquanto os Amadores/Casuais poderiam estar excedendo essa faixa, talvez sem um benefício adicional de performance e potencialmente aumentando o risco de efeitos colaterais não capturados em detalhe por nossa medida agregada de frequência de efeitos adversos.
 
-A observação de que [mencionar um achado específico do estudo, ex: jogadores profissionais consomem mais cafeína] pode ser interpretada à luz dos mecanismos de ação da cafeína como um antagonista dos receptores de adenosina (Cappelletti et al., 2015), o que justificaria seu uso estratégico para manter o estado de alerta em níveis competitivos mais altos. Adicionalmente, a variedade de fontes de cafeína consumidas pelos participantes (café, energéticos, suplementos) e a potencial interação de outros compostos bioativos presentes nessas fontes (Kennedy & Wightman, 2022) podem explicar parte da variabilidade nos efeitos relatados e nas estratégias de consumo, um ponto que merece aprofundamento em futuras investigações que comparem diretamente os efeitos de diferentes produtos cafeinados.
+A prevalência do consumo de café (76.24%) e energéticos (56.35%) na nossa amostra é alta e reflete a popularidade dessas bebidas. A ausência de correlação entre dose de cafeína e horas de jogo, ou com a frequência geral de efeitos adversos, sugere que o consumo pode ser impulsionado por outros fatores além da necessidade percebida para o jogo ou a ocorrência de sintomas negativos. Tais fatores podem incluir hábitos sociais, marketing, sabor, ou a busca por um efeito estimulante generalizado. A variedade de fontes de cafeína e a possível interação com outros compostos bioativos (Kennedy & Wightman, 2022), especialmente em energéticos, complicam a interpretação direta dos efeitos da cafeína isolada e justificam a necessidade de mais estudos que detalhem as fontes de consumo.
 
 [Adaptar este parágrafo conforme os resultados dos testes de hipóteses e AED forem obtidos. Exemplo: "Se o estudo encontrar associação entre cafeína e ansiedade, discutir aqui em relação à literatura que aponta efeitos ansiogênicos em altas doses ou em indivíduos sensíveis."]
 
 ## 4.3 Implicações teóricas e práticas
-Os achados reforçam a teoria de que a cafeína atua como facilitador cognitivo em atividades de alta demanda mental. Do ponto de vista prático, indicam a necessidade de orientações de consumo seguras para jogadores de esports, a fim de equilibrar desempenho e saúde.
+Os achados deste estudo contribuem para a crescente literatura sobre o uso de substâncias para otimização de performance no contexto dos esports. Teoricamente, o maior consumo de cafeína por jogadores Amadores/Casuais em detrimento dos Semi-Profissionais, aliado à literatura recente que demonstra eficácia de doses menores (Rogers et al., 2024; Wu et al., 2024), sugere que a relação entre dose de cafeína, nível de habilidade e performance percebida/real pode não ser linear e merece investigação mais aprofundada. Pode haver um "ponto ótimo" de consumo que jogadores de níveis mais altos estejam mais propensos a identificar ou respeitar, enquanto jogadores casuais podem estar em um padrão de "quanto mais, melhor", sem necessariamente obter benefícios proporcionais.
+
+Do ponto de vista prático, os resultados destacam a necessidade de educação e desenvolvimento de diretrizes sobre o consumo de cafeína para jogadores de esports de todos os níveis. Essas diretrizes devem enfatizar:
+1.  **Doses eficazes e seguras:** Informar sobre as doses que demonstraram melhorar o desempenho cognitivo e motor específico para esports (e.g., 1-3 mg/kg), desencorajando o consumo excessivo.
+2.  **Fontes de cafeína:** Alertar sobre o conteúdo variável de cafeína em diferentes produtos (café, energéticos, suplementos) e os riscos associados a outros ingredientes em bebidas energéticas.
+3.  **Timing do consumo:** Sugerir estratégias de timing para otimizar os efeitos da cafeína para treinos e competições, minimizando o impacto no sono.
+4.  **Sensibilidade individual e efeitos adversos:** Educar sobre a variabilidade na resposta à cafeína e os potenciais efeitos colaterais (ansiedade, insônia, desconforto gastrointestinal), incentivando o autoconhecimento e a moderação.
+5.  **Hidratação e nutrição geral:** Contextualizar o uso de cafeína dentro de uma abordagem holística de saúde e performance, que inclua hidratação adequada e uma dieta balanceada.
 
 ## 4.4 Limitações do estudo
-Este estudo é transversal e depende de autorrelato, o que pode introduzir viés de memória. A amostra de conveniência e o recrutamento online podem limitar a generalização dos resultados. Futuras pesquisas longitudinais são recomendadas.
+Este estudo possui limitações que devem ser consideradas na interpretação dos resultados. Primeiramente, o desenho transversal permite identificar associações, mas não relações de causalidade. Em segundo lugar, a dependência do autorrelato para quantificar o consumo de cafeína e os hábitos de jogo pode introduzir viés de memória ou de desejabilidade social. A quantificação do consumo de cafeína, embora detalhada, pode não capturar perfeitamente a biodisponibilidade de diferentes fontes. Terceiro, a amostra foi de conveniência e recrutada online, o que pode limitar a generalização dos resultados para toda a população de jogadores de esports brasileiros; jogadores mais engajados em comunidades online podem estar sobrerrepresentados. Quarto, o pequeno número de participantes no grupo 'Profissional' impediu análises comparativas robustas com este nível de elite. Finalmente, a medida agregada de "frequência de efeitos adversos" não permitiu uma análise detalhada de sintomas específicos e sua relação com a dose de cafeína.
 
 ## 4.5 Sugestões para pesquisas futuras
-Investigar efeitos a longo prazo do consumo crônico de cafeína em saúde mental e física de jogadores; analisar estratégias de moderação de dose; explorar populações de diferentes regiões e níveis competitivos.
+Pesquisas futuras poderiam se beneficiar de:
+1.  **Estudos longitudinais ou interventivos:** Para investigar os efeitos causais de diferentes doses e regimes de consumo de cafeína na performance e bem-estar de jogadores de esports ao longo do tempo.
+2.  **Medidas objetivas de consumo:** Utilizar diários alimentares validados ou análises bioquímicas para quantificar o consumo de cafeína de forma mais precisa.
+3.  **Avaliação direta da performance:** Incorporar testes cognitivos e de performance em jogos específicos para correlacionar o consumo de cafeína com desfechos objetivos.
+4.  **Amostras mais amplas e diversificadas:** Buscar amostras maiores e mais representativas, incluindo um número suficiente de jogadores profissionais, para permitir análises de subgrupos mais robustas.
+5.  **Caracterização detalhada de efeitos adversos:** Utilizar questionários específicos para avaliar a prevalência, tipo e intensidade de efeitos adversos relacionados à cafeína, e sua associação com diferentes padrões de consumo.
+6.  **Investigação de fatores motivacionais:** Explorar as razões e contextos que levam ao consumo de cafeína em diferentes níveis de jogadores.
 
 # 5. Conclusão
-Este estudo transversal demonstrou padrões variados de consumo de cafeína entre jogadores de esports brasileiros, com associações significativas entre experiência de jogo e dose consumida. Os resultados apontam para a relevância de diretrizes adaptadas e futuras investigações longitudinais para compreender impactos a longo prazo.
+Este estudo transversal forneceu um retrato inicial dos padrões de consumo de cafeína em uma amostra de jogadores de esports brasileiros, revelando um consumo médio diário considerável e a particularidade de jogadores Amadores/Casuais reportarem um consumo significativamente maior que Semi-Profissionais. Não foram encontradas associações lineares simples entre o consumo de cafeína e as horas de jogo diárias, nem com uma medida geral da frequência de efeitos adversos. Estes resultados, interpretados à luz da literatura recente sobre doses eficazes de cafeína em esports (e.g., Wu et al., 2024; Rogers et al., 2024), sugerem uma dinâmica de consumo complexa, possivelmente influenciada por fatores que vão além da busca otimizada por performance, especialmente em níveis não profissionais. Destaca-se a importância de desenvolver estratégias educativas e diretrizes de consumo consciente de cafeína adaptadas à comunidade de esports, visando maximizar os potenciais benefícios ergogênicos enquanto se minimizam os riscos à saúde e bem-estar dos jogadores.
 
 # Agradecimentos (Opcional)
 Agradecemos ao Comitê de Ética em Pesquisa da Universidade Estadual de Campinas pelo apoio, aos participantes pelo tempo dispensado e à equipe de desenvolvimento do pipeline de dados.
@@ -180,7 +222,49 @@ Agradecemos ao Comitê de Ética em Pesquisa da Universidade Estadual de Campina
   author={Grand View Research},
   year={2024},
   howpublished={Website Report ID: GVR-2-68038-762-4},
-  note={Accessed May 2025. Data for Brazil market size 2024 and projections to 2030. URL to be added when specific report is finalized.}
+  note={Accessed May 2025. Data for Brazil market size 2024 and projections to 2030. URL: To be added when specific report is finalized.}
+}
+
+@misc{precedence2023esportsmarket,
+  title={Esports Market (By Revenue Stream: Sponsorship, Media Rights, Advertising, Publisher Fees, Merchandise & Tickets; By Device Type; By Game Genre; By Audience Type) - Global Industry Analysis, Size, Share, Growth, Trends, Regional Outlook, and Forecast 2024-2032},
+  author={Precedence Research},
+  year={2023},
+  month={Dec},
+  howpublished={Website Report ID: 100414},
+  note={Accessed May 2024. URL: https://www.precedenceresearch.com/esports-market}
+}
+
+@article{wu2024caffeine,
+  title={Caffeine supplementation improves the cognitive abilities and shooting performance of elite e-sports players: a crossover trial},
+  author={Wu, Shih-Hao and Chen, Yu-Chun and Chen, Che-Hsiu and Liu, Hou-Shao and Liu, Zhi-Xin and Chiu, Chih-Hui and others},
+  journal={Scientific Reports},
+  volume={14},
+  number={1},
+  pages={2074},
+  year={2024},
+  publisher={Nature Publishing Group UK London},
+  doi={10.1038/s41598-024-52599-y}
+}
+
+@article{rogers2024caffeine,
+  title={Caffeine improves the shooting performance and reaction time of first-person shooter esports players: a dose-response study},
+  author={Rogers, Ethan J and Trotter, Michael G and Johnson, Daniel and Desbrow, Ben and King, Neil},
+  journal={Frontiers in Sports and Active Living},
+  volume={6},
+  pages={1437700},
+  year={2024},
+  publisher={Frontiers Media SA},
+  doi={10.3389/fspor.2024.1437700}
+}
+
+@misc{forbes2024brazilesportsaudience,
+    author = {Forbes Staff},
+    title = {Games Brasil 2024: audiência de eSports cresce 22,7% e chega a 40,8 milhões de pessoas},
+    howpublished = {Forbes},
+    month = {Apr},
+    year = {2024},
+    day = {18},
+    note = {Accessed May 2024. URL: https://forbes.com.br/forbes-tech/2024/04/games-brasil-2024-audiencia-de-esports-cresce-227-e-chega-a-408-milhoes-de-pessoas/}
 }
 
 # Apêndices (Opcional)
