@@ -204,6 +204,24 @@
 *   Consentimento Livre e Esclarecido (TCLE) como critério de inclusão.
 *   Se aplicável, menção à aprovação do projeto original por Comitê de Ética em Pesquisa.
 
-**Próximos Passos Imediatos (Retomada do Processamento de Dados):**
-1.  [ ] **Focar na Fase 1.1 e 1.2:** Implementar todas as codificações restantes em `src/data_processing.py` e desenvolver a geração do `Livro_de_Codigos.txt` detalhado.
-2.  [ ] Após a conclusão do processamento, proceder com a AED (Fase 1.5).
+**Próximos Passos Imediatos:**
+1.  [ ] Draft Methods 2.2 (Participantes) in `docs/Publicacao_Tese.md`.
+2.  [ ] Draft Methods 2.3 (Instrumento) in `docs/Publicacao_Tese.md`.
+3.  [ ] Draft Methods 2.4 (Processamento de dados) in `docs/Publicacao_Tese.md`.
+4.  [ ] Draft Methods 2.5 (Análises estatísticas) in `docs/Publicacao_Tese.md`.
+5.  [ ] Draft Methods 2.6 (Considerações éticas) in `docs/Publicacao_Tese.md`.
+6.  [ ] Create notebook `notebooks/analise_exploratoria.ipynb` for exploratory analysis.
+7.  [ ] Create notebook `notebooks/analise_estatistica.ipynb` for statistical tests.
+8.  [ ] Draft Results 3.1 (Descrição da amostra) in `docs/Publicacao_Tese.md`.
+9.  [ ] Draft Results 3.2 (Análise descritiva) in `docs/Publicacao_Tese.md`.
+10. [ ] Draft Results 3.3 (Principais achados estatísticos) in `docs/Publicacao_Tese.md`.
+11. [ ] Draft Results 3.4 (Figuras e tabelas) in `docs/Publicacao_Tese.md`.
+12. [ ] Draft Discussion 4.1–4.5 in `docs/Publicacao_Tese.md`.
+13. [ ] Draft Conclusion 5 in `docs/Publicacao_Tese.md`.
+14. [ ] Draft Acknowledgements in `docs/Publicacao_Tese.md`.
+15. [ ] Compile References section with BibTeX entries in `docs/Publicacao_Tese.md`.
+16. [ ] Populate Appendices A and B in `docs/Publicacao_Tese.md`.
+17. [ ] Run `src/data_processing.py` to generate `IC_Dados_Processados.csv` and `Livro_de_Codigos.txt`.
+18. [ ] Perform manual data validation and NaN distribution analysis.
+19. [ ] Create summary document `AED_Resultados_Chave.md` with key exploratory insights.
+20. [ ] Review and finalize full manuscript for submission.
