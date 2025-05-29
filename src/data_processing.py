@@ -4,6 +4,31 @@ from datetime import datetime
 import re
 import json
 
+# Utility functions for extracting volume and dose values
+def extract_vol_ml(text):
+    """Extract numerical volume in ml from text; returns Int or NA if not found."""
+    if pd.isna(text):
+        return pd.NA
+    text_str = str(text).lower()
+    match = re.search(r'(\d+)\s*ml', text_str)
+    if match:
+        return int(match.group(1))
+    return pd.NA
+
+
+def extract_dose_mg(text):
+    """Extract numerical dose in mg from text; returns Int or NA if not found."""
+    if pd.isna(text):
+        return pd.NA
+    text_str = str(text).lower()
+    match_mg = re.search(r'(\d+)\s*mg', text_str)
+    if match_mg:
+        return int(match_mg.group(1))
+    match_num = re.search(r'(\d+)', text_str)
+    if match_num:
+        return int(match_num.group(1))
+    return pd.NA
+
 
 def load_data(path: str) -> pd.DataFrame:
     """Load CSV data from a file."""
@@ -41,13 +66,13 @@ def parse_dates(df: pd.DataFrame) -> pd.DataFrame:
 def clean_numeric_columns(df: pd.DataFrame, cols: dict) -> pd.DataFrame:
     """Clean numeric columns: replace decimal comma, handle '#ERROR!', convert to float."""
     for orig, new in cols.items():
-        df[new] = (
+        series = (
             df[orig]
             .astype(str)
             .str.replace(',', '.', regex=False)
             .replace({'#ERROR!': np.nan, '': np.nan})
-            .astype(float)
         )
+        df[new] = pd.to_numeric(series, errors='coerce')
     return df
 
 
@@ -70,11 +95,13 @@ def create_dummies(df: pd.DataFrame, column: str, prefix: str) -> pd.DataFrame:
     for cat in categories:
         safe = cat.upper().replace(' ', '_').replace('(', '').replace(')', '').replace('-', '_')
         dummy_col = f"{prefix}_{safe}"
+        # Escape regex metacharacters in category
+        pattern = r"\b" + re.escape(cat) + r"\b"
         df[dummy_col] = (
             df[column]
             .astype(str)
             .str.lower()
-            .str.contains(fr"\b{cat}\b", na=False)
+            .str.contains(pattern, na=False, regex=True)
             .astype('Int64')
         )
         df.loc[df[column].isna(), dummy_col] = pd.NA
@@ -95,7 +122,7 @@ def generate_codebook(df: pd.DataFrame, codebook_path: str) -> None:
                 uniques = uniques[:20] + ['...']
             # Serialize unique values as JSON string to preserve types
             uniques_str = json.dumps(uniques, ensure_ascii=False)
-            f.write(f"{col}\t{dtype}\t{uniques_str}\n")
+            f.write(f'{col}\t{dtype}\t"{uniques_str}"\n')
 
 
 def export_processed(df: pd.DataFrame, csv_path: str, codebook_path: str) -> None:
@@ -161,10 +188,6 @@ def process_all(input_path: str, output_csv: str, codebook_txt: str) -> pd.DataF
     df.loc[df['CONSUMO_CAFE_BIN'] == 0, 'CAFE_DIAS_SEMANA_NUM'] = pd.NA # Se não consome café, NaN
 
     # 2.5.2. Em qual tipo de recipiente você costuma consumir seu café? -> CAFE_RECIPIENTE_VOL_ML & CAFE_RECIPIENTE_TIPO_COD
-    def extract_vol_ml(text):
-        if pd.isna(text): return pd.NA
-        match = re.search(r'(\d+)\s*ml', str(text).lower())
-        return int(match.group(1)) if match else pd.NA
     df['CAFE_RECIPIENTE_VOL_ML'] = df['Em qual tipo de recipiente você costuma consumir seu café?'].apply(extract_vol_ml)
     
     recipiente_cafe_map = {
@@ -186,7 +209,7 @@ def process_all(input_path: str, output_csv: str, codebook_txt: str) -> pd.DataF
         '4 vezes ao dia': 4,
         '5 vezes ou mais ao dia': 5
     }
-    df['CAFE_VEZES_DIA_NUM'] = df['"Com base no recipiente que você selecionou anteriormente ( ___ ""), quantas vezes no dia você consome café nesse recipiente?'].map(cafe_times_day_map)
+    df['CAFE_VEZES_DIA_NUM'] = df['Com base no recipiente que você selecionou anteriormente ( ___ "), quantas vezes no dia você consome café nesse recipiente?'].map(cafe_times_day_map)
     df.loc[df['CONSUMO_CAFE_BIN'] == 0, 'CAFE_VEZES_DIA_NUM'] = pd.NA
     
     # 2.5.2. Qual tipo de café você mais costuma consumir? -> CAFE_TIPO_PRINCIPAL_COD
@@ -217,23 +240,6 @@ def process_all(input_path: str, output_csv: str, codebook_txt: str) -> pd.DataF
     df['HORAS_JOGO_OUTROS_MEDIA_DIA'] = df['Quantas horas por dia, em média, você joga e-sports?.1'].map(game_hours_map)
     
     # 2.5.2. Suplemento: Qual a dose que você toma de cafeína em suplemento por dia? -> SUPLEM_DOSE_CAFEINA_MG
-    def extract_dose_mg(text):
-        if pd.isna(text): return pd.NA
-        text_str = str(text).lower()
-        # Procura por números seguidos de "mg" ou apenas números se não houver "mg"
-        match_mg = re.search(r'(\d+)\s*mg', text_str)
-        if match_mg:
-            return int(match_mg.group(1))
-        
-        match_num = re.search(r'(\d+)', text_str) # Pega o primeiro número encontrado
-        if match_num:
-            # Casos comuns onde o número sozinho é a dose em mg
-            # Ex: "400", "200", "210"
-            # Considerar lógica adicional se houver ambiguidades como "1 comprimido", etc.
-            # Por ora, assume que se não tem "mg", o número é a dose.
-            return int(match_num.group(1))
-        return pd.NA
-
     df['SUPLEM_DOSE_CAFEINA_MG'] = df['Qual a dose que você toma de cafeína em suplemento por dia?'].apply(extract_dose_mg)
 
     # 2.5.2. Suplemento: "No dia que você costuma consumir ___", quantas vezes você toma essa porção? -> SUPLEM_DOSES_NUM
@@ -608,24 +614,12 @@ def process_all(input_path: str, output_csv: str, codebook_txt: str) -> pd.DataF
         '4 vezes ao dia': 4,
         '5 vezes ou mais ao dia': 5
     }
-    col_cha_vezes_dia = '"Com base no recipiente que você selecionou anteriormente ( ___ ), quantas vezes ao dia você consome chá nesse recipiente?' # Nome da coluna parece ter um erro de digitação no CSV com aspas extras no final
-    # Tentativa de encontrar a coluna correta, adaptando-se a possíveis variações no nome real da coluna
-    actual_col_cha_vezes_dia = None
-    possible_names = [
-        '"Com base no recipiente que você selecionou anteriormente ( ___ ), quantas vezes ao dia você consome chá nesse recipiente?',
-        '"Com base no recipiente que você selecionou anteriormente ( ___ ""), quantas vezes ao dia você consome chá nesse recipiente?' # Com aspas duplas como em café
-    ]
-    for name in possible_names:
-        if name in df.columns:
-            actual_col_cha_vezes_dia = name
-            break
-    
-    if actual_col_cha_vezes_dia:
-        df['CHA_VEZES_DIA_NUM'] = df[actual_col_cha_vezes_dia].map(cha_times_day_map)
+    col_cha_vezes_dia = 'Com base no recipiente que você selecionou anteriormente ( ___ ), quantas vezes ao dia você consome chá nesse recipiente?'
+    if col_cha_vezes_dia in df.columns:
+        df['CHA_VEZES_DIA_NUM'] = df[col_cha_vezes_dia].map(cha_times_day_map)
         df.loc[df['CONSUMO_CHA_BIN'] == 0, 'CHA_VEZES_DIA_NUM'] = pd.NA
     else:
         df['CHA_VEZES_DIA_NUM'] = pd.NA
-        print(f"Warning: Coluna para 'CHA_VEZES_DIA_NUM' não encontrada. Nomes tentados: {possible_names}") # Adiciona um aviso
 
     # --- Consumo de Chocolate ---
     # 2.5.2. Especifique a porção média de chocolate no dia que consome ( ___ ) -> CHOCOLATE_PORCAO_COD
@@ -669,7 +663,7 @@ def process_all(input_path: str, output_csv: str, codebook_txt: str) -> pd.DataF
         # ... Adicionar todas as variações e seus códigos
         'outro': 99
     }
-    col_efeito_adverso_freq = '"Para os efeitos colaterais que você sentiu ao consumir cafeína, Com que frequência eles aparecem?"'
+    col_efeito_adverso_freq = 'Para os efeitos colaterais que você sentiu ao consumir cafeína, Com que frequência eles aparecem?'
     if col_efeito_adverso_freq in df.columns:
         df['EFEITO_ADVERSO_FREQ_NORMALIZADA'] = df[col_efeito_adverso_freq].astype(str).str.lower().str.strip()
         df = encode_column(df, 'EFEITO_ADVERSO_FREQ_NORMALIZADA', efeito_adverso_freq_map, 'EFEITO_ADVERSO_FREQUENCIA_DESCRITA_COD')
@@ -680,7 +674,7 @@ def process_all(input_path: str, output_csv: str, codebook_txt: str) -> pd.DataF
 
     # Continuar com as demais codificações...
     # (Exemplo: Pontuação original para float)
-    df['PONTUACAO_ORIGINAL'] = pd.to_numeric(df['Pontuação'].str.replace(',','.', regex=False), errors='coerce')
+    df['PONTUACAO_ORIGINAL'] = pd.to_numeric(df['Pontuação'].astype(str).str.replace(',','.', regex=False), errors='coerce')
 
     # --- Fim da Implementação Detalhada da Codificação ---
 
@@ -699,7 +693,7 @@ def process_all(input_path: str, output_csv: str, codebook_txt: str) -> pd.DataF
         df['CHOCOLATE_PORCAO_COD'] = pd.factorize(df[col_choc].astype(str).str.lower().str.strip())[0] + 1
         df['CHOCOLATE_PORCAO_COD'] = df['CHOCOLATE_PORCAO_COD'].astype('Int64')
     # Dynamic encoding for adverse effect frequency
-    col_eff = '"Para os efeitos colaterais que você sentiu ao consumir cafeína, Com que frequência eles aparecem?"'
+    col_eff = 'Para os efeitos colaterais que você sentiu ao consumir cafeína, Com que frequência eles aparecem?'
     if col_eff in df.columns:
         df['EFEITO_ADVERSO_FREQUENCIA_DESCRITA_COD'] = pd.factorize(df[col_eff].astype(str).str.lower().str.strip())[0] + 1
         df['EFEITO_ADVERSO_FREQUENCIA_DESCRITA_COD'] = df['EFEITO_ADVERSO_FREQUENCIA_DESCRITA_COD'].astype('Int64')

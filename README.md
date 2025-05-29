@@ -1,5 +1,8 @@
 # IC Data Processing
 
+![CI](https://github.com/wollisellis/IC/actions/workflows/ci.yml/badge.svg)
+![Coverage](https://img.shields.io/badge/coverage-80%25-brightgreen)
+
 This project processes raw questionnaire data from `IC_Dados_Curados - Worksheet (1).csv` into a numerically coded format suitable for rigorous statistical analysis. The primary script, `src/data_processing.py`, handles data loading, cleaning, PII removal, date transformations, and categorical encoding according to a defined methodology.
 
 The main outputs are:
@@ -53,16 +56,16 @@ pytest --maxfail=1 --disable-warnings -q
 Para facilitar a navegação e manter a organização do projeto, seguem os principais documentos:
 
 ### Projetos e Relatórios
-- [Metodologia e Relatório Final](RelatórioFinal_Éllis.md)
-- [Processamento e Metodologia de Dados](Processamento CSV para Análise Estatística_.md)
+- [Metodologia e Relatório Final](docs/RelatórioFinal_Éllis.md)
+- [Processamento e Metodologia de Dados](docs/Processamento%20CSV%20para%20Análise%20Estatística_.md)
 - [Dados Tabulados para Análise Estatística (PDF)](Dados tabulados para análise estatística_.pdf)
 
 ### Planos e Roadmaps
-- [Roadmap de Publicação do Artigo](ROADMAP_ARTIGO.md)
-- [Plano de Análise Estatística Focada](PLANO_ANALISE_EFICIENCIA.md)
+- [Roadmap de Publicação do Artigo](docs/ROADMAP_ARTIGO.md)
+- [Plano de Análise Estatística Focada](docs/PLANO_ANALISE_EFICIENCIA.md)
 
 ### Manuscrito
-- [Esqueleto do Manuscrito](Publicacao_Tese.md)
+- [Esqueleto do Manuscrito](docs/Publicacao_Tese.md)
 
 ### Documentação Técnica
 - [Visão Geral do Projeto (README)](README.md)
