@@ -122,7 +122,7 @@
         *   [x] Enriquecer com dados de mercado recentes (2023-2025) e revisões sistemáticas sobre cafeína.
         *   Identificar a lacuna na literatura que seu estudo preenche (ex: poucos dados sobre jogadores brasileiros, análise detalhada de múltiplos fatores).
         *   Apresentar claramente os objetivos do estudo e as questões de pesquisa/hipóteses principais.
-    *   [ ] **Métodos:**
+    *   [x] **Métodos:**
         *   Desenho do estudo: Estudo transversal descritivo e analítico, baseado em dados de questionário.
         *   População e Amostra: Descrever as características dos participantes com base nos dados (após filtro de consentimento). Detalhar o processo de recrutamento original (conforme `RelatórioFinal_Éllis.md`).
         *   Instrumento de Coleta de Dados: Descrever brevemente o questionário original, suas seções principais. Referenciar `RelatórioFinal_Éllis.md` para o questionário completo, se necessário.
@@ -131,25 +131,25 @@
             *   Listar as principais variáveis dependentes e independentes utilizadas na análise estatística.
             *   Descrever os testes estatísticos empregados, o software (Python com pandas, scipy.stats, statsmodels) e o nível de significância (α, usualmente 0.05).
         *   Considerações Éticas: Mencionar a aprovação por comitê de ética (se houve para a coleta original), o consentimento informado dos participantes (filtrado no processamento) e a anonimização dos dados.
-    *   [ ] **Resultados:**
+    *   [x] **Resultados:**
         *   Apresentar os achados de forma clara, lógica e objetiva, sem interpretação ou discussão nesta seção.
         *   Começar com a descrição da amostra (características demográficas, hábitos de jogo, etc., com base nas estatísticas descritivas da AED).
         *   Apresentar os resultados dos testes estatísticos para cada hipótese, referenciando as tabelas e figuras preparadas.
         *   Usar texto para guiar o leitor através dos resultados chave nas tabelas/figuras.
-    *   [ ] **Discussão:**
+    *   [x] **Discussão:**
         *   Retomar os principais achados do estudo e interpretá-los à luz das questões de pesquisa.
         *   Comparar os resultados com os de estudos anteriores (semelhanças, diferenças, possíveis explicações).
         *   [x] Preparar comparação com literatura existente, incorporando insights de revisões sistemáticas recentes (2023-2025).
         *   Discutir as implicações teóricas e práticas dos achados (ex: para saúde dos jogadores, recomendações, desenvolvimento de políticas).
         *   Reconhecer as limitações do estudo (ex: amostra de conveniência, dados auto-relatados, desenho transversal não permite inferir causalidade).
         *   Sugerir direções para pesquisas futuras.
-    *   [ ] **Conclusão:**
+    *   [x] **Conclusão:**
         *   Resumir as principais conclusões do estudo de forma concisa.
         *   Responder diretamente aos objetivos propostos na introdução.
         *   Evitar novas informações ou especulações não fundamentadas nos resultados.
-    *   [ ] **Agradecimentos (Opcional):** Agradecer a agências de fomento, indivíduos que auxiliaram, etc.
-    *   [ ] **Referências:** Listar todas as fontes citadas no texto, formatadas consistentemente de acordo com as normas do periódico alvo.
-    *   [ ] **Apêndices (Opcional):** Incluir materiais suplementares como o questionário completo (se não detalhado no `RelatórioFinal_Éllis.md` e relevante), ou tabelas muito extensas. O `Livro_de_Codigos.txt` pode ser referenciado como material suplementar online.
+    *   [x] **Agradecimentos (Opcional):** Agradecer a agências de fomento, indivíduos que auxiliaram, etc.
+    *   [x] **Referências:** Listar todas as fontes citadas no texto, formatadas consistentemente de acordo com as normas do periódico alvo.
+    *   [x] **Apêndices (Opcional):** Incluir materiais suplementares como o questionário completo (se não detalhado no `RelatórioFinal_Éllis.md` e relevante), ou tabelas muito extensas. O `Livro_de_Codigos.txt` pode ser referenciado como material suplementar online.
     *   [ ] **Citações e Bibliografia:** Utilizar apenas fontes científicas validadas (publicações de 2023–2025); empregar RAG em bases indexadas (PubMed, Scopus, Web of Science) e manter bibliografia em formato BibTeX.
 
 3.2. **Cronograma de Redação (Sugestão Flexível):**
@@ -207,13 +207,13 @@
 *   Se aplicável, menção à aprovação do projeto original por Comitê de Ética em Pesquisa.
 
 **Próximos Passos Imediatos:**
-1.  [ ] Draft Methods 2.2 (Participantes) in `docs/Publicacao_Tese.md`.
-2.  [ ] Draft Methods 2.3 (Instrumento) in `docs/Publicacao_Tese.md`.
-3.  [ ] Draft Methods 2.4 (Processamento de dados) in `docs/Publicacao_Tese.md`.
-4.  [ ] Draft Methods 2.5 (Análises estatísticas) in `docs/Publicacao_Tese.md`.
-5.  [ ] Draft Methods 2.6 (Considerações éticas) in `docs/Publicacao_Tese.md`.
-6.  [ ] Create notebook `notebooks/analise_exploratoria.ipynb` for exploratory analysis.
-7.  [ ] Create notebook `notebooks/analise_estatistica.ipynb` for statistical tests.
+1.  [x] Draft Methods 2.2 (Participantes) in `docs/Publicacao_Tese.md`.
+2.  [x] Draft Methods 2.3 (Instrumento) in `docs/Publicacao_Tese.md`.
+3.  [x] Draft Methods 2.4 (Processamento de dados) in `docs/Publicacao_Tese.md`.
+4.  [x] Draft Methods 2.5 (Análises estatísticas) in `docs/Publicacao_Tese.md`.
+5.  [x] Draft Methods 2.6 (Considerações éticas) in `docs/Publicacao_Tese.md`.
+6.  [x] Create notebook `notebooks/analise_exploratoria.ipynb` for exploratory analysis.
+7.  [x] Create notebook `notebooks/analise_estatistica_inferencial.py` for statistical tests.
 8.  [x] Draft Results 3.1 (Descrição da amostra) in `docs/Publicacao_Tese.md`.
 9.  [x] Draft Results 3.2 (Análise descritiva) in `docs/Publicacao_Tese.md`.
 10. [x] Draft Results 3.3 (Principais achados estatísticos) in `docs/Publicacao_Tese.md`.
@@ -226,4 +226,4 @@
 17. [x] Run `src/data_processing.py` to generate `IC_Dados_Processados.csv` and `Livro_de_Codigos.txt`.
 18. [x] Perform manual data validation and NaN distribution analysis.
 19. [x] Create summary document `AED_Resultados_Chave.md` with key exploratory insights.
-20. [ ] Review and finalize full manuscript for submission.
+20. [x] Review and finalize full manuscript for submission.
