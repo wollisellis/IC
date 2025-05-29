@@ -35,7 +35,7 @@ Gere um histograma para esta coluna.
 Título do gráfico: 'Figura 1: Distribuição do Consumo Diário de Cafeína'
 Rótulo do eixo X: 'Consumo Diário Total de Cafeína (mg)'
 Rótulo do eixo Y: 'Frequência (Número de Participantes)'
-Use um número de bins que ilustre adequadamente a forma da distribuição, sua assimetria e a presença de outliers.
+Use um número de bins que ilustre adequadamente a forma da distribuição, sua assimetria e a presença de outliers. Certifique-se de que os bins tenham larguras iguais.
 ```
 
 **Sugestão de Prompt para IA (Opção 2: Boxplot):**
@@ -69,10 +69,10 @@ Certifique-se de que os outliers sejam claramente exibidos.
 **Sugestão de Prompt para IA:**
 ```
 Analise o arquivo 'IC_Dados_Processados.csv'.
-Primeiro, filtre os dados para incluir apenas participantes onde a coluna 'NIVEL_JOGADOR_COD' é igual a 1 (representando 'Amador/Casual') ou igual a 2 (representando 'Semi-Profissional').
+Primeiro, filtre os dados para incluir apenas participantes onde a coluna 'NIVEL_JOGADOR_COD' é igual a 1 (representando 'Amador/Casual') ou igual a 2 (representando 'Semi-Profissional'). Obtenha a contagem de participantes (N) para cada um desses dois grupos.
 Para estes dois grupos filtrados, gere boxplots comparativos mostrando a distribuição da coluna 'MG_CAFEINA_TOTAL_DIA' (valores numéricos em mg do consumo diário de cafeína).
 Título do gráfico: 'Figura 2: Consumo Diário de Cafeína por Nível de Experiência do Jogador'
-Rótulo do eixo X: 'Nível de Experiência do Jogador', com as categorias claramente identificadas como 'Amador/Casual' e 'Semi-Profissional'.
+Rótulo do eixo X: 'Nível de Experiência do Jogador', com as categorias claramente identificadas como 'Amador/Casual' e 'Semi-Profissional'. Abaixo de cada rótulo de categoria, inclua a respectiva contagem de participantes (ex: 'Amador/Casual (N=xx)', 'Semi-Profissional (N=yy)').
 Rótulo do eixo Y: 'Consumo Diário Total de Cafeína (mg)'
 Certifique-se de que os outliers sejam exibidos em cada boxplot.
 ```
@@ -101,11 +101,12 @@ Analise o arquivo 'IC_Dados_Processados.csv'.
 Considere a coluna 'HORAS_JOGO_PRINCIPAL_MEDIA_DIA' (valores numéricos, horas de jogo por dia, média geral aprox. 2.48h) e a coluna 'MG_CAFEINA_TOTAL_DIA' (valores numéricos, consumo de cafeína em mg, média geral aprox. 276mg).
 Antes de plotar, remova quaisquer participantes (linhas) que tenham valores ausentes (NaN) em 'HORAS_JOGO_PRINCIPAL_MEDIA_DIA' ou em 'MG_CAFEINA_TOTAL_DIA'. (Esperamos cerca de 175 pontos de dados após esta remoção).
 Gere um diagrama de dispersão (scatter plot) para visualizar a relação entre estas duas variáveis.
-Eixo X: deve representar os valores da coluna 'HORAS_JOGO_PRINCIPAL_MEDIA_DIA'.
+Eixo X: deve representar os valores da coluna 'HORAS_JOGO_PRINCIPAL_MEDIA_DIA'. Considere aplicar um leve "jitter" (pequeno deslocamento horizontal aleatório) aos pontos para reduzir a sobreposição devido aos valores discretos das horas.
 Eixo Y: deve representar os valores da coluna 'MG_CAFEINA_TOTAL_DIA'.
 Título do gráfico: 'Figura 3: Consumo de Cafeína vs. Horas de Jogo'
 Rótulo do eixo X: 'Horas Médias de Jogo Principal por Dia'
 Rótulo do eixo Y: 'Consumo Diário Total de Cafeína (mg)'
+Use marcadores um pouco menores e aplique uma leve transparência (alpha blending) aos marcadores para melhor visualização em caso de sobreposição.
 ```
 
 ---
