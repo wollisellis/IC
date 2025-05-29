@@ -1,7 +1,7 @@
 Resultados das Análises Estatísticas Inferenciais
-Data da Análise: 2025-05-29 00:35:26.896220
+Data da Análise: 2025-05-29 05:15:55.811400
 Arquivo de Dados: IC_Dados_Processados.csv
-Shape do DataFrame Carregado: (181, 349)
+Shape do DataFrame Carregado: (181, 237)
 
 --- Verificação Inicial dos Dados para Análise ---
 NIVEL_JOGADOR_COD: Valores únicos (primeiros 10 se houver muitos): [1 2 3]
@@ -13,15 +13,19 @@ MG_CAFEINA_DIA: Presença de NaNs: 0 / 181
 HORAS_JOGO_PRINCIPAL_MEDIA_DIA: Valores únicos (primeiros 10 se houver muitos): [1.5 7.  5.  3.  nan 0.5]
 HORAS_JOGO_PRINCIPAL_MEDIA_DIA: Tipos de dados: float64
 HORAS_JOGO_PRINCIPAL_MEDIA_DIA: Presença de NaNs: 6 / 181
-EFEITO_ADVERSO_INSONIA_BIN: Valores únicos (primeiros 10 se houver muitos): [0]
+EFEITO_ADVERSO_INSONIA_BIN: Valores únicos (primeiros 10 se houver muitos): [1 0]
 EFEITO_ADVERSO_INSONIA_BIN: Tipos de dados: int64
 EFEITO_ADVERSO_INSONIA_BIN: Presença de NaNs: 0 / 181
-EFEITO_ADVERSO_NERVOSISMO_BIN: Valores únicos (primeiros 10 se houver muitos): [0]
-EFEITO_ADVERSO_NERVOSISMO_BIN: Tipos de dados: int64
-EFEITO_ADVERSO_NERVOSISMO_BIN: Presença de NaNs: 0 / 181
-EFEITO_ADVERSO_FREQUENCIA_DESCRITA_COD: Valores únicos (primeiros 10 se houver muitos): [0]
-EFEITO_ADVERSO_FREQUENCIA_DESCRITA_COD: Tipos de dados: int64
-EFEITO_ADVERSO_FREQUENCIA_DESCRITA_COD: Presença de NaNs: 0 / 181
+EFEITO_ADVERSO_NERVOSISMO_BIN: Valores únicos (primeiros 10 se houver muitos): <IntegerArray>
+[<NA>]
+Length: 1, dtype: Int64
+EFEITO_ADVERSO_NERVOSISMO_BIN: Tipos de dados: Int64
+EFEITO_ADVERSO_NERVOSISMO_BIN: Presença de NaNs: 181 / 181
+EFEITO_ADVERSO_FREQUENCIA_DESCRITA_COD: Valores únicos (primeiros 10 se houver muitos): <IntegerArray>
+[<NA>, 0]
+Length: 2, dtype: Int64
+EFEITO_ADVERSO_FREQUENCIA_DESCRITA_COD: Tipos de dados: Int64
+EFEITO_ADVERSO_FREQUENCIA_DESCRITA_COD: Presença de NaNs: 117 / 181
 --------------------------------------------------
 
 --- Análise H1: Consumo de Cafeína (MG_CAFEINA_DIA) vs. Nível do Jogador (NIVEL_JOGADOR_COD) ---
@@ -39,15 +43,12 @@ Figura 3 salva em: notebooks/outputs\figura3_cafeina_vs_horas_jogo.png
 
 --- Análise H3: Efeitos Adversos vs. Dose de Cafeína (MG_CAFEINA_DIA) ---
   Analisando efeito específico: Insônia (coluna: EFEITO_ADVERSO_INSONIA_BIN)
-    Não há dados suficientes em ambos os grupos (COM e SEM Insônia, N_min=5) para o teste.
-      N_COM=0, N_SEM=181
+    Grupo COM Insônia (N=94): Média Cafeína=300.54 mg (DP=212.74) mg
+    Grupo SEM Insônia (N=87): Média Cafeína=250.26 mg (DP=223.23) mg
+    Teste Mann-Whitney U (unilateral: COM Insônia > SEM Insônia): Estatística U=4852.00, p-valor=0.0152
+    Resultado H3 (Insônia): Consumo de cafeína é significativamente MAIOR no grupo COM Insônia.
   Analisando efeito específico: Nervosismo (coluna: EFEITO_ADVERSO_NERVOSISMO_BIN)
-    Não há dados suficientes em ambos os grupos (COM e SEM Nervosismo, N_min=5) para o teste.
-      N_COM=0, N_SEM=181
-  Analisando frequência geral de efeitos (EFEITO_ADVERSO_FREQUENCIA_DESCRITA_COD)
-    Correlação de Spearman entre MG_CAFEINA_DIA e EFEITO_ADVERSO_FREQUENCIA_DESCRITA_COD: rho=nan, p-valor=nan, N=181
-    Resultado H3 (Frequência Geral): Nenhuma correlação estatisticamente significativa.
-Não foi possível realizar a análise H3 (específica ou geral) com as colunas disponíveis ou dados suficientes.
+    Não há dados suficientes para EFEITO_ADVERSO_NERVOSISMO_BIN após remover NaNs.
 
 --- Análise Adicional: Consumo de Energéticos vs. Horas de Jogo ---
 Grupo Consome Energéticos (N=99): Média Horas Jogo=2.54 (DP=1.79)
@@ -106,7 +107,7 @@ Dep. Variable:     HORAS_JOGO_PRINCIPAL_MEDIA_DIA   R-squared:                  
 Model:                                        OLS   Adj. R-squared:                  0.130
 Method:                             Least Squares   F-statistic:                     7.387
 Date:                            Thu, 29 May 2025   Prob (F-statistic):           1.68e-05
-Time:                                    00:35:28   Log-Likelihood:                -318.49
+Time:                                    05:15:56   Log-Likelihood:                -318.49
 No. Observations:                             172   AIC:                             647.0
 Df Residuals:                                 167   BIC:                             662.7
 Df Model:                                       4                                         
@@ -132,4 +133,28 @@ Notes:
 strong multicollinearity or other numerical problems.
 
 --- Análise de Regressão Logística: Presença de Efeitos Adversos ---
-Variável resposta 'EFEITO_ADVERSO_PRESENTE_BIN' não tem pelo menos duas classes únicas após dropna. Pulando Regressão Logística.
+  Sumário da Regressão Logística para EFEITO_ADVERSO_PRESENTE_BIN:
+                                Logit Regression Results                               
+=======================================================================================
+Dep. Variable:     EFEITO_ADVERSO_PRESENTE_BIN   No. Observations:                  181
+Model:                                   Logit   Df Residuals:                      177
+Method:                                    MLE   Df Model:                            3
+Date:                         Thu, 29 May 2025   Pseudo R-squ.:                 0.07256
+Time:                                 05:15:56   Log-Likelihood:                -109.05
+converged:                                True   LL-Null:                       -117.59
+Covariance Type:                     nonrobust   LLR p-value:                 0.0006856
+===========================================================================================
+                              coef    std err          z      P>|z|      [0.025      0.975]
+-------------------------------------------------------------------------------------------
+const                      -0.2445      0.317     -0.771      0.441      -0.866       0.377
+MG_CAFEINA_DIA              0.0002      0.001      0.229      0.819      -0.001       0.002
+CONSUMO_ENERGETICOS_BIN     0.5713      0.346      1.653      0.098      -0.106       1.249
+CONSUMO_CHA_BIN             1.2656      0.348      3.632      0.000       0.583       1.949
+===========================================================================================
+
+  Odds Ratios:
+                               OR  Lower CI  Upper CI
+const                    0.783059  0.420522  1.458144
+MG_CAFEINA_DIA           1.000184  0.998607  1.001764
+CONSUMO_ENERGETICOS_BIN  1.770597  0.899209  3.486416
+CONSUMO_CHA_BIN          3.545199  1.790715  7.018669

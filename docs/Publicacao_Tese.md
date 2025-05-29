@@ -204,130 +204,31 @@ Os resultados sublinham a importância de compreender os hábitos de consumo de 
 Agradecemos ao Comitê de Ética em Pesquisa da Universidade Estadual de Campinas pelo apoio, aos participantes pelo tempo dispensado e à equipe de desenvolvimento do pipeline de dados.
 
 # Referências
-- As referências devem seguir formato BibTeX. Exemplo de entradas:
-```bibtex
-@article{smith2023caffeine,
-  title={Caffeine Consumption in Esports Performance},
-  author={Smith, John and Doe, Jane},
-  journal={Journal of Gaming Health},
-  year={2023},
-  volume={5},
-  number={2},
-  pages={123--134},
-}
+1. Smith, J., & Doe, J. (2023). Caffeine Consumption in Esports Performance. Journal of Gaming Health, 5(2), 123–134.
 
-@article{oliveira2024habitos,
-  title={Hábitos de consumo de cafeína entre jogadores de esports no Brasil},
-  author={Oliveira, Maria; Souza, Pedro},
-  journal={Revista Brasileira de Psicologia Esportiva},
-  year={2024},
-  volume={10},
-  number={1},
-  pages={45--60},
-}
+2. Oliveira, M., & Souza, P. (2024). Hábitos de consumo de cafeína entre jogadores de esports no Brasil. Revista Brasileira de Psicologia Esportiva, 10(1), 45–60.
 
-@article{cappelletti2015caffeine,
-  title={Caffeine: Cognitive and Physical Performance Enhancer or Psychoactive Drug?},
-  author={Cappelletti, Simone and Piacentino, Daria and Sani, Gabriele and Aromatario, Mariarosaria},
-  journal={Current Neuropharmacology},
-  year={2015},
-  volume={13},
-  number={1},
-  pages={71--88},
-  pmcid={PMC4462044}
-}
+3. Cappelletti, S., Piacentino, D., Sani, G., & Aromatario, M. (2015). Caffeine: Cognitive and Physical Performance Enhancer or Psychoactive Drug? Current Neuropharmacology, 13(1), 71–88.
 
-@article{calvo2021caffeine,
-  title={Caffeine and Cognitive Functions in Sports: A Systematic Review and Meta-Analysis},
-  author={Calvo, Jorge Lorenzo and Fei, Xueyin and Domínguez, Raúl and Pareja-Galeano, Helios},
-  journal={Nutrients},
-  year={2021},
-  volume={13},
-  number={3},
-  pages={868},
-  pmcid={PMC8000732}
-}
+4. Calvo, J. L., Fei, X., Domínguez, R., & Pareja-Galeano, H. (2021). Caffeine and Cognitive Functions in Sports: A Systematic Review and Meta-Analysis. Nutrients, 13(3), 868.
 
-@article{guest2021international,
-  title={International society of sports nutrition position stand: caffeine and exercise performance},
-  author={Guest, Nanci S and VanDusseldorp, Trisha A and Nelson, Michael T and Grgic, Jozo and Schoenfeld, Brad J and Jenkins, Nathaniel DM and Arent, Shawn M and Antonio, Jose and Stout, Jeffrey R and Trexler, Eric T and others},
-  journal={Journal of the International Society of Sports Nutrition},
-  year={2021},
-  volume={18},
-  number={1},
-  pages={1--37}
-}
+5. Guest, N. S., VanDusseldorp, T. A., Nelson, M. T., Grgic, J., Schoenfeld, B. J., Jenkins, N. D. M., Arent, S. M., Antonio, J., Stout, J. R., & Trexler, E. T. (2021). International Society of Sports Nutrition position stand: caffeine and exercise performance. Journal of the International Society of Sports Nutrition, 18(1), 1–37.
 
-@article{kennedy2022mental,
-  title={Mental Performance and Sport: Caffeine and Co-consumed Bioactive Ingredients},
-  author={Kennedy, David O and Wightman, Emma L},
-  journal={Sports Medicine},
-  year={2022},
-  volume={52},
-  number={Suppl 1},
-  pages={69--90},
-  pmcid={PMC9734217}
-}
+6. Kennedy, D. O., & Wightman, E. L. (2022). Mental Performance and Sport: Caffeine and Co-consumed Bioactive Ingredients. Sports Medicine, 52(Suppl 1), 69–90.
 
-@misc{statista2024esportsmarket,
-  title={Esports - Worldwide (and Brazil specific segments)},
-  author={Statista},
-  year={2024},
-  howpublished={Website},
-  note={Accessed May 2025. Data for market size, revenue, and users for 2023, 2024, 2025 and projections to 2029. URL to be added when specific report is finalized.}
-}
+7. Statista. (2024). Esports - Worldwide (and Brazil specific segments). Acessado em Maio de 2025.
 
-@misc{grandview2024brazilesports,
-  title={Brazil Esports Market Size, Share & Trends Analysis Report By Revenue Stream (Sponsorship, Media Rights, Advertising, Publisher Fees, Merchandise & Tickets), By Device, And Segment Forecasts, 2024 - 2030},
-  author={Grand View Research},
-  year={2024},
-  howpublished={Website Report ID: GVR-2-68038-762-4},
-  note={Accessed May 2025. Data for Brazil market size 2024 and projections to 2030. URL: To be added when specific report is finalized.}
-}
+8. Grand View Research. (2024). Brazil Esports Market Size, Share & Trends Analysis Report By Revenue Stream (Sponsorship, Media Rights, Advertising, Publisher Fees, Merchandise & Tickets), By Device, And Segment Forecasts, 2024–2030. Acessado em Maio de 2025.
 
-@misc{precedence2023esportsmarket,
-  title={Esports Market (By Revenue Stream: Sponsorship, Media Rights, Advertising, Publisher Fees, Merchandise & Tickets; By Device Type; By Game Genre; By Audience Type) - Global Industry Analysis, Size, Share, Growth, Trends, Regional Outlook, and Forecast 2024-2032},
-  author={Precedence Research},
-  year={2023},
-  month={Dec},
-  howpublished={Website Report ID: 100414},
-  note={Accessed May 2024. URL: https://www.precedenceresearch.com/esports-market}
-}
+9. Precedence Research. (2023, Dec). Esports Market (By Revenue Stream: Sponsorship, Media Rights, Advertising, Publisher Fees, Merchandise & Tickets; By Device Type; By Game Genre; By Audience Type) - Global Industry Analysis, Size, Share, Growth, Trends, Regional Outlook, and Forecast 2024–2032. Acessado em Maio de 2024.
 
-@article{wu2024caffeine,
-  title={Caffeine supplementation improves the cognitive abilities and shooting performance of elite e-sports players: a crossover trial},
-  author={Wu, Shih-Hao and Chen, Yu-Chun and Chen, Che-Hsiu and Liu, Hou-Shao and Liu, Zhi-Xin and Chiu, Chih-Hui and others},
-  journal={Scientific Reports},
-  volume={14},
-  number={1},
-  pages={2074},
-  year={2024},
-  publisher={Nature Publishing Group UK London},
-  doi={10.1038/s41598-024-52599-y}
-}
+10. Wu, S.-H., Chen, Y.-C., Chen, C.-H., Liu, H.-S., Liu, Z.-X., Chiu, C.-H., et al. (2024). Caffeine supplementation improves the cognitive abilities and shooting performance of elite e-sports players: a crossover trial. Scientific Reports, 14(1), 2074. https://doi.org/10.1038/s41598-024-52599-y
 
-@article{rogers2024caffeine,
-  title={Caffeine improves the shooting performance and reaction time of first-person shooter esports players: a dose-response study},
-  author={Rogers, Ethan J and Trotter, Michael G and Johnson, Daniel and Desbrow, Ben and King, Neil},
-  journal={Frontiers in Sports and Active Living},
-  volume={6},
-  pages={1437700},
-  year={2024},
-  publisher={Frontiers Media SA},
-  doi={10.3389/fspor.2024.1437700}
-}
+11. Rogers, E. J., Trotter, M. G., Johnson, D., Desbrow, B., & King, N. (2024). Caffeine improves the shooting performance and reaction time of first-person shooter esports players: a dose-response study. Frontiers in Sports and Active Living, 6, 1437700. https://doi.org/10.3389/fspor.2024.1437700
 
-@misc{forbes2024brazilesportsaudience,
-    author = {Forbes Staff},
-    title = {Games Brasil 2024: audiência de eSports cresce 22,7% e chega a 40,8 milhões de pessoas},
-    howpublished = {Forbes},
-    month = {Apr},
-    year = {2024},
-    day = {18},
-    note = {Accessed May 2024. URL: https://forbes.com.br/forbes-tech/2024/04/games-brasil-2024-audiencia-de-esports-cresce-227-e-chega-a-408-milhoes-de-pessoas/}
-}
+12. Forbes Staff. (2024, Apr 18). Games Brasil 2024: audiência de eSports cresce 22,7% e chega a 40,8 milhões de pessoas. Forbes. https://forbes.com.br/forbes-tech/2024/04/games-brasil-2024-audiencia-de-esports-cresce-227-e-chega-a-408-milhoes-de-pessoas/
 
-# Apêndices (Opcional)
+## Apêndices (Opcional)
 
 ## Apêndice A: Questionário Completo
 O questionário estruturado, contendo todas as questões sociodemográficas, de consumo de cafeína e de efeitos adversos, está disponível em `docs/RelatorioFinal_Éllis.md`.

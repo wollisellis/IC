@@ -114,22 +114,22 @@ def calcular_estatisticas_descritivas(caminho_csv: str):
     # --- Geração de Figuras ---
     ensure_output_dir()
 
-    # Figura 1: Distribuição do Consumo Diário de Cafeína (MG_CAFEINA_DIA)
+    # Figura 1: Distribuição do Consumo Diário Total de Cafeína (mg)
     if 'MG_CAFEINA_DIA' in df.columns:
         plt.figure(figsize=(10, 6))
         plt.hist(df['MG_CAFEINA_DIA'].dropna(), bins=20, color='skyblue', edgecolor='black')
-        plt.title('Figura 1: Distribuição do Consumo Diário de Cafeína (MG_CAFEINA_DIA)')
-        plt.xlabel('Consumo Diário de Cafeína (mg)')
-        plt.ylabel('Frequência')
+        plt.title('Figura 1: Distribuição do Consumo Diário Total de Cafeína')
+        plt.xlabel('Consumo Diário Total de Cafeína (mg)')
+        plt.ylabel('Frequência (Número de Participantes)')
         plt.grid(axis='y', alpha=0.75)
         fig1_path = os.path.join(OUTPUT_DIR, "figura1_distribuicao_cafeina.png")
         plt.savefig(fig1_path)
         plt.close()
-        print(f"\\nFigura 1 salva em: {fig1_path}")
+        print(f"\nFigura 1 salva em: {fig1_path}")
     else:
-        print("\\nAVISO: Não foi possível gerar a Figura 1 (Coluna 'MG_CAFEINA_DIA' não encontrada).")
+        print("\nAVISO: Não foi possível gerar a Figura 1 (Coluna 'MG_CAFEINA_DIA' não encontrada).")
 
-    # Figura 2: Consumo Diário de Cafeína (MG_CAFEINA_DIA) por Nível de Jogador
+    # Figura 2: Consumo Diário Total de Cafeína por Nível de Experiência do Jogador
     if 'MG_CAFEINA_DIA' in df.columns and 'NIVEL_JOGADOR_COD' in df.columns:
         # Mapear códigos para nomes para melhor visualização
         df_copy = df.copy()
@@ -142,16 +142,16 @@ def calcular_estatisticas_descritivas(caminho_csv: str):
         if not df_plot_fig2.empty:
             plt.figure(figsize=(10, 6))
             df_plot_fig2.boxplot(column='MG_CAFEINA_DIA', by='NIVEL_JOGADOR_NOME', grid=True, patch_artist=True)
-            plt.title('Figura 2: Consumo Diário de Cafeína por Nível de Jogador')
+            plt.title('Figura 2: Consumo Diário Total de Cafeína por Nível de Experiência do Jogador')
+            plt.xlabel('Nível de Experiência do Jogador')
+            plt.ylabel('Consumo Diário Total de Cafeína (mg)')
             plt.suptitle('') # Remove o título automático do pandas
-            plt.xlabel('Nível do Jogador')
-            plt.ylabel('Consumo Diário de Cafeína (mg)')
             fig2_path = os.path.join(OUTPUT_DIR, "figura2_cafeina_por_nivel.png")
             plt.savefig(fig2_path)
             plt.close()
             print(f"Figura 2 salva em: {fig2_path}")
         else:
-            print("\\nAVISO: Não foi possível gerar a Figura 2 (Dados insuficientes para os níveis de jogador especificados).")
+            print("\nAVISO: Não foi possível gerar a Figura 2 (Dados insuficientes para os níveis de jogador especificados).")
     else:
         print("\nAVISO: Não foi possível gerar a Figura 2 (Colunas 'MG_CAFEINA_DIA' ou 'NIVEL_JOGADOR_COD' não encontradas).")
 
@@ -269,7 +269,7 @@ def calcular_estatisticas_descritivas(caminho_csv: str):
     else:
         print("\nAVISO: Coluna 'MELHORAR_PERFORMANCE_MOTIVO_BIN' não encontrada.")
 
-    print("\\n\\n--- Contagens Detalhadas e Figuras para Efeitos Adversos Específicos (H3) ---")
+    print("\n\\n--- Contagens Detalhadas e Figuras para Efeitos Adversos Específicos (H3) ---")
     efeitos_para_analise_descritiva = {
         'EFEITO_ADVERSO_INSONIA_BIN': 'Insônia',
         'EFEITO_ADVERSO_TAQUICARDIA_BIN': 'Taquicardia',
