@@ -99,7 +99,7 @@ Não foi encontrada diferença estatisticamente significativa no consumo diário
 
 ## 3.4 Figuras e tabelas principais
 
-**Tabela 1: Características Sociodemográficas e de Jogo da Amostra (N=181).**
+Table: Características Sociodemográficas e de Jogo da Amostra (N=181)
 
 | Característica | Estatística | Valor |
 |----------------|-------------|-------|
@@ -115,7 +115,7 @@ Não foi encontrada diferença estatisticamente significativa no consumo diário
 | Horas de Jogo Principal/Dia | Média (DP) | 2.48 (DP = 1.70) |
 | Horas de Jogo Principal/Dia | Mediana | 3.00 |
 
-**Tabela 2: Padrões de Consumo de Cafeína e Resultados dos Testes de Hipóteses.**
+Table: Padrões de Consumo de Cafeína e Resultados dos Testes de Hipóteses
 
 *Parte A: Consumo de Cafeína Total Diário (Consumo Diário Total de Cafeína (mg))*
 
