@@ -201,25 +201,22 @@ def analisar_h3(df: pd.DataFrame):
         grupo_com_efeito = df_h3[df_h3[col_bin] == 1]['MG_CAFEINA_TOTAL_DIA']
         grupo_sem_efeito = df_h3[df_h3[col_bin] == 0]['MG_CAFEINA_TOTAL_DIA']
 
-        if grupo_com_efeito.empty or grupo_sem_efeito.empty:
-            print(f"    Não há dados suficientes em ambos os grupos (COM e SEM {nome_efeito}) para o teste.")
-            if grupo_com_efeito.empty: print(f"      Ninguém reportou {nome_efeito} (ou todos com NaNs na cafeína associada).")
-            if grupo_sem_efeito.empty: print(f"      Todos reportaram {nome_efeito} (ou todos com NaNs na cafeína associada).")
+        if grupo_com_efeito.empty or grupo_sem_efeito.empty or len(grupo_com_efeito) < 3 or len(grupo_sem_efeito) < 3:
+            print(f"    Não há dados suficientes nos grupos COM e SEM {nome_efeito} para análise (min 3 por grupo). COM: {len(grupo_com_efeito)}, SEM: {len(grupo_sem_efeito)}.")
             continue
-        
-        print(f"    Grupo COM {nome_efeito} (N={len(grupo_com_efeito)}): Média Cafeína={grupo_com_efeito.mean():.2f} mg (DP={grupo_com_efeito.std():.2f}) mg")
-        print(f"    Grupo SEM {nome_efeito} (N={len(grupo_sem_efeito)}): Média Cafeína={grupo_sem_efeito.mean():.2f} mg (DP={grupo_sem_efeito.std():.2f}) mg")
 
         try:
-            stat, p_valor = mannwhitneyu(grupo_com_efeito, grupo_sem_efeito, alternative='greater') 
+            # Teste unilateral: consumo de cafeína é MAIOR no grupo COM efeito
+            stat, p_valor = mannwhitneyu(grupo_com_efeito, grupo_sem_efeito, alternative='greater')
+            print(f"    Grupo COM {nome_efeito} (N={len(grupo_com_efeito)}): Média Cafeína={grupo_com_efeito.mean():.2f} mg (DP={grupo_com_efeito.std():.2f}) mg")
+            print(f"    Grupo SEM {nome_efeito} (N={len(grupo_sem_efeito)}): Média Cafeína={grupo_sem_efeito.mean():.2f} mg (DP={grupo_sem_efeito.std():.2f}) mg")
             print(f"    Teste Mann-Whitney U (unilateral: COM {nome_efeito} > SEM {nome_efeito}): Estatística U={stat:.2f}, p-valor={p_valor:.4f}")
-
             if p_valor < 0.05:
                 print(f"    Resultado H3 ({nome_efeito}): Consumo de cafeína é significativamente MAIOR no grupo COM {nome_efeito}.")
             else:
                 print(f"    Resultado H3 ({nome_efeito}): Não há evidência de que o consumo de cafeína seja significativamente maior no grupo COM {nome_efeito}.")
         except Exception as e:
-            print(f"    Erro ao executar Mann-Whitney U para {nome_efeito}: {e}")
+            print(f"    Erro ao realizar teste para {nome_efeito}: {e}")
 
 def analisar_h7(df: pd.DataFrame):
     """
@@ -370,31 +367,89 @@ def analisar_h6(df: pd.DataFrame):
             print(f"    Dados para {col_plataforma}: {df_h6_efeito[col_plataforma].unique()}")
             print(f"    Dados para {col_efeito}: {df_h6_efeito[col_efeito].unique()}")
 
+def analisar_h8(df: pd.DataFrame):
+    """
+    H8: Existem diferenças no consumo diário de cafeína (MG_CAFEINA_TOTAL_DIA)
+    entre participantes do gênero masculino (GENERO_COD=1) e feminino (GENERO_COD=2).
+    """
+    print("\n--- Análise H8: Consumo de Cafeína vs. Gênero ---")
+    col_cafeina = 'MG_CAFEINA_TOTAL_DIA'
+    col_genero = 'GENERO_COD'
+
+    if col_cafeina not in df.columns or col_genero not in df.columns:
+        print(f"Colunas necessárias para H8 ({col_cafeina}, {col_genero}) não encontradas. Pulando análise.")
+        return
+
+    df_h8 = df[[col_genero, col_cafeina]].copy()
+    df_h8.dropna(subset=[col_genero, col_cafeina], inplace=True)
+
+    # Filtrar para incluir apenas os códigos de gênero 1 (Masculino) e 2 (Feminino)
+    df_h8 = df_h8[df_h8[col_genero].isin([1, 2])]
+
+    if df_h8[col_genero].nunique() < 2:
+        print("Não há pelo menos dois grupos de gênero (Masculino e Feminino) para comparar. Pulando análise.")
+        return
+
+    grupo_masculino = df_h8[df_h8[col_genero] == 1][col_cafeina]
+    grupo_feminino = df_h8[df_h8[col_genero] == 2][col_cafeina]
+
+    if grupo_masculino.empty or len(grupo_masculino) < 3:
+        print(f"Grupo Masculino (GENERO_COD=1) não possui dados suficientes (N={len(grupo_masculino)}, min=3). Pulando H8.")
+        return
+    if grupo_feminino.empty or len(grupo_feminino) < 3:
+        print(f"Grupo Feminino (GENERO_COD=2) não possui dados suficientes (N={len(grupo_feminino)}, min=3). Pulando H8.")
+        return
+
+    print(f"Grupo Masculino (N={len(grupo_masculino)}): Média Cafeína={grupo_masculino.mean():.2f} mg, DP={grupo_masculino.std():.2f} mg")
+    print(f"Grupo Feminino (N={len(grupo_feminino)}): Média Cafeína={grupo_feminino.mean():.2f} mg, DP={grupo_feminino.std():.2f} mg")
+
+    try:
+        stat, p_valor = mannwhitneyu(grupo_masculino, grupo_feminino, alternative='two-sided')
+        print(f"Teste Mann-Whitney U (bilateral): Estatística U={stat:.2f}, p-valor={p_valor:.4f}")
+        if p_valor < 0.05:
+            print("Resultado H8: Diferença estatisticamente significativa no consumo de cafeína entre gênero Masculino e Feminino.")
+        else:
+            print("Resultado H8: Nenhuma diferença estatisticamente significativa no consumo de cafeína entre gênero Masculino e Feminino.")
+    except Exception as e:
+        print(f"Erro ao executar o teste para H8: {e}")
+
+def main():
+    """Função principal para executar todas as análises."""
+    # CAMINHO_CSV = '../IC_Dados_Processados.csv' # Ajuste o caminho conforme necessário
+    CAMINHO_CSV = "IC_Dados_Processados.csv" # Usar caminho relativo à raiz do projeto
+    df = carregar_dados(CAMINHO_CSV)
+
+    if df.empty:
+        print("DataFrame vazio. Encerrando análises.")
+        return
+
+    print("\n--- Verificação Inicial dos Dados para Análise ---")
+    colunas_verificar = {
+        'NIVEL_JOGADOR_COD': df['NIVEL_JOGADOR_COD'] if 'NIVEL_JOGADOR_COD' in df else None,
+        'MG_CAFEINA_TOTAL_DIA': df['MG_CAFEINA_TOTAL_DIA'] if 'MG_CAFEINA_TOTAL_DIA' in df else None,
+        'HORAS_JOGO_PRINCIPAL_MEDIA_DIA': df['HORAS_JOGO_PRINCIPAL_MEDIA_DIA'] if 'HORAS_JOGO_PRINCIPAL_MEDIA_DIA' in df else None,
+        'EFEITO_ADVERSO_INSONIA_BIN': df['EFEITO_ADVERSO_INSONIA_BIN'] if 'EFEITO_ADVERSO_INSONIA_BIN' in df else None,
+        'EFEITO_ADVERSO_NERVOSISMO_BIN': df['EFEITO_ADVERSO_NERVOSISMO_BIN'] if 'EFEITO_ADVERSO_NERVOSISMO_BIN' in df else None,
+        'MELHORAR_PERFORMANCE_MOTIVO_BIN': df['MELHORAR_PERFORMANCE_MOTIVO_BIN'] if 'MELHORAR_PERFORMANCE_MOTIVO_BIN' in df else None,
+        'PLATAFORMA_PRINCIPAL_COD': df['PLATAFORMA_PRINCIPAL_COD'] if 'PLATAFORMA_PRINCIPAL_COD' in df else None,
+        'GENERO_COD': df['GENERO_COD'] if 'GENERO_COD' in df else None
+    }
+    for nome_col, dados_col in colunas_verificar.items():
+        if dados_col is not None:
+            print(f"Valores únicos em '{nome_col}': {dados_col.unique()[:10]} (primeiros 10 se houver muitos)")
+            print(f"Tipos de dados da coluna '{nome_col}': {dados_col.dtype}")
+            print(f"Presença de NaNs em '{nome_col}': {dados_col.isnull().sum()} / {len(df)}")
+        else:
+            print(f"Coluna '{nome_col}' não encontrada no DataFrame.")
+    print("--------------------------------------------------")
+
+    analisar_h1(df.copy())
+    analisar_h2(df.copy())
+    analisar_h3(df.copy())
+    analisar_h7(df.copy())
+    analisar_h6(df.copy())
+    analisar_h8(df.copy()) # Adiciona a chamada para H8
+
 if __name__ == '__main__':
-    caminho_do_arquivo_csv = 'C:/Users/nicol_qs45gn8/IC/IC_Dados_Processados.csv'
-    df_processado = carregar_dados(caminho_do_arquivo_csv)
-
-    if not df_processado.empty:
-        print("\n--- Verificação Inicial dos Dados para Análise ---")
-        colunas_a_verificar = ['NIVEL_JOGADOR_COD', 'MG_CAFEINA_TOTAL_DIA', 'HORAS_JOGO_PRINCIPAL_MEDIA_DIA', 
-                               'EFEITO_ADVERSO_INSONIA_BIN', 'EFEITO_ADVERSO_NERVOSISMO_BIN']
-        for col in colunas_a_verificar:
-            if col in df_processado:
-                print(f"Valores únicos em '{col}': {df_processado[col].unique()[:10]} (primeiros 10 se houver muitos)")
-                print(f"Tipos de dados da coluna '{col}': {df_processado[col].dtype}")
-                if pd.api.types.is_numeric_dtype(df_processado[col]):
-                    print(f"Presença de NaNs em '{col}': {df_processado[col].isnull().sum()} / {len(df_processado[col])}")
-            else:
-                print(f"AVISO IMPORTANTE: Coluna '{col}' NÃO encontrada no DataFrame. Análises dependentes falharão.")
-        print("--------------------------------------------------")
-
-        analisar_h1(df_processado)
-        analisar_h2(df_processado)
-        analisar_h3(df_processado)
-        analisar_h7(df_processado)
-        analisar_h6(df_processado)
-    else:
-        print("Análises não puderam ser executadas devido a erro no carregamento dos dados.")
-
-print("\nAnálises estatísticas inferenciais concluídas.")
-print("--- FIM DA EXECUÇÃO DO SCRIPT DE ANÁLISES INFERENCIAIS ---")
+    main()
+    print("\n--- FIM DA EXECUÇÃO DO SCRIPT DE ANÁLISES INFERENCIAIS ---")
