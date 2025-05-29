@@ -25,10 +25,10 @@ O consumo de cafeína no contexto dos esportes eletrônicos (esports) tem se des
 
 # 1. Introdução
 ## 1.1 Contextualização dos e-sports e consumo de cafeína
-Os esportes eletrônicos (esports) tornaram-se uma indústria global bilionária, atraindo milhões de espectadores e praticantes. Em paralelo, a cafeína é amplamente consumida como estimulante cognitivo e energético, tanto na forma de café quanto em suplementos e bebidas energéticas. Entre jogadores de esports, o uso de cafeína pode impactar atenção, tempo de reação e resistência mental durante competições prolongadas.
+Os esportes eletrônicos (esports) experimentaram um crescimento exponencial na última década, consolidando-se como uma indústria global multibilionária que atrai milhões de espectadores e jogadores engajados. Em 2025, estima-se que a receita global de e-sports alcance US$ 4.8 bilhões, com projeções indicando US$ 5.9 bilhões até 2029, e uma base de usuários que pode chegar a quase 900 milhões mundialmente neste mesmo ano (Statista, 2024). O Brasil acompanha essa tendência, com previsões de receita de US$ 116 milhões em 2025 e um público que ultrapassou 33 milhões de usuários já em 2023, posicionando o país como um mercado chave na América Latina (Statista, 2024; Grand View Research, 2024). Neste cenário de alta competitividade e demanda por performance, a cafeína, um estimulante do sistema nervoso central, é frequentemente utilizada por jogadores que buscam otimizar o estado de alerta, a concentração e a resistência mental durante sessões de treino e competições prolongadas. O consumo ocorre através de diversas fontes, como café, chás, bebidas energéticas, refrigerantes e suplementos específicos.
 
 ## 1.2 Revisão da literatura relevante
-Estudos anteriores em atletas tradicionais indicam que doses moderadas de cafeína (3-6 mg/kg) melhoram desempenho físico e cognitivo, enquanto pesquisas em ambientes acadêmicos associam a cafeína ao aumento de atenção e memória de curto prazo. Entretanto, há escassez de dados específicos sobre consumo de cafeína em jogadores de esports, especialmente no contexto brasileiro.
+A cafeína (1,3,7-trimetilxantina) é um dos recursos ergogênicos mais estudados e consumidos no mundo. Seus principais mecanismos de ação incluem o antagonismo dos receptores de adenosina no cérebro, a mobilização de cálcio intracelular e a inibição de fosfodiesterases, resultando em aumento da neurotransmissão excitatória, redução da percepção de fadiga e melhora da função neuromuscular (Cappelletti et al., 2015). Revisões sistemáticas e meta-análises indicam que doses moderadas de cafeína (tipicamente 3-6 mg/kg de peso corporal) podem melhorar significativamente tanto o desempenho físico (e.g., resistência, força) quanto diversas funções cognitivas cruciais para atletas, como atenção, vigilância, tempo de reação e humor (Calvo et al., 2021; Guest et al., 2021). Embora grande parte da pesquisa tenha focado em atletas tradicionais, os benefícios cognitivos, especialmente na manutenção da atenção e na redução da percepção de esforço, são altamente transferíveis para as demandas dos jogadores de esports. No entanto, os efeitos sobre outras funções cognitivas, como memória de trabalho e funções executivas complexas, são menos consistentes quando a cafeína é consumida isoladamente (Kennedy & Wightman, 2022). Estudos em ambientes acadêmicos também associam a cafeína ao aumento de atenção e, em alguns contextos, à memória de curto prazo. No entanto, ainda existe uma escassez de dados específicos sobre os padrões de consumo de cafeína e seus efeitos percebidos em jogadores de esports, particularmente no Brasil e considerando a variedade de fontes de cafeína disponíveis.
 
 ## 1.3 Lacunas identificadas
 Apesar das evidências sobre benefícios e riscos da cafeína em diferentes populações, faltam estudos sistemáticos que descrevam padrões de consumo de cafeína em esports e analisem relações com experiência de jogo, hábitos de saúde e ocorrência de efeitos adversos. Além disso, poucos trabalhos abordam múltiplas fontes de cafeína (café, energéticos, suplementos, chá e chocolate) de forma integrada.
@@ -75,10 +75,16 @@ As Tabelas 1 e 2 apresentam estatísticas descritivas detalhadas e os resultados
 
 # 4. Discussão
 ## 4.1 Interpretação dos achados
-Os resultados indicam que o nível de experiência em esports está positivamente associado ao consumo de cafeína, sugerindo que jogadores mais experientes adotam rotinas de consumo para otimizar desempenho e vigilância. Observou-se ainda que maior dose de cafeína correlacionou-se com horas de jogo diárias, possivelmente refletindo estratégias de resistência.
+Os resultados indicam que o nível de experiência em esports está positivamente associado ao consumo de cafeína, sugerindo que jogadores mais experientes adotam rotinas de consumo para otimizar desempenho e vigilância. Observou-se ainda que maior dose de cafeína correlacionou-se com horas de jogo diárias, possivelmente refletindo estratégias de resistência. (ESTES TEXTOS SÃO PLACEHOLDERS E SERÃO AJUSTADOS CONFORME OS RESULTADOS REAIS DA ANÁLISE ESTATÍSTICA)
 
 ## 4.2 Comparação com literatura existente
-Estudos em atletas tradicionais reportam benefícios cognitivos semelhantes ao observado neste trabalho. Entretanto, a literatura sobre gamers é limitada; nossos achados avançam o conhecimento ao integrar múltiplas fontes de cafeína num contexto de esports, corroborando e expandindo resultados prévios.
+Os achados do presente estudo sobre os padrões de consumo e os [efeitos percebidos/associações encontradas] alinham-se parcialmente com a literatura científica consolidada. Revisões sistemáticas e meta-análises demonstram consistentemente que a cafeína, em doses moderadas, melhora aspectos do desempenho cognitivo, como atenção, vigilância e tempo de reação, além de reduzir a percepção de fadiga em atletas (Calvo et al., 2021; Guest et al., 2021). Nossos resultados [confirmam/divergem de/complementam] esses achados ao [descrever a relação específica no contexto de e-sports, por exemplo: observarmos que jogadores que consomem X mg de cafeína relatam Y].
+
+A prevalência do consumo de cafeína encontrada (XY%) e as doses médias (ABC mg) estão [acima/abaixo/em consonância] com estudos em outras populações de atletas ou estudantes universitários [CITAR EXEMPLOS, SE POSSÍVEL COM DADOS RECENTES 2023-2025]. Especificamente para e-sports, onde a literatura ainda é incipiente, nossos dados contribuem com um panorama detalhado para o cenário brasileiro.
+
+A observação de que [mencionar um achado específico do estudo, ex: jogadores profissionais consomem mais cafeína] pode ser interpretada à luz dos mecanismos de ação da cafeína como um antagonista dos receptores de adenosina (Cappelletti et al., 2015), o que justificaria seu uso estratégico para manter o estado de alerta em níveis competitivos mais altos. Adicionalmente, a variedade de fontes de cafeína consumidas pelos participantes (café, energéticos, suplementos) e a potencial interação de outros compostos bioativos presentes nessas fontes (Kennedy & Wightman, 2022) podem explicar parte da variabilidade nos efeitos relatados e nas estratégias de consumo, um ponto que merece aprofundamento em futuras investigações que comparem diretamente os efeitos de diferentes produtos cafeinados.
+
+[Adaptar este parágrafo conforme os resultados dos testes de hipóteses e AED forem obtidos. Exemplo: "Se o estudo encontrar associação entre cafeína e ansiedade, discutir aqui em relação à literatura que aponta efeitos ansiogênicos em altas doses ou em indivíduos sensíveis."]
 
 ## 4.3 Implicações teóricas e práticas
 Os achados reforçam a teoria de que a cafeína atua como facilitador cognitivo em atividades de alta demanda mental. Do ponto de vista prático, indicam a necessidade de orientações de consumo seguras para jogadores de esports, a fim de equilibrar desempenho e saúde.
@@ -117,7 +123,65 @@ Agradecemos ao Comitê de Ética em Pesquisa da Universidade Estadual de Campina
   number={1},
   pages={45--60},
 }
-```
+
+@article{cappelletti2015caffeine,
+  title={Caffeine: Cognitive and Physical Performance Enhancer or Psychoactive Drug?},
+  author={Cappelletti, Simone and Piacentino, Daria and Sani, Gabriele and Aromatario, Mariarosaria},
+  journal={Current Neuropharmacology},
+  year={2015},
+  volume={13},
+  number={1},
+  pages={71--88},
+  pmcid={PMC4462044}
+}
+
+@article{calvo2021caffeine,
+  title={Caffeine and Cognitive Functions in Sports: A Systematic Review and Meta-Analysis},
+  author={Calvo, Jorge Lorenzo and Fei, Xueyin and Domínguez, Raúl and Pareja-Galeano, Helios},
+  journal={Nutrients},
+  year={2021},
+  volume={13},
+  number={3},
+  pages={868},
+  pmcid={PMC8000732}
+}
+
+@article{guest2021international,
+  title={International society of sports nutrition position stand: caffeine and exercise performance},
+  author={Guest, Nanci S and VanDusseldorp, Trisha A and Nelson, Michael T and Grgic, Jozo and Schoenfeld, Brad J and Jenkins, Nathaniel DM and Arent, Shawn M and Antonio, Jose and Stout, Jeffrey R and Trexler, Eric T and others},
+  journal={Journal of the International Society of Sports Nutrition},
+  year={2021},
+  volume={18},
+  number={1},
+  pages={1--37}
+}
+
+@article{kennedy2022mental,
+  title={Mental Performance and Sport: Caffeine and Co-consumed Bioactive Ingredients},
+  author={Kennedy, David O and Wightman, Emma L},
+  journal={Sports Medicine},
+  year={2022},
+  volume={52},
+  number={Suppl 1},
+  pages={69--90},
+  pmcid={PMC9734217}
+}
+
+@misc{statista2024esportsmarket,
+  title={Esports - Worldwide (and Brazil specific segments)},
+  author={Statista},
+  year={2024},
+  howpublished={Website},
+  note={Accessed May 2025. Data for market size, revenue, and users for 2023, 2024, 2025 and projections to 2029. URL to be added when specific report is finalized.}
+}
+
+@misc{grandview2024brazilesports,
+  title={Brazil Esports Market Size, Share & Trends Analysis Report By Revenue Stream (Sponsorship, Media Rights, Advertising, Publisher Fees, Merchandise & Tickets), By Device, And Segment Forecasts, 2024 - 2030},
+  author={Grand View Research},
+  year={2024},
+  howpublished={Website Report ID: GVR-2-68038-762-4},
+  note={Accessed May 2025. Data for Brazil market size 2024 and projections to 2030. URL to be added when specific report is finalized.}
+}
 
 # Apêndices (Opcional)
 

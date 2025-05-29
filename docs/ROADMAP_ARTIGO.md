@@ -119,6 +119,7 @@
     *   [x] **Introdução:**
         *   Contextualizar o tema: crescimento dos e-sports, papel da cafeína como psicoestimulante, preocupações com saúde e performance.
         *   Revisão da literatura: o que já se sabe sobre consumo de cafeína em atletas, estudantes, e (se houver) jogadores de e-sports. Citar estudos relevantes.
+        *   [x] Enriquecer com dados de mercado recentes (2023-2025) e revisões sistemáticas sobre cafeína.
         *   Identificar a lacuna na literatura que seu estudo preenche (ex: poucos dados sobre jogadores brasileiros, análise detalhada de múltiplos fatores).
         *   Apresentar claramente os objetivos do estudo e as questões de pesquisa/hipóteses principais.
     *   [ ] **Métodos:**
@@ -138,6 +139,7 @@
     *   [ ] **Discussão:**
         *   Retomar os principais achados do estudo e interpretá-los à luz das questões de pesquisa.
         *   Comparar os resultados com os de estudos anteriores (semelhanças, diferenças, possíveis explicações).
+        *   [x] Preparar comparação com literatura existente, incorporando insights de revisões sistemáticas recentes (2023-2025).
         *   Discutir as implicações teóricas e práticas dos achados (ex: para saúde dos jogadores, recomendações, desenvolvimento de políticas).
         *   Reconhecer as limitações do estudo (ex: amostra de conveniência, dados auto-relatados, desenho transversal não permite inferir causalidade).
         *   Sugerir direções para pesquisas futuras.
