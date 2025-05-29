@@ -132,27 +132,35 @@ Table: Padrões de Consumo de Cafeína e Resultados dos Testes de Hipóteses
 
 *Parte B: Resumo dos testes de hipóteses*
 
-| Hipótese | Variáveis | Teste | Estatística/Coeficiente | p-valor | N |
-|----------|-----------|-------|-------------------------|---------|---|
-| H1       | Nível de Experiência do Jogador vs. Consumo Diário Total de Cafeína (mg) | Kruskal-Wallis (3 grupos) | H = 7.44 | 0.0242 | 181 |
-| H1 (foco) | Nível de Experiência do Jogador (Amador/Casual vs. Semi-Pro) vs. Consumo Diário Total de Cafeína (mg) | Mann-Whitney U | U = 2853.00 | 0.0229 | 146 (Amador/Casual), 31 (Semi-Profissional) |
-| H2       | Consumo Diário Total de Cafeína (mg) vs. Horas Médias de Jogo Principal por Dia | Correlação de Spearman | ρ = 0.068 | 0.3693 | 175 |
-| H3       | Consumo Diário Total de Cafeína (mg) vs. Ocorrência de Insônia (Sim/Não) | Mann-Whitney U (unilateral) | U = 4852.00 | 0.0152 | 94 (Com Insônia), 87 (Sem Insônia) |
-| H3       | Consumo Diário Total de Cafeína (mg) vs. Ocorrência de Dor de Estômago (Sim/Não) | Mann-Whitney U (unilateral) | U = 4509.50 | 0.0092 | 71 (Com Dor Estômago), 105 (Sem Dor Estômago) |
-| H7       | Consumo Diário Total de Cafeína (mg) vs. Consumo de Cafeína com Intenção de Melhorar Performance (Sim/Não) | Mann-Whitney U (unilateral) | U = 3122.50 | 0.0003 | 31 (Sim Performance), 144 (Não Performance) |
-| H6       | Plataforma Principal de Jogo vs. Ocorrência de Insônia (Sim/Não) | Teste Exato de Fisher | N/A | 0.9823 | 179 (Total Insônia vs Plataforma) |
-| H8       | Gênero do Participante (Masc vs. Fem) vs. Consumo Diário Total de Cafeína (mg) | Mann-Whitney U (bilateral) | U = 2300.00 | 0.4582 | 136 (Masc), 37 (Fem) |
+<table>
+<caption>Table: Resumo dos testes de hipóteses</caption>
+<thead>
+<tr><th>Hipótese</th><th>Variáveis</th><th>Teste</th><th>Estatística/Coeficiente</th><th>p-valor</th><th>N</th></tr>
+</thead>
+<tbody>
+<tr><td>H1</td><td>Nível de Experiência do Jogador vs. Consumo Diário Total de Cafeína (mg)</td><td>Kruskal-Wallis (3 grupos)</td><td>H = 7.44</td><td>0.0242</td><td>181</td></tr>
+<tr><td>H1 (foco)</td><td>Nível de Experiência do Jogador (Amador/Casual vs. Semi-Profissional) vs. Consumo Diário Total de Cafeína (mg)</td><td>Mann-Whitney U</td><td>U = 2853.00</td><td>0.0229</td><td>146, 31</td></tr>
+<tr><td>H2</td><td>Consumo Diário Total de Cafeína (mg) vs. Horas Médias de Jogo Principal por Dia</td><td>Correlação de Spearman</td><td>ρ = 0.068</td><td>0.3693</td><td>175</td></tr>
+<tr><td>H3</td><td>Consumo Diário Total de Cafeína (mg) vs. Ocorrência de Insônia (Sim/Não)</td><td>Mann-Whitney U (unilateral)</td><td>U = 4852.00</td><td>0.0152</td><td>94, 87</td></tr>
+<tr><td>H3</td><td>Consumo Diário Total de Cafeína (mg) vs. Ocorrência de Dor de Estômago (Sim/Não)</td><td>Mann-Whitney U (unilateral)</td><td>U = 4509.50</td><td>0.0092</td><td>71, 105</td></tr>
+<tr><td>H7</td><td>Consumo Diário Total de Cafeína (mg) vs. Consumo de Cafeína com Intenção de Melhorar Performance (Sim/Não)</td><td>Mann-Whitney U (unilateral)</td><td>U = 3122.50</td><td>0.0003</td><td>31, 144</td></tr>
+<tr><td>H6</td><td>Plataforma Principal de Jogo vs. Ocorrência de Insônia (Sim/Não)</td><td>Teste Exato de Fisher</td><td>N/A</td><td>0.9823</td><td>179</td></tr>
+<tr><td>H8</td><td>Gênero do Participante (Masc vs. Fem) vs. Consumo Diário Total de Cafeína (mg)</td><td>Mann-Whitney U (bilateral)</td><td>U = 2300.00</td><td>0.4582</td><td>136, 37</td></tr>
+</tbody>
+</table>
 
-
-*   **Figura 1: Distribuição do Consumo Diário de Cafeína (Consumo Diário Total de Cafeína (mg)).**
-    ![Figura 1: Distribuição do Consumo Diário de Cafeína (Consumo Diário Total de Cafeína (mg))](notebooks/outputs/figura1_distribuicao_cafeina.png)
-    *   Histograma ou boxplot mostrando a distribuição da variável Consumo Diário Total de Cafeína (mg) para a amostra total, evidenciando a assimetria e outliers.
-*   **Figura 2: Consumo Diário de Cafeína (Consumo Diário Total de Cafeína (mg)) por Nível de Experiência do Jogador.**
-    ![Figura 2: Consumo Diário de Cafeína (Consumo Diário Total de Cafeína (mg)) por Nível de Experiência do Jogador](notebooks/outputs/figura2_cafeina_por_nivel.png)
-    *   Boxplots comparando Consumo Diário Total de Cafeína (mg) entre os grupos Amador/Casual e Semi-Profissional.
-*   **Figura 3: Diagrama de Dispersão - Consumo de Cafeína vs. Horas de Jogo.**
-    ![Figura 3: Diagrama de Dispersão - Consumo de Cafeína vs. Horas de Jogo](notebooks/outputs/figura3_cafeina_vs_horas_jogo.png)
-    *   Scatter plot mostrando a relação entre Consumo Diário Total de Cafeína (mg) e Horas Médias de Jogo Principal por Dia.
+*   **Figura 1: Distribuição do Consumo Diário Total de Cafeína em Jogadores de Esports (mg).**
+    ![Figura 1: Distribuição do Consumo Diário Total de Cafeína em Jogadores de Esports](notebooks/outputs/figura1_distribuicao_cafeina.png)
+    *   Histograma da variável Consumo Diário Total de Cafeína (mg) para os 181 participantes sem missing values.
+    *   Note: Bins = 20; n = 181.
+*   **Figura 2: Consumo Diário Total de Cafeína por Nível de Experiência do Jogador (mg).**
+    ![Figura 2: Consumo Diário Total de Cafeína por Nível de Experiência](notebooks/outputs/figura2_cafeina_por_nivel.png)
+    *   Boxplots comparando o Consumo Diário Total de Cafeína (mg) entre Amador/Casual (n=146) e Semi-Profissional (n=31).
+    *   Note: Profissionais excluídos por n < 5.
+*   **Figura 3: Relação entre Consumo Diário Total de Cafeína (mg) e Horas Médias de Jogo Principal por Dia.**
+    ![Figura 3: Relação Consumo de Cafeína vs Horas de Jogo](notebooks/outputs/figura3_cafeina_vs_horas_jogo.png)
+    *   Diagrama de dispersão com linha de regressão (Spearman rho calculado) para n = 175 participantes.
+    *   Note: Valores ausentes de HORAS_JOGO_PRINCIPAL_MEDIA_DIA (n=6) foram excluídos.
 
 Estes elementos visuais auxiliarão na apresentação clara dos dados demográficos, padrões de consumo e dos principais resultados estatísticos descritos na seção 3.3.
 
