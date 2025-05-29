@@ -148,6 +148,7 @@
     *   [ ] **Agradecimentos (Opcional):** Agradecer a agências de fomento, indivíduos que auxiliaram, etc.
     *   [ ] **Referências:** Listar todas as fontes citadas no texto, formatadas consistentemente de acordo com as normas do periódico alvo.
     *   [ ] **Apêndices (Opcional):** Incluir materiais suplementares como o questionário completo (se não detalhado no `RelatórioFinal_Éllis.md` e relevante), ou tabelas muito extensas. O `Livro_de_Codigos.txt` pode ser referenciado como material suplementar online.
+    *   [ ] **Citações e Bibliografia:** Utilizar apenas fontes científicas validadas (publicações de 2023–2025); empregar RAG em bases indexadas (PubMed, Scopus, Web of Science) e manter bibliografia em formato BibTeX.
 
 3.2. **Cronograma de Redação (Sugestão Flexível):**
     *   [ ] Semanas 1-2: Rascunho inicial de Métodos e Resultados (utilizando Fases 1 e 2 como base).

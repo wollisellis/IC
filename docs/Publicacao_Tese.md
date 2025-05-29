@@ -68,7 +68,7 @@ Este estudo empregou um desenho transversal descritivo, no qual um questionário
 # Agradecimentos (Opcional)
 
 # Referências
-*(Formato de acordo com o periódico alvo)*
+As referências devem ser artigos científicos de periódicos indexados publicados entre 2023 e 2025, recuperados via RAG em bases indexadas (PubMed, Scopus, Web of Science). Manter bibliografia em formato BibTeX e citar no texto conforme as normas do periódico alvo.
 
 # Apêndices (Opcional)
 - Apêndice A: Questionário completo
