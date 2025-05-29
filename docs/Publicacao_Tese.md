@@ -24,10 +24,20 @@ O consumo de cafeína no contexto dos esportes eletrônicos (esports) tem se des
 ---
 
 # 1. Introdução
-1.1 Contextualização dos e-sports e consumo de cafeína
-1.2 Revisão da literatura relevante
-1.3 Lacunas identificadas
-1.4 Objetivos e hipóteses do estudo
+## 1.1 Contextualização dos e-sports e consumo de cafeína
+Os esportes eletrônicos (esports) tornaram-se uma indústria global bilionária, atraindo milhões de espectadores e praticantes. Em paralelo, a cafeína é amplamente consumida como estimulante cognitivo e energético, tanto na forma de café quanto em suplementos e bebidas energéticas. Entre jogadores de esports, o uso de cafeína pode impactar atenção, tempo de reação e resistência mental durante competições prolongadas.
+
+## 1.2 Revisão da literatura relevante
+Estudos anteriores em atletas tradicionais indicam que doses moderadas de cafeína (3-6 mg/kg) melhoram desempenho físico e cognitivo, enquanto pesquisas em ambientes acadêmicos associam a cafeína ao aumento de atenção e memória de curto prazo. Entretanto, há escassez de dados específicos sobre consumo de cafeína em jogadores de esports, especialmente no contexto brasileiro.
+
+## 1.3 Lacunas identificadas
+Apesar das evidências sobre benefícios e riscos da cafeína em diferentes populações, faltam estudos sistemáticos que descrevam padrões de consumo de cafeína em esports e analisem relações com experiência de jogo, hábitos de saúde e ocorrência de efeitos adversos. Além disso, poucos trabalhos abordam múltiplas fontes de cafeína (café, energéticos, suplementos, chá e chocolate) de forma integrada.
+
+## 1.4 Objetivos e hipóteses do estudo
+Este estudo teve como objetivo principal caracterizar os padrões de consumo de cafeína em jogadores de esports brasileiros e investigar associações com variáveis demográficas, nível de experiência e indicadores de bem-estar. Hipóteses principais:
+1. Jogadores profissionais consomem mais cafeína diariamente que amadores.
+2. Maior consumo de cafeína está associado a maior tempo médio de jogo por dia.
+3. Frequência de efeitos adversos (insônia, nervosismo) aumenta conforme a dose de cafeína.
 
 # 2. Métodos
 2.1 Desenho do estudo: questionário transversal
