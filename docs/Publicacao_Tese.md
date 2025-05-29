@@ -61,16 +61,17 @@ Este estudo seguiu as diretrizes da Declaração de Helsinki e foi aprovado pelo
 # 3. Resultados
 
 ## 3.1 Descrição da amostra
-A amostra final incluiu N participantes, com idade média de X anos (DP = Y). A composição por gênero foi A% masculino e B% feminino. Quanto ao nível de experiência em esports, C% eram amadores, D% semi-profissionais e E% profissionais.
+A amostra final incluiu 181 participantes. A idade média dos participantes foi de 25.70 anos (DP = 6.64). Quanto ao gênero, 75.14% se identificaram como masculino, 20.44% como feminino, e 4.42% indicaram outras identidades ou preferiram não responder. Em relação ao nível de experiência em esports, 80.66% eram amadores/casuais, 17.13% semi-profissionais, e 2.21% profissionais.
 
 ## 3.2 Análise descritiva das variáveis principais
-As variáveis contínuas, como dose de cafeína diária (média = W mg; DP = Z mg) e horas de jogo diárias (média = V horas; DP = U horas), apresentaram distribuição aproximada a normal. As variáveis categóricas, como consumo de energéticos, mostraram que T% dos participantes consomem energéticos regularmente.
+O consumo médio diário de cafeína reportado foi de 276.37 mg (DP = 218.69 mg). A média de horas de jogo principal por dia foi de 2.48 horas (DP = 1.70 horas). Dos participantes, 76.24% reportaram consumir café, e 56.35% reportaram consumir energéticos. A coluna MG_CAFEINA_DIA apresentou 0.00% de valores ausentes.
 
 ## 3.3 Principais achados estatísticos
-A ANOVA one-way revelou diferença significativa no consumo médio de cafeína entre níveis de jogadores (F(2, N-3) = Fval, p = pv), com maiores valores observados em profissionais. A correlação de Pearson entre dose de cafeína e horas de jogo foi r = rval (p < 0.05), indicando associação positiva.
+(Esta seção será preenchida após a execução da análise estatística no notebook `analise_estatistica.ipynb`)
+A ANOVA one-way revelou [descrição do resultado para H1, ex: diferença significativa ou não] no consumo médio de cafeína entre níveis de jogadores (F([DF1], [DF2]) = [VALOR F], p = [VALOR P]). A correlação de Pearson/Spearman entre dose de cafeína e horas de jogo foi r = [VALOR R] (p = [VALOR P]), indicando [descrição da associação].
 
 ## 3.4 Figuras e tabelas principais
-As Tabelas 1 e 2 apresentam estatísticas descritivas e resultados dos testes. As Figuras 1–3 mostram boxplots por categoria e scatter plots com regressão.
+As Tabelas 1 e 2 apresentam estatísticas descritivas detalhadas e os resultados dos testes de hipóteses. As Figuras 1–3 ilustram as distribuições das principais variáveis e as relações investigadas.
 
 # 4. Discussão
 ## 4.1 Interpretação dos achados

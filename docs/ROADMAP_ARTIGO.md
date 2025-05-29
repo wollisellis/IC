@@ -69,7 +69,7 @@
 
 1.5. **Análise Exploratória de Dados (AED) Aprofundada e Visualização:**
     *   [ ] Criar um script/notebook Jupyter (`analise_exploratoria.ipynb`) dedicado.
-    *   [ ] Calcular estatísticas descritivas detalhadas para todas as variáveis relevantes em `IC_Dados_Processados.csv`.
+    *   [x] Calcular estatísticas descritivas detalhadas para todas as variáveis relevantes em `IC_Dados_Processados.csv`.
         *   Para numéricas: média, mediana, moda, DP, mínimo, máximo, quartis.
         *   Para categóricas: frequências absolutas e relativas.
     *   [ ] Gerar um conjunto rico de visualizações:
