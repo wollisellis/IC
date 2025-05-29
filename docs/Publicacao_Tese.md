@@ -40,8 +40,10 @@ Este estudo teve como objetivo principal caracterizar os padrões de consumo de 
 3. Frequência de efeitos adversos (insônia, nervosismo) aumenta conforme a dose de cafeína.
 
 # 2. Métodos
-2.1 Desenho do estudo: questionário transversal
-2.2 Participantes: critérios de inclusão, filtro de consentimento
+## 2.1 Desenho do Estudo: questionário transversal
+Este estudo empregou um desenho transversal descritivo, no qual um questionário online estruturado foi disponibilizado a jogadores de esports brasileiros. O instrumento foi composto por seções sobre dados sociodemográficos, hábitos de jogo, fontes e frequência de consumo de cafeína, uso de energéticos e suplementos, além de ocorrência de efeitos adversos. O levantamento de dados ocorreu durante um período de quatro semanas, com divulgação em redes sociais e fóruns especializados em esports.
+
+## 2.2 Participantes: critérios de inclusão e filtro de consentimento
 2.3 Instrumento: descrição breve do questionário (referenciar RelatórioFinal_Éllis.md)
 2.4 Processamento de dados: limpeza, codificação e análise exploratória (referenciar src/data_processing.py e Livro_de_Codigos.txt)
 2.5 Análises estatísticas: testes e software utilizado

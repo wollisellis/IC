@@ -113,10 +113,10 @@
 **Fase 3: Redação do Artigo Científico**
 
 3.1. **Planejamento e Estruturação do Manuscrito (Padrão IMRaD):**
-    *   [ ] **Título:** Finalizar o título para ser informativo, conciso e atrativo.
-    *   [ ] **Resumo (Abstract):** Escrever após ter as seções principais (aprox. 250-300 palavras). Incluir: breve Contexto, Objetivo principal, Métodos resumidos, Principais Resultados, Conclusões chave.
-    *   [ ] **Palavras-chave:** Selecionar 3-5 palavras-chave descritivas (ex: cafeína, e-sports, jogadores, hábitos de consumo, Brasil).
-    *   [ ] **Introdução:**
+    *   [x] **Título:** Finalizar o título para ser informativo, conciso e atrativo.
+    *   [x] **Resumo (Abstract):** Escrever após ter as seções principais (aprox. 250-300 palavras). Incluir: breve Contexto, Objetivo principal, Métodos resumidos, Principais Resultados, Conclusões chave.
+    *   [x] **Palavras-chave:** Selecionar 3-5 palavras-chave descritivas (ex: cafeína, e-sports, jogadores, hábitos de consumo, Brasil).
+    *   [x] **Introdução:**
         *   Contextualizar o tema: crescimento dos e-sports, papel da cafeína como psicoestimulante, preocupações com saúde e performance.
         *   Revisão da literatura: o que já se sabe sobre consumo de cafeína em atletas, estudantes, e (se houver) jogadores de e-sports. Citar estudos relevantes.
         *   Identificar a lacuna na literatura que seu estudo preenche (ex: poucos dados sobre jogadores brasileiros, análise detalhada de múltiplos fatores).
