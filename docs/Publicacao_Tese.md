@@ -55,14 +55,14 @@ Foram considerados elegíveis participantes com idade igual ou superior a 18 ano
 O questionário online foi estruturado em seções referentes a dados sociodemográficos, hábitos de jogo, fontes e frequência de consumo de cafeína (café, suplementos, energéticos, chá e chocolate), e ocorrência de efeitos adversos. O questionário completo está disponível no Apêndice A e em `docs/RelatórioFinal_Éllis.md`.
 
 ## 2.4 Processamento de dados: limpeza, codificação e análise exploratória
-Os dados brutos foram importados em Python e processados utilizando um pipeline customizado (disponível em `src/data_processing.py`). Este processo incluiu a remoção de informações de identificação pessoal (PII), padronização de formatos de data e texto, e a conversão de respostas textuais e valores não padronizados (e.g., '#ERROR!', strings vazias) em `NaN` para colunas numéricas. Colunas condicionais tiveram seus valores explicitamente definidos como `NaN` quando a condição precedente não era atendida (e.g., detalhes sobre consumo de café para não consumidores). Algumas variáveis apresentaram dados ausentes, como `IDADE` (1.66% de NaNs, N=3) e `HORAS_JOGO_PRINCIPAL_MEDIA_DIA` (3.31% de NaNs, N=6); as demais colunas com alta porcentagem de NaNs eram, em sua maioria, condicionais (e.g., detalhes de suplementação para não usuários) ou não foram utilizadas nas análises principais aqui reportadas. Não foi realizada a remoção sistemática de outliers, optando-se pelo uso de métodos estatísticos robustos a eles. Em seguida, foi gerado o livro de códigos detalhado via `generate_codebook` (ver Apêndice B e `docs/Livro_de_Codigos.txt`) e conduzida uma análise exploratória de dados (AED) para identificação de padrões e distribuições.
+Os dados brutos foram importados em Python e processados utilizando um pipeline customizado (disponível em `src/data_processing.py`). Este processo incluiu a remoção de informações de identificação pessoal (PII), padronização de formatos de data e texto, e a conversão de respostas textuais e valores não padronizados (e.g., '#ERROR!', strings vazias) em `NaN` para colunas numéricas. Colunas condicionais tiveram seus valores explicitamente definidos como `NaN` quando a condição precedente não era atendida (e.g., detalhes sobre consumo de café para não consumidores). Algumas variáveis apresentaram dados ausentes, como Idade do Participante (anos) (1.66% de NaNs, N=3) e Horas Médias de Jogo Principal por Dia (3.31% de NaNs, N=6); as demais colunas com alta porcentagem de NaNs eram, em sua maioria, condicionais (e.g., detalhes de suplementação para não usuários) ou não foram utilizadas nas análises principais aqui reportadas. Não foi realizada a remoção sistemática de outliers, optando-se pelo uso de métodos estatísticos robustos a eles. Em seguida, foi gerado o livro de códigos detalhado via `generate_codebook` (ver Apêndice B e `docs/Livro_de_Codigos.txt`) e conduzida uma análise exploratória de dados (AED) para identificação de padrões e distribuições.
 
 ## 2.5 Análises estatísticas: testes e software utilizado
 As análises estatísticas foram conduzidas utilizando Python com as bibliotecas `pandas` para manipulação de dados, `scipy.stats` para testes estatísticos e, potencialmente, `scikit-posthocs` para testes post-hoc específicos (como Dunn com correção de Bonferroni), e `statsmodels` se necessário.
-Para comparar o consumo de cafeína (`MG_CAFEINA_TOTAL_DIA`, variável contínua não normalmente distribuída) entre dois grupos independentes (e.g., ocorrência de insônia [H3], intenção de melhorar performance [H7], gênero [H8]), utilizou-se o teste de Mann-Whitney U. A direcionalidade do teste (unilateral ou bilateral) foi escolhida com base na natureza da hipótese específica, sendo unilateral quando uma direção clara era teoricamente esperada. Para comparar entre os três grupos de nível de jogador (Amador/Casual, Semi-Profissional, Profissional [H1]), utilizou-se o teste de Kruskal-Wallis, seguido do teste post-hoc de Dunn com correção de Bonferroni para comparações par a par.
-A associação entre o consumo de cafeína e as horas de jogo (`HORAS_JOGO_PRINCIPAL_MEDIA_DIA` [H2]), ambas variáveis contínuas/ordinais não normalmente distribuídas, foi avaliada pela correlação de Spearman (ρ). 
-Para investigar a associação entre variáveis categóricas (plataforma de jogo principal vs. ocorrência de efeitos adversos específicos [H6]), foram utilizadas tabelas de contingência e o Teste Exato de Fisher, apropriado para amostras com contagens esperadas baixas em algumas células.
-O nível de significância adotado para todas as análises foi α = 0.05. A escolha por testes não paramétricos foi justificada pelos resultados da AED, que indicaram distribuições assimétricas e a presença de outliers na variável `MG_CAFEINA_TOTAL_DIA`.
+Para comparar o consumo de cafeína (Consumo Diário Total de Cafeína (mg), variável contínua não normalmente distribuída) entre dois grupos independentes (e.g., Ocorrência de Insônia (Sim/Não) [H3], Consumo de Cafeína com Intenção de Melhorar Performance (Sim/Não) [H7], Gênero do Participante [H8]), utilizou-se o teste de Mann-Whitney U. A direcionalidade do teste (unilateral ou bilateral) foi escolhida com base na natureza da hipótese específica, sendo unilateral quando uma direção clara era teoricamente esperada. Para comparar entre os três grupos de Nível de Experiência do Jogador (Amador/Casual, Semi-Profissional, Profissional [H1]), utilizou-se o teste de Kruskal-Wallis, seguido do teste post-hoc de Dunn com correção de Bonferroni para comparações par a par.
+A associação entre o consumo de cafeína e as horas de jogo (Horas Médias de Jogo Principal por Dia [H2]), ambas variáveis contínuas/ordinais não normalmente distribuídas, foi avaliada pela correlação de Spearman (ρ).
+Para investigar a associação entre variáveis categóricas (Plataforma Principal de Jogo vs. ocorrência de efeitos adversos específicos [H6]), foram utilizadas tabelas de contingência e o Teste Exato de Fisher, apropriado para amostras com contagens esperadas baixas em algumas células.
+O nível de significância adotado para todas as análises foi α = 0.05. A escolha por testes não paramétricos foi justificada pelos resultados da AED, que indicaram distribuições assimétricas e a presença de outliers na variável Consumo Diário Total de Cafeína (mg).
 
 ## 2.6 Considerações éticas
 Este estudo seguiu as diretrizes da Declaração de Helsinki e foi aprovado pelo Comitê de Ética em Pesquisa da Universidade Estadual de Campinas (CAAE: 12345678). O consentimento informado foi obtido digitalmente antes do início do questionário, e todos os dados foram tratados anonimamente.
@@ -73,14 +73,14 @@ Este estudo seguiu as diretrizes da Declaração de Helsinki e foi aprovado pelo
 A amostra do estudo foi composta por 181 jogadores de esports brasileiros que forneceram consentimento e completaram o questionário online. A idade média dos participantes foi de 25.70 anos (Desvio Padrão, DP = 6.64; Mínimo = 18, Máximo = 56), com 1.66% de dados ausentes para esta variável (N=3). A maioria dos participantes identificou-se como do gênero masculino (75.14%, N=136), enquanto 20.44% (N=37) identificaram-se como do gênero feminino, e 4.42% (N=8) indicaram outras identidades de gênero ou preferiram não responder. Quanto ao nível de experiência auto-reportado em esports, a amostra foi predominantemente composta por jogadores Amadores/Casuais (80.66%, N=146), seguidos por Semi-Profissionais (17.13%, N=31) e uma pequena parcela de Profissionais (2.21%, N=4).
 
 ## 3.2 Análise descritiva das variáveis principais
-O consumo médio diário total de cafeína (`MG_CAFEINA_TOTAL_DIA`) reportado pelos participantes foi de 276.37 mg (DP = 218.69 mg; Mediana = 228.74 mg), variando de 0 mg a um máximo de 1092.91 mg, sem valores ausentes para esta variável. Em relação às fontes de cafeína, 76.24% (N=138) dos participantes reportaram consumir café e 56.35% (N=102) reportaram consumir bebidas energéticas. A média de horas dedicadas ao jogo principal por dia (`HORAS_JOGO_PRINCIPAL_MEDIA_DIA`) foi de 2.48 horas (DP = 1.70 horas; Mediana = 3.00 horas), com 3.31% de dados ausentes (N=6) para esta variável.
+O consumo médio diário total de cafeína (Consumo Diário Total de Cafeína (mg)) reportado pelos participantes foi de 276.37 mg (DP = 218.69 mg; Mediana = 228.74 mg), variando de 0 mg a um máximo de 1092.91 mg, sem valores ausentes para esta variável. Em relação às fontes de cafeína, 76.24% (N=138) dos participantes reportaram consumir café e 56.35% (N=102) reportaram consumir bebidas energéticas. A média de horas dedicadas ao jogo principal por dia (Horas Médias de Jogo Principal por Dia) foi de 2.48 horas (DP = 1.70 horas; Mediana = 3.00 horas), com 3.31% de dados ausentes (N=6) para esta variável.
 
 ## 3.3 Principais achados estatísticos
 **H1: Consumo de Cafeína vs. Nível do Jogador**
-A análise do consumo de cafeína (`MG_CAFEINA_TOTAL_DIA`) entre os três níveis de jogadores (Amador/Casual: N=146, Média Cafeína = 281.40 ± 203.34 mg; Semi-Profissional: N=31, Média Cafeína = 210.66 ± 215.40 mg; Profissional: N=4, Média Cafeína = 602.09 ± 468.85 mg) utilizando o teste de Kruskal-Wallis revelou uma diferença global estatisticamente significativa (H-estatística = 7.44, p = 0.0242). Contudo, os testes post-hoc de Dunn com correção de Bonferroni não indicaram diferenças significativas entre os pares de grupos específicos (Amador/Casual vs. Semi-Profissional: p = 0.0711; Amador/Casual vs. Profissional: p = 0.5152; Semi-Profissional vs. Profissional: p = 0.0957). Uma análise focada nos dois maiores grupos, Amadores/Casuais e Semi-Profissionais (excluindo Profissionais devido ao N muito baixo), como previamente considerado, indicou que Amadores/Casuais (281.40 ± 203.34 mg) reportaram maior consumo que Semi-Profissionais (210.66 ± 215.40 mg; Teste de Mann-Whitney U = 2853.00, p = 0.0229).
+A análise do consumo de cafeína (Consumo Diário Total de Cafeína (mg)) entre os três níveis de jogadores (Amador/Casual: N=146, Média Cafeína = 281.40 ± 203.34 mg; Semi-Profissional: N=31, Média Cafeína = 210.66 ± 215.40 mg; Profissional: N=4, Média Cafeína = 602.09 ± 468.85 mg) utilizando o teste de Kruskal-Wallis revelou uma diferença global estatisticamente significativa (H-estatística = 7.44, p = 0.0242). Contudo, os testes post-hoc de Dunn com correção de Bonferroni não indicaram diferenças significativas entre os pares de grupos específicos (Amador/Casual vs. Semi-Profissional: p = 0.0711; Amador/Casual vs. Profissional: p = 0.5152; Semi-Profissional vs. Profissional: p = 0.0957). Uma análise focada nos dois maiores grupos, Amadores/Casuais e Semi-Profissionais (excluindo Profissionais devido ao N muito baixo), como previamente considerado, indicou que Amadores/Casuais (281.40 ± 203.34 mg) reportaram maior consumo que Semi-Profissionais (210.66 ± 215.40 mg; Teste de Mann-Whitney U = 2853.00, p = 0.0229).
 
 **H2: Consumo de Cafeína vs. Horas de Jogo**
-Não foi encontrada correlação estatisticamente significativa entre o consumo diário de cafeína (`MG_CAFEINA_TOTAL_DIA`) e as horas médias de jogo principal por dia (`HORAS_JOGO_PRINCIPAL_MEDIA_DIA`) (Correlação de Spearman ρ = 0.068, p = 0.3693, N=175).
+Não foi encontrada correlação estatisticamente significativa entre o consumo diário de cafeína (Consumo Diário Total de Cafeína (mg)) e as horas médias de jogo principal por dia (Horas Médias de Jogo Principal por Dia) (Correlação de Spearman ρ = 0.068, p = 0.3693, N=175).
 
 **H3: Efeitos Adversos Específicos vs. Dose de Cafeína**
 Investigou-se a associação entre o consumo de cafeína e a ocorrência de efeitos adversos específicos:
@@ -95,7 +95,7 @@ Jogadores que reportaram consumir cafeína com a intenção de melhorar a perfor
 Não foram encontradas associações estatisticamente significativas entre a plataforma de jogo principal (Celular/Mobile, PC, Playstation, Xbox) e a ocorrência de insônia (Teste Exato de Fisher, p = 0.9823), taquicardia (p = 0.5671), tremores (p = 0.7998) ou dor no estômago (p = 0.2554).
 
 **H8: Consumo de Cafeína vs. Gênero**
-Não foi encontrada diferença estatisticamente significativa no consumo diário de cafeína (`MG_CAFEINA_TOTAL_DIA`) entre participantes do gênero masculino (N=136; Média = 280.10 ± 220.50 mg) e feminino (N=37; Média = 260.20 ± 200.30 mg) (Teste de Mann-Whitney U, U = 2300.00, p = 0.4582, bilateral). O grupo "Outros/PÑR" (N=8) não foi incluído nesta análise devido ao tamanho reduzido.
+Não foi encontrada diferença estatisticamente significativa no consumo diário de cafeína (Consumo Diário Total de Cafeína (mg)) entre participantes do gênero masculino (N=136; Média = 280.10 ± 220.50 mg) e feminino (N=37; Média = 260.20 ± 200.30 mg) (Teste de Mann-Whitney U, U = 2300.00, p = 0.4582, bilateral). O grupo "Outros/PÑR" (N=8) não foi incluído nesta análise devido ao tamanho reduzido.
 
 ## 3.4 Figuras e tabelas principais
 
@@ -117,7 +117,7 @@ Não foi encontrada diferença estatisticamente significativa no consumo diário
 
 **Tabela 2: Padrões de Consumo de Cafeína e Resultados dos Testes de Hipóteses.**
 
-*Parte A: Consumo de Cafeína Total Diário (MG_CAFEINA_TOTAL_DIA)*
+*Parte A: Consumo de Cafeína Total Diário (Consumo Diário Total de Cafeína (mg))*
 
 | Descrição | Estatística | Valor (mg) |
 |-------------------|-----------------|---------------|
@@ -134,22 +134,22 @@ Não foi encontrada diferença estatisticamente significativa no consumo diário
 
 | Hipótese | Variáveis | Teste | Estatística/Coeficiente | p-valor | N |
 |----------|-----------|-------|-------------------------|---------|---|
-| H1       | `NIVEL_JOGADOR_COD` vs. `MG_CAFEINA_TOTAL_DIA` | Kruskal-Wallis (3 grupos) | H = 7.44 | 0.0242 | 181 |
-| H1 (foco) | `NIVEL_JOGADOR_COD` (Amador/Casual vs. Semi-Pro) vs. `MG_CAFEINA_TOTAL_DIA` | Mann-Whitney U | U = 2853.00 | 0.0229 | 146 (Amador/Casual), 31 (Semi-Profissional) |
-| H2       | `MG_CAFEINA_TOTAL_DIA` vs. `HORAS_JOGO_PRINCIPAL_MEDIA_DIA` | Correlação de Spearman | ρ = 0.068 | 0.3693 | 175 |
-| H3       | `MG_CAFEINA_TOTAL_DIA` vs. `EFEITO_ADVERSO_INSONIA_BIN` | Mann-Whitney U (unilateral) | U = 4852.00 | 0.0152 | 94 (Com Insônia), 87 (Sem Insônia) |
-| H3       | `MG_CAFEINA_TOTAL_DIA` vs. `EFEITO_ADVERSO_DOR_ESTOMAGO_BIN` | Mann-Whitney U (unilateral) | U = 4509.50 | 0.0092 | 71 (Com Dor Estômago), 105 (Sem Dor Estômago) |
-| H7       | `MG_CAFEINA_TOTAL_DIA` vs. `MELHORAR_PERFORMANCE_MOTIVO_BIN` | Mann-Whitney U (unilateral) | U = 3122.50 | 0.0003 | 31 (Sim Performance), 144 (Não Performance) |
-| H6       | `PLATAFORMA_PRINCIPAL_COD` vs. `EFEITO_ADVERSO_INSONIA_BIN` | Teste Exato de Fisher | N/A | 0.9823 | 179 (Total Insônia vs Plataforma) |
-| H8       | `GENERO_COD` (Masc vs. Fem) vs. `MG_CAFEINA_TOTAL_DIA` | Mann-Whitney U (bilateral) | U = 2300.00 | 0.4582 | 136 (Masc), 37 (Fem) |
+| H1       | Nível de Experiência do Jogador vs. Consumo Diário Total de Cafeína (mg) | Kruskal-Wallis (3 grupos) | H = 7.44 | 0.0242 | 181 |
+| H1 (foco) | Nível de Experiência do Jogador (Amador/Casual vs. Semi-Pro) vs. Consumo Diário Total de Cafeína (mg) | Mann-Whitney U | U = 2853.00 | 0.0229 | 146 (Amador/Casual), 31 (Semi-Profissional) |
+| H2       | Consumo Diário Total de Cafeína (mg) vs. Horas Médias de Jogo Principal por Dia | Correlação de Spearman | ρ = 0.068 | 0.3693 | 175 |
+| H3       | Consumo Diário Total de Cafeína (mg) vs. Ocorrência de Insônia (Sim/Não) | Mann-Whitney U (unilateral) | U = 4852.00 | 0.0152 | 94 (Com Insônia), 87 (Sem Insônia) |
+| H3       | Consumo Diário Total de Cafeína (mg) vs. Ocorrência de Dor de Estômago (Sim/Não) | Mann-Whitney U (unilateral) | U = 4509.50 | 0.0092 | 71 (Com Dor Estômago), 105 (Sem Dor Estômago) |
+| H7       | Consumo Diário Total de Cafeína (mg) vs. Consumo de Cafeína com Intenção de Melhorar Performance (Sim/Não) | Mann-Whitney U (unilateral) | U = 3122.50 | 0.0003 | 31 (Sim Performance), 144 (Não Performance) |
+| H6       | Plataforma Principal de Jogo vs. Ocorrência de Insônia (Sim/Não) | Teste Exato de Fisher | N/A | 0.9823 | 179 (Total Insônia vs Plataforma) |
+| H8       | Gênero do Participante (Masc vs. Fem) vs. Consumo Diário Total de Cafeína (mg) | Mann-Whitney U (bilateral) | U = 2300.00 | 0.4582 | 136 (Masc), 37 (Fem) |
 
 
-*   **Figura 1: Distribuição do Consumo Diário de Cafeína (MG_CAFEINA_TOTAL_DIA).**
-    *   Histograma ou boxplot mostrando a distribuição da variável `MG_CAFEINA_TOTAL_DIA` para a amostra total, evidenciando a assimetria e outliers. (Ver `notebooks/outputs/figura1_distribuicao_cafeina.png`)
-*   **Figura 2: Consumo Diário de Cafeína (MG_CAFEINA_TOTAL_DIA) por Nível de Jogador.**
-    *   Boxplots comparando `MG_CAFEINA_TOTAL_DIA` entre os grupos Amador/Casual e Semi-Profissional. (Ver `notebooks/outputs/figura2_cafeina_por_nivel.png`)
+*   **Figura 1: Distribuição do Consumo Diário de Cafeína (Consumo Diário Total de Cafeína (mg)).**
+    *   Histograma ou boxplot mostrando a distribuição da variável Consumo Diário Total de Cafeína (mg) para a amostra total, evidenciando a assimetria e outliers. (Ver `notebooks/outputs/figura1_distribuicao_cafeina.png`)
+*   **Figura 2: Consumo Diário de Cafeína (Consumo Diário Total de Cafeína (mg)) por Nível de Experiência do Jogador.**
+    *   Boxplots comparando Consumo Diário Total de Cafeína (mg) entre os grupos Amador/Casual e Semi-Profissional. (Ver `notebooks/outputs/figura2_cafeina_por_nivel.png`)
 *   **Figura 3: Diagrama de Dispersão - Consumo de Cafeína vs. Horas de Jogo.**
-    *   Scatter plot mostrando a relação entre `MG_CAFEINA_TOTAL_DIA` e `HORAS_JOGO_PRINCIPAL_MEDIA_DIA`. (Ver `notebooks/outputs/figura3_cafeina_vs_horas_jogo.png`)
+    *   Scatter plot mostrando a relação entre Consumo Diário Total de Cafeína (mg) e Horas Médias de Jogo Principal por Dia. (Ver `notebooks/outputs/figura3_cafeina_vs_horas_jogo.png`)
 
 Estes elementos visuais auxiliarão na apresentação clara dos dados demográficos, padrões de consumo e dos principais resultados estatísticos descritos na seção 3.3.
 
