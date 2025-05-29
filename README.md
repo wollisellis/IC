@@ -46,9 +46,9 @@ df = process_all(data_path, output_csv, codebook)
 
 ## Tests
 
-Run pytest:
-```
-pytest --maxfail=1 --disable-warnings -q
+Run pytest with coverage:
+```bash
+pytest --maxfail=1 --disable-warnings -q --cov=src --cov-report=term-missing --cov-fail-under=80
 ```
 
 ## Documentação
