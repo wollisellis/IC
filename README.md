@@ -69,4 +69,4 @@ Para facilitar a navegação e manter a organização do projeto, seguem os prin
 
 ### Documentação Técnica
 - [Visão Geral do Projeto (README)](README.md)
-- [Código de Processamento de Dados](src/data_processing.py) 
+- [Código de Processamento de Dados](src/data_processing.py)
