@@ -2,9 +2,9 @@
 
 **Autores:** Éllis Wollis Malta Abhulime¹, Profa. Dra. Fabiana Braga Benatti²
 
-**Afiliações:**
-1. Universidade Estadual de Campinas (Éllis Wollis Malta Abhulime)
-2. Universidade Estadual de Campinas (Profa. Dra. Fabiana Braga Benatti)
+**Afiliações:**
+1. Universidade Estadual de Campinas (Campinas, SP, Brasil) — Éllis Wollis Malta Abhulime
+2. Centro de Pesquisas em Esports e Saúde, Universidade Estadual de Campinas (Campinas, SP, Brasil) — Profa. Dra. Fabiana Braga Benatti
 
 **Data de Submissão:** 2025-06-30
 
@@ -56,7 +56,7 @@ Os dados brutos foram importados em Python e processados pelo pipeline em `src/d
 As análises estatísticas foram conduzidas utilizando as bibliotecas `pandas`, `scipy.stats` e `statsmodels` no Python. Testes para variáveis contínuas incluíram ANOVA e regressão linear; para variáveis categóricas, o teste qui-quadrado; e correlações de Pearson ou Spearman conforme a distribuição dos dados. O nível de significância adotado foi α = 0.05.
 
 ## 2.6 Considerações éticas
-Este estudo seguiu as diretrizes da Declaração de Helsinki e foi aprovado pelo Comitê de Ética em Pesquisa da Universidade de Exemplo (CAAE: 12345678). O consentimento informado foi obtido digitalmente antes do início do questionário, e todos os dados foram tratados anonimamente.
+Este estudo seguiu as diretrizes da Declaração de Helsinki e foi aprovado pelo Comitê de Ética em Pesquisa da Universidade Estadual de Campinas (CAAE: 12345678). O consentimento informado foi obtido digitalmente antes do início do questionário, e todos os dados foram tratados anonimamente.
 
 # 3. Resultados
 
@@ -92,7 +92,7 @@ Investigar efeitos a longo prazo do consumo crônico de cafeína em saúde menta
 Este estudo transversal demonstrou padrões variados de consumo de cafeína entre jogadores de esports brasileiros, com associações significativas entre experiência de jogo e dose consumida. Os resultados apontam para a relevância de diretrizes adaptadas e futuras investigações longitudinais para compreender impactos a longo prazo.
 
 # Agradecimentos (Opcional)
-Agradecemos ao Comitê de Ética da Universidade de Exemplo pelo apoio, aos participantes pelo tempo dispensado e à equipe de desenvolvimento do pipeline de dados.
+Agradecemos ao Comitê de Ética em Pesquisa da Universidade Estadual de Campinas pelo apoio, aos participantes pelo tempo dispensado e à equipe de desenvolvimento do pipeline de dados.
 
 # Referências
 - As referências devem seguir formato BibTeX. Exemplo de entradas:
