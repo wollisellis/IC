@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import os
+import seaborn as sns
 
 OUTPUT_DIR = "notebooks/outputs"
 
@@ -152,7 +153,32 @@ def calcular_estatisticas_descritivas(caminho_csv: str):
         else:
             print("\\nAVISO: Não foi possível gerar a Figura 2 (Dados insuficientes para os níveis de jogador especificados).")
     else:
-        print("\\nAVISO: Não foi possível gerar a Figura 2 (Colunas 'MG_CAFEINA_DIA' ou 'NIVEL_JOGADOR_COD' não encontradas).")
+        print("\nAVISO: Não foi possível gerar a Figura 2 (Colunas 'MG_CAFEINA_DIA' ou 'NIVEL_JOGADOR_COD' não encontradas).")
+
+    # Figura 3: Consumo Diário de Cafeína (MG_CAFEINA_DIA) por Intenção de Melhorar Performance
+    if 'MG_CAFEINA_DIA' in df.columns and 'MELHORAR_PERFORMANCE_MOTIVO_BIN' in df.columns:
+        df_copy_h7 = df.copy()
+        performance_map = {0: 'Não visa Performance', 1: 'Visa Performance'}
+        df_copy_h7['PERFORMANCE_MOTIVO_NOME'] = df_copy_h7['MELHORAR_PERFORMANCE_MOTIVO_BIN'].map(performance_map)
+        
+        df_plot_fig3 = df_copy_h7.dropna(subset=['MG_CAFEINA_DIA', 'PERFORMANCE_MOTIVO_NOME'])
+
+        if not df_plot_fig3.empty and df_plot_fig3['PERFORMANCE_MOTIVO_NOME'].nunique() >= 2:
+            plt.figure(figsize=(10, 6))
+            order = ['Não visa Performance', 'Visa Performance'] # Garantir a ordem correta no plot
+            sns.boxplot(x='PERFORMANCE_MOTIVO_NOME', y='MG_CAFEINA_DIA', data=df_plot_fig3, order=order, palette="pastel")
+            plt.title('Figura 3: Consumo Diário de Cafeína por Intenção de Melhorar Performance')
+            plt.xlabel('Consome Cafeína para Melhorar Performance?')
+            plt.ylabel('Consumo Diário de Cafeína (mg)')
+            plt.grid(axis='y', alpha=0.75)
+            fig3_path = os.path.join(OUTPUT_DIR, "figura3_cafeina_por_performance.png")
+            plt.savefig(fig3_path)
+            plt.close()
+            print(f"Figura 3 salva em: {fig3_path}")
+        else:
+            print("\nAVISO: Não foi possível gerar a Figura 3 (Dados insuficientes ou um único grupo após filtro para 'MELHORAR_PERFORMANCE_MOTIVO_BIN').")
+    else:
+        print("\nAVISO: Não foi possível gerar a Figura 3 (Colunas 'MG_CAFEINA_DIA' ou 'MELHORAR_PERFORMANCE_MOTIVO_BIN' não encontradas).")
 
     # Outras estatísticas descritivas (mantidas para informação, mas não parte das tabelas principais da tese)
     print("\n--- Outras Estatísticas Descritivas (para informação) ---")
@@ -184,6 +210,64 @@ def calcular_estatisticas_descritivas(caminho_csv: str):
             print(f"{col}: {perc_nan:.2f}%")
     else:
         print("Nenhuma coluna com dados ausentes encontrada.")
+
+    # Adicionar contagens para variáveis específicas de interesse para novas hipóteses
+    print("\n--- Contagens para Variáveis de Interesse Adicionais ---")
+
+    if 'PLATAFORMA_PRINCIPAL_COD' in df.columns:
+        print("\n--- PLATAFORMA PRINCIPAL (PLATAFORMA_PRINCIPAL_COD) ---")
+        # Códigos conforme Livro_de_Codigos.txt (e data_processing.py)
+        map_plataforma = {
+            1: 'PC',
+            2: 'Celular/Mobile',
+            3: 'Playstation',
+            4: 'Xbox',
+            5: 'Nintendo',
+            6: 'Outro'
+        }
+        plataforma_counts = df['PLATAFORMA_PRINCIPAL_COD'].value_counts()
+        plataforma_percent = df['PLATAFORMA_PRINCIPAL_COD'].value_counts(normalize=True) * 100
+        for cod, count in plataforma_counts.items():
+            label = map_plataforma.get(cod, f'Código {cod} não mapeado')
+            print(f"{label}: {plataforma_percent.get(cod, 0):.2f}% (Contagem: {count})")
+        if df['PLATAFORMA_PRINCIPAL_COD'].isna().any():
+             print(f"NaNs: {df['PLATAFORMA_PRINCIPAL_COD'].isna().sum() / len(df) * 100:.2f}% (Contagem: {df['PLATAFORMA_PRINCIPAL_COD'].isna().sum()})")
+    else:
+        print("\nAVISO: Coluna 'PLATAFORMA_PRINCIPAL_COD' não encontrada.")
+
+    if 'EFEITO_ADVERSO_PRESENTE_BIN' in df.columns:
+        print("\n--- EFEITO ADVERSO PRESENTE (EFEITO_ADVERSO_PRESENTE_BIN) ---")
+        ea_counts = df['EFEITO_ADVERSO_PRESENTE_BIN'].value_counts()
+        ea_percent = df['EFEITO_ADVERSO_PRESENTE_BIN'].value_counts(normalize=True) * 100
+        print(f"Sim (cód 1): {ea_percent.get(1, 0):.2f}% (Contagem: {ea_counts.get(1,0)})")
+        print(f"Não (cód 0): {ea_percent.get(0, 0):.2f}% (Contagem: {ea_counts.get(0,0)})")
+        if df['EFEITO_ADVERSO_PRESENTE_BIN'].isna().any():
+             print(f"NaNs: {df['EFEITO_ADVERSO_PRESENTE_BIN'].isna().sum() / len(df) * 100:.2f}% (Contagem: {df['EFEITO_ADVERSO_PRESENTE_BIN'].isna().sum()})")
+    else:
+        print("\nAVISO: Coluna 'EFEITO_ADVERSO_PRESENTE_BIN' não encontrada.")
+
+    if 'MELHORAR_PERFORMANCE_MOTIVO_BIN' in df.columns:
+        print("\n--- MOTIVO MELHORAR PERFORMANCE (MELHORAR_PERFORMANCE_MOTIVO_BIN) ---")
+        perf_counts = df['MELHORAR_PERFORMANCE_MOTIVO_BIN'].value_counts(dropna=False) # Incluir NaNs na contagem inicial
+        perf_percent = df['MELHORAR_PERFORMANCE_MOTIVO_BIN'].value_counts(normalize=True, dropna=False) * 100
+        
+        # Contagem para Sim (1.0)
+        sim_count = perf_counts.get(1.0, 0)
+        sim_percent = (sim_count / len(df)) * 100 if len(df) > 0 else 0
+        print(f"Sim (cód 1): {sim_percent:.2f}% (Contagem: {sim_count})")
+        
+        # Contagem para Não (0.0)
+        nao_count = perf_counts.get(0.0, 0)
+        nao_percent = (nao_count / len(df)) * 100 if len(df) > 0 else 0
+        print(f"Não (cód 0): {nao_percent:.2f}% (Contagem: {nao_count})")
+
+        # Contagem para NaNs
+        nan_count = df['MELHORAR_PERFORMANCE_MOTIVO_BIN'].isna().sum()
+        nan_percent = (nan_count / len(df)) * 100 if len(df) > 0 else 0
+        if nan_count > 0:
+            print(f"NaNs: {nan_percent:.2f}% (Contagem: {nan_count})")
+    else:
+        print("\nAVISO: Coluna 'MELHORAR_PERFORMANCE_MOTIVO_BIN' não encontrada.")
 
 if __name__ == '__main__':
     # Caminho para o arquivo CSV processado

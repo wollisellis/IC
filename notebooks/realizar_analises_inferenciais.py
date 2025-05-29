@@ -7,6 +7,7 @@ import pandas as pd
 from scipy.stats import kruskal, pearsonr, spearmanr, mannwhitneyu
 import statsmodels.api as sm
 from statsmodels.formula.api import ols
+import scikit_posthocs as sp
 
 def carregar_dados(caminho_csv: str) -> pd.DataFrame:
     """Carrega os dados processados."""
@@ -59,14 +60,16 @@ def analisar_h1(df: pd.DataFrame):
     }
 
     grupos_para_teste = []
-    nomes_dos_grupos = []
+    nomes_dos_grupos_map = {}
+    
+    df_h1_filtrado = df_h1.copy()
 
     for codigo, nome in map_nivel_jogador_esperado.items():
         if codigo in niveis_no_csv:
             dados_do_grupo = df_h1[df_h1['NIVEL_JOGADOR_COD'] == codigo]['MG_CAFEINA_TOTAL_DIA']
             if not dados_do_grupo.empty:
                 grupos_para_teste.append(dados_do_grupo)
-                nomes_dos_grupos.append(nome)
+                nomes_dos_grupos_map[nome] = dados_do_grupo
                 print(f"Grupo '{nome}': N={len(dados_do_grupo)}, Média Cafeína={dados_do_grupo.mean():.2f} mg, DP={dados_do_grupo.std():.2f} mg")
             else:
                 print(f"Grupo '{nome}' encontrado mas vazio após filtro de NaN para cafeína.")
@@ -81,13 +84,33 @@ def analisar_h1(df: pd.DataFrame):
     try:
         if len(grupos_para_teste) == 2:
             stat, p_valor_h1 = mannwhitneyu(grupos_para_teste[0], grupos_para_teste[1], alternative='two-sided')
-            print(f"Teste Mann-Whitney U entre '{nomes_dos_grupos[0]}' e '{nomes_dos_grupos[1]}': Estatística U={stat:.2f}, p-valor={p_valor_h1:.4f}")
+            print(f"Teste Mann-Whitney U entre '{list(nomes_dos_grupos_map.keys())[0]}' e '{list(nomes_dos_grupos_map.keys())[1]}': Estatística U={stat:.2f}, p-valor={p_valor_h1:.4f}")
         elif len(grupos_para_teste) >= 3:
             stat, p_valor_h1 = kruskal(*grupos_para_teste)
-            print(f"Teste Kruskal-Wallis entre os {len(nomes_dos_grupos)} grupos ({', '.join(nomes_dos_grupos)}): H-estatística={stat:.2f}, p-valor={p_valor_h1:.4f}")
+            print(f"Teste Kruskal-Wallis entre os {len(nomes_dos_grupos_map.keys())} grupos ({', '.join(nomes_dos_grupos_map.keys())}): H-estatística={stat:.2f}, p-valor={p_valor_h1:.4f}")
         
         if p_valor_h1 < 0.05:
             print("Resultado H1: Diferença estatisticamente significativa encontrada.")
+            if len(grupos_para_teste) >= 3:
+                print("\n  Realizando teste post-hoc de Dunn com correção de Bonferroni:")
+                posthoc_df = sp.posthoc_dunn(grupos_para_teste, p_adjust='bonferroni')
+                
+                group_names_list = list(nomes_dos_grupos_map.keys())
+                posthoc_df.columns = group_names_list
+                posthoc_df.index = group_names_list
+                print("  Matriz de p-valores (Teste de Dunn com correção de Bonferroni):")
+                print(posthoc_df)
+                
+                print("\n  Interpretação do Post-Hoc (Dunn-Bonferroni):")
+                for i in range(len(group_names_list)):
+                    for j in range(i + 1, len(group_names_list)):
+                        group1 = group_names_list[i]
+                        group2 = group_names_list[j]
+                        p_value = posthoc_df.loc[group1, group2]
+                        if p_value < 0.05:
+                            print(f"    Diferença significativa encontrada entre '{group1}' e '{group2}' (p={p_value:.4f})")
+                        else:
+                            print(f"    NÃO houve diferença significativa entre '{group1}' e '{group2}' (p={p_value:.4f})")
         else:
             print("Resultado H1: Nenhuma diferença estatisticamente significativa encontrada.")
     except Exception as e:
@@ -194,6 +217,62 @@ def analisar_h3(df: pd.DataFrame):
         except Exception as e:
             print(f"    Erro ao executar Mann-Whitney U para {nome_efeito}: {e}")
 
+def analisar_h7(df: pd.DataFrame):
+    """
+    H7: Jogadores que consomem cafeína para melhorar a performance 
+    consomem mais cafeína do que os que não têm essa intenção.
+    Testa diferenças no consumo de MG_CAFEINA_TOTAL_DIA entre
+    MELHORAR_PERFORMANCE_MOTIVO_BIN (1 vs 0).
+    """
+    print("\n--- Análise H7: Consumo de Cafeína vs. Intenção de Melhorar Performance ---")
+    col_interesse_h7 = 'MELHORAR_PERFORMANCE_MOTIVO_BIN'
+    col_cafeina = 'MG_CAFEINA_TOTAL_DIA'
+
+    if col_cafeina not in df.columns or col_interesse_h7 not in df.columns:
+        print(f"Colunas necessárias para H7 ({col_cafeina}, {col_interesse_h7}) não encontradas. Pulando análise.")
+        return
+
+    df_h7 = df[[col_interesse_h7, col_cafeina]].copy()
+    df_h7.dropna(subset=[col_interesse_h7, col_cafeina], inplace=True)
+
+    if df_h7.empty:
+        print("Não há dados suficientes para H7 após remover NaNs.")
+        return
+    
+    try:
+        df_h7[col_interesse_h7] = pd.to_numeric(df_h7[col_interesse_h7], errors='raise').astype(int)
+    except (ValueError, TypeError) as e:
+        print(f"    Erro ao converter coluna {col_interesse_h7} para numérico/inteiro: {e}. Valores: {df_h7[col_interesse_h7].unique()[:5]}. Pulando.")
+        return
+
+    valores_unicos_h7 = df_h7[col_interesse_h7].unique()
+    if not all(v in [0, 1] for v in valores_unicos_h7):
+        print(f"    Coluna {col_interesse_h7} não é binária (0 ou 1) após conversão (valores: {valores_unicos_h7}). Pulando.")
+        return
+
+    grupo_performance_sim = df_h7[df_h7[col_interesse_h7] == 1][col_cafeina]
+    grupo_performance_nao = df_h7[df_h7[col_interesse_h7] == 0][col_cafeina]
+
+    if grupo_performance_sim.empty or grupo_performance_nao.empty:
+        print("    Não há dados suficientes em ambos os grupos (SIM e NÃO performance) para o teste.")
+        if grupo_performance_sim.empty: print("      Ninguém reportou consumir para performance (ou todos com NaNs na cafeína associada).")
+        if grupo_performance_nao.empty: print("      Todos reportaram consumir para performance (ou todos com NaNs na cafeína associada).")
+        return
+        
+    print(f"    Grupo SIM Performance (N={len(grupo_performance_sim)}): Média Cafeína={grupo_performance_sim.mean():.2f} mg (DP={grupo_performance_sim.std():.2f}) mg")
+    print(f"    Grupo NÃO Performance (N={len(grupo_performance_nao)}): Média Cafeína={grupo_performance_nao.mean():.2f} mg (DP={grupo_performance_nao.std():.2f}) mg")
+
+    try:
+        stat, p_valor = mannwhitneyu(grupo_performance_sim, grupo_performance_nao, alternative='greater') 
+        print(f"    Teste Mann-Whitney U (unilateral: SIM Performance > NÃO Performance): Estatística U={stat:.2f}, p-valor={p_valor:.4f}")
+
+        if p_valor < 0.05:
+            print(f"    Resultado H7: Consumo de cafeína é significativamente MAIOR no grupo que visa performance.")
+        else:
+            print(f"    Resultado H7: Não há evidência de que o consumo de cafeína seja significativamente maior no grupo que visa performance.")
+    except Exception as e:
+        print(f"    Erro ao executar Mann-Whitney U para H7: {e}")
+
 if __name__ == '__main__':
     caminho_do_arquivo_csv = 'C:/Users/nicol_qs45gn8/IC/IC_Dados_Processados.csv'
     df_processado = carregar_dados(caminho_do_arquivo_csv)
@@ -215,6 +294,7 @@ if __name__ == '__main__':
         analisar_h1(df_processado)
         analisar_h2(df_processado)
         analisar_h3(df_processado)
+        analisar_h7(df_processado)
     else:
         print("Análises não puderam ser executadas devido a erro no carregamento dos dados.")
 

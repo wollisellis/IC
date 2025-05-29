@@ -648,6 +648,16 @@ def process_all(input_path: str, output_csv: str, codebook_txt: str) -> pd.DataF
     else:
         df['CHOCOLATE_PORCAO_COD'] = pd.NA
 
+    # --- Motivo do Consumo de Cafeína ---
+    # Pergunta: Você consome cafeína pensando em melhorar a sua performance nos esportes eletrônicos? -> MELHORAR_PERFORMANCE_MOTIVO_BIN
+    col_melhorar_performance = 'Você consome cafeína pensando em melhorar a sua performance nos esportes eletrônicos?'
+    if col_melhorar_performance in df.columns:
+        performance_map = {'Sim': 1, 'Não': 0}
+        df = encode_column(df, col_melhorar_performance, performance_map, 'MELHORAR_PERFORMANCE_MOTIVO_BIN')
+    else:
+        df['MELHORAR_PERFORMANCE_MOTIVO_BIN'] = pd.NA
+        df['MELHORAR_PERFORMANCE_MOTIVO_BIN'] = df['MELHORAR_PERFORMANCE_MOTIVO_BIN'].astype('Int64')
+
     # --- Efeitos Adversos ---
     # Pergunta original sobre ter sentido ou não ALGUM efeito:
     col_efeitos_adv_geral_raw = "Você já experimentou algum dos seguintes efeitos adversos após consumir cafeína?Insônia, taquicardia (coração acelerado), nervosismo, tremores, dor no estômago ou outro sintoma"
@@ -766,6 +776,12 @@ def process_all(input_path: str, output_csv: str, codebook_txt: str) -> pd.DataF
             print(f"Coluna: {col_debug}, Existe: False")
     print("--- FIM DEBUG ---\n")
 
+    # Remover colunas "Unnamed" antes de exportar
+    cols_unnamed = [col for col in df.columns if 'Unnamed:' in col]
+    if cols_unnamed:
+        print(f"Removendo colunas 'Unnamed': {cols_unnamed}")
+        df = df.drop(columns=cols_unnamed)
+    
     # Export outputs
     export_processed(df, output_csv, codebook_txt)
     return df 
