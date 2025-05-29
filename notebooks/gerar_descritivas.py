@@ -269,6 +269,62 @@ def calcular_estatisticas_descritivas(caminho_csv: str):
     else:
         print("\nAVISO: Coluna 'MELHORAR_PERFORMANCE_MOTIVO_BIN' não encontrada.")
 
+    print("\\n\\n--- Contagens Detalhadas e Figuras para Efeitos Adversos Específicos (H3) ---")
+    efeitos_para_analise_descritiva = {
+        'EFEITO_ADVERSO_INSONIA_BIN': 'Insônia',
+        'EFEITO_ADVERSO_TAQUICARDIA_BIN': 'Taquicardia',
+        'EFEITO_ADVERSO_TREMORES_BIN': 'Tremores',
+        'EFEITO_ADVERSO_DOR_ESTOMAGO_BIN': 'Dor no Estômago'
+    }
+
+    for col_bin, nome_efeito_fig in efeitos_para_analise_descritiva.items():
+        print(f"\\n--- EFEITO ADVERSO: {nome_efeito_fig} ({col_bin}) ---")
+        if col_bin in df.columns:
+            # Contagens
+            counts = df[col_bin].value_counts(dropna=False)
+            total_participantes = len(df)
+            
+            sim_count = counts.get(1, 0)
+            sim_percent = (sim_count / total_participantes) * 100 if total_participantes > 0 else 0
+            print(f"Com {nome_efeito_fig} (cód 1): {sim_percent:.2f}% (Contagem: {sim_count})")
+
+            nao_count = counts.get(0, 0)
+            nao_percent = (nao_count / total_participantes) * 100 if total_participantes > 0 else 0
+            print(f"Sem {nome_efeito_fig} (cód 0): {nao_percent:.2f}% (Contagem: {nao_count})")
+            
+            nan_count = counts.get(np.nan, counts[counts.index.isna()].sum()) # Contar NaNs explicitamente
+            nan_percent = (nan_count / total_participantes) * 100 if total_participantes > 0 else 0
+            if nan_count > 0:
+                print(f"NaNs: {nan_percent:.2f}% (Contagem: {nan_count})")
+
+            # Figura (Boxplot: MG_CAFEINA_TOTAL_DIA vs. Presença do Efeito)
+            if 'MG_CAFEINA_TOTAL_DIA' in df.columns:
+                df_fig_h3 = df.copy()
+                # Mapear 0 e 1 para rótulos mais descritivos para o plot
+                map_efeito = {0: f'Sem {nome_efeito_fig}', 1: f'Com {nome_efeito_fig}'}
+                df_fig_h3[f'{col_bin}_NOME'] = df_fig_h3[col_bin].map(map_efeito)
+                
+                df_plot_fig_h3_especifico = df_fig_h3.dropna(subset=['MG_CAFEINA_TOTAL_DIA', f'{col_bin}_NOME'])
+
+                if not df_plot_fig_h3_especifico.empty and df_plot_fig_h3_especifico[f'{col_bin}_NOME'].nunique() >= 2:
+                    plt.figure(figsize=(10, 6))
+                    order_h3 = [f'Sem {nome_efeito_fig}', f'Com {nome_efeito_fig}']
+                    sns.boxplot(x=f'{col_bin}_NOME', y='MG_CAFEINA_TOTAL_DIA', data=df_plot_fig_h3_especifico, order=order_h3, palette="pastel")
+                    plt.title(f'Figura H3 ({nome_efeito_fig}): Consumo de Cafeína vs. {nome_efeito_fig}')
+                    plt.xlabel(f'Reportou {nome_efeito_fig}?')
+                    plt.ylabel('Consumo Diário de Cafeína (mg)')
+                    plt.grid(axis='y', alpha=0.75)
+                    fig_h3_path = os.path.join(OUTPUT_DIR, f"figura_H3_{nome_efeito_fig.lower().replace(' ', '_').replace('ô', 'o')}.png")
+                    plt.savefig(fig_h3_path)
+                    plt.close()
+                    print(f"Figura H3 ({nome_efeito_fig}) salva em: {fig_h3_path}")
+                else:
+                    print(f"AVISO: Não foi possível gerar a Figura H3 para {nome_efeito_fig} (Dados insuficientes ou um único grupo após filtro).")
+            else:
+                print(f"AVISO: Não foi possível gerar a Figura H3 para {nome_efeito_fig} (Coluna 'MG_CAFEINA_TOTAL_DIA' não encontrada).")
+        else:
+            print(f"AVISO: Coluna '{col_bin}' não encontrada para {nome_efeito_fig}.")
+
 if __name__ == '__main__':
     # Caminho para o arquivo CSV processado
     caminho_do_arquivo_csv = 'C:/Users/nicol_qs45gn8/IC/IC_Dados_Processados.csv' # Usando caminho absoluto

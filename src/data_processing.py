@@ -664,32 +664,78 @@ def process_all(input_path: str, output_csv: str, codebook_txt: str) -> pd.DataF
     
     df['EFEITO_ADVERSO_PRESENTE_BIN'] = pd.NA # Inicializar a coluna
     if col_efeitos_adv_geral_raw in df.columns:
-        # Mapear diretamente "Sim" para 1 e "Não" para 0
-        sim_nao_map = {'sim': 1, 'não': 0, 'nao': 0} # Adicionado 'nao' para cobrir variações
+        sim_nao_map = {'sim': 1, 'não': 0, 'nao': 0}
         df['EFEITO_ADVERSO_PRESENTE_BIN'] = df[col_efeitos_adv_geral_raw].astype(str).str.lower().str.strip().map(sim_nao_map)
-        # Garantir que o tipo seja Int64 após o mapeamento, mesmo que hajam NAs (se o map não cobrir todos os casos)
         df['EFEITO_ADVERSO_PRESENTE_BIN'] = df['EFEITO_ADVERSO_PRESENTE_BIN'].astype('Int64')
     
-    # REMOÇÃO DA LÓGICA ANTERIOR PARA EFEITOS_BINARIOS_MAP E CRIAÇÃO DAS COLUNAS _BIN ESPEFÍFICAS
-    # As colunas EFEITO_ADVERSO_INSONIA_BIN, EFEITO_ADVERSO_TAQUICARDIA_BIN, etc., não são mais criadas aqui
-    # pois a pergunta original não detalha OS TIPOS de efeitos, apenas se ALGUM foi sentido.
-    # Se o script de análise inferencial ainda esperar essas colunas, elas precisarão ser removidas de lá
-    # ou uma fonte de dados alternativa para elas precisará ser identificada.
-    # Para evitar KeyErrors imediatos no script de análise, vamos criá-las como NA.
-    # (Idealmente, o script de análise seria atualizado para não depender mais delas).
-    efeitos_especificos_obsoletos = [
-        'EFEITO_ADVERSO_INSONIA_BIN', 'EFEITO_ADVERSO_TAQUICARDIA_BIN', 
-        'EFEITO_ADVERSO_NERVOSISMO_BIN', 'EFEITO_ADVERSO_TREMORES_BIN',
-        'EFEITO_ADVERSO_DOR_ESTOMAGO_BIN', 'EFEITO_ADVERSO_ANSIEDADE_BIN',
+    # Mapeamento para colunas de frequência de efeitos adversos específicos
+    # 0 = Nunca/Não aplicável/Não presente ou não frequente
+    # 1 = Presente com alguma frequência (Raramente, Ocasionalmente, Frequentemente, Sempre)
+    freq_to_binary_map = {
+        'nunca': 0,
+        'raramente': 1,
+        'ocasionalmente': 1,
+        'frequentemente': 1,
+        'sempre': 1
+        # NA será tratado separadamente ou pelo .map resultando em NA, depois preenchido
+    }
+
+    # Colunas de frequência originais e suas novas colunas _BIN correspondentes
+    efeitos_adv_especificos_map = {
+        'Sobre a frequência que tem Insônia': 'EFEITO_ADVERSO_INSONIA_BIN',
+        'Sobre a frequência que tem Taquicardia (coração acelerado)': 'EFEITO_ADVERSO_TAQUICARDIA_BIN',
+        # 'Sobre a frequência que tem Nervosismo' - COLUNA NÃO ENCONTRADA NO CSV. Tratar como NA.
+        'Sobre a frequência que tem Tremores': 'EFEITO_ADVERSO_TREMORES_BIN',
+        'Sobre a frequência que tem Dor no estômago': 'EFEITO_ADVERSO_DOR_ESTOMAGO_BIN'
+    }
+
+    for col_original, col_nova_bin in efeitos_adv_especificos_map.items():
+        if col_original in df.columns:
+            df[col_nova_bin] = df[col_original].astype(str).str.lower().str.strip().map(freq_to_binary_map)
+            
+            if 'EFEITO_ADVERSO_PRESENTE_BIN' in df.columns:
+                 # Se não sentiu NENHUM efeito adverso (PRESENTE_BIN == 0), então o específico também é 0.
+                 df.loc[df['EFEITO_ADVERSO_PRESENTE_BIN'] == 0, col_nova_bin] = 0
+                 # Se sentiu ALGUM efeito (PRESENTE_BIN == 1) mas a frequência específica não foi respondida (col_nova_bin ainda é NA), manter NA.
+                 # Não preencher com 0, pois não sabemos se é ausente ou apenas não respondido.
+                 # Se PRESENTE_BIN é NA, col_nova_bin também deve ser NA (o .map já pode ter feito isso se a frequência original era NA).
+                 df.loc[df['EFEITO_ADVERSO_PRESENTE_BIN'].isna(), col_nova_bin] = pd.NA
+            
+            # Se após os condicionais acima, ainda houver NAs em col_nova_bin E PRESENTE_BIN NÃO é 0 (ou seja, é 1 ou NA),
+            # isso significa que a frequência original mapeou para NA.
+            # Se PRESENTE_BIN == 1, o NA em col_nova_bin deve ser mantido.
+            # Se PRESENTE_BIN == NA, o NA em col_nova_bin deve ser mantido.
+            # Se PRESENTE_BIN == 0, já foi tratado (col_nova_bin é 0).
+            # A única situação onde NAs restantes (após .map) deveriam virar 0 é se PRESENTE_BIN == 0, o que já está coberto.
+            # Ou se a política for "NA na frequência específica, quando PRESENTE_BIN é 1, significa que o efeito específico não ocorreu", então seria 0.
+            # Por ora, vamos ser conservadores: NA na frequência específica quando PRESENTE_BIN=1 -> NA no _BIN.
+            # Se a coluna original de frequência era NA, o .map já resulta em NA.
+            # Se EFEITO_ADVERSO_PRESENTE_BIN não existir, não fazemos esses ajustes condicionais.
+
+            df[col_nova_bin] = df[col_nova_bin].astype('Int64')
+        else:
+            print(f"AVISO: Coluna de frequência original '{col_original}' não encontrada. '{col_nova_bin}' será preenchida com NA.")
+            df[col_nova_bin] = pd.NA
+            df[col_nova_bin] = df[col_nova_bin].astype('Int64')
+
+    # Efeitos que não têm coluna de frequência específica no CSV ou não foram mapeados:
+    # Nervosismo, Ansiedade, Dor de Cabeça. Manter como NA.
+    efeitos_sem_fonte_direta = [
+        'EFEITO_ADVERSO_NERVOSISMO_BIN', # Não havia "Sobre a frequência que tem Nervosismo"
+        'EFEITO_ADVERSO_ANSIEDADE_BIN',
         'EFEITO_ADVERSO_DOR_CABECA_BIN'
     ]
-    for col_obsoleta in efeitos_especificos_obsoletos:
-        if col_obsoleta not in df.columns: # Apenas se não existir (improvável agora)
-            df[col_obsoleta] = pd.NA
-            df[col_obsoleta] = df[col_obsoleta].astype('Int64')
-        else: # Se já existe (criada antes no script ou no CSV de entrada), garantir que seja NA
-            df[col_obsoleta] = pd.NA
-            df[col_obsoleta] = df[col_obsoleta].astype('Int64')
+    for col_sem_fonte in efeitos_sem_fonte_direta:
+        if col_sem_fonte not in df.columns or df[col_sem_fonte].isnull().all(): # Somente se não existir ou for toda NA
+            df[col_sem_fonte] = pd.NA
+            df[col_sem_fonte] = df[col_sem_fonte].astype('Int64')
+        # Se já existe e tem dados (de uma execução anterior ou CSV), esta lógica não sobrescreverá forçadamente com NA,
+        # a menos que o objetivo seja explicitamente resetá-las.
+        # Dado que estamos refazendo a lógica, forçar para NA se não há fonte é seguro.
+        elif col_sem_fonte in df.columns and col_sem_fonte not in efeitos_adv_especificos_map.values():
+             df[col_sem_fonte] = pd.NA # Reset para os que não têm fonte mapeada
+             df[col_sem_fonte] = df[col_sem_fonte].astype('Int64')
+
 
     # "Para os efeitos colaterais que você sentiu ao consumir cafeína, Com que frequência eles aparecem?" -> EFEITO_ADVERSO_FREQUENCIA_DESCRITA_COD
     efeito_adverso_freq_map = {

@@ -164,7 +164,10 @@ def analisar_h3(df: pd.DataFrame):
     print("\n--- Análise H3: Efeitos Adversos vs. Dose de Cafeína ---")
     efeitos_colunas_binarias = {
         'EFEITO_ADVERSO_INSONIA_BIN': 'Insônia',
-        'EFEITO_ADVERSO_NERVOSISMO_BIN': 'Nervosismo'
+        'EFEITO_ADVERSO_TAQUICARDIA_BIN': 'Taquicardia',
+        'EFEITO_ADVERSO_NERVOSISMO_BIN': 'Nervosismo',
+        'EFEITO_ADVERSO_TREMORES_BIN': 'Tremores',
+        'EFEITO_ADVERSO_DOR_ESTOMAGO_BIN': 'Dor no Estômago'
     }
     if 'MG_CAFEINA_TOTAL_DIA' not in df.columns:
         print("Coluna MG_CAFEINA_TOTAL_DIA não encontrada. Pulando H3.")
