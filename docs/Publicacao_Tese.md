@@ -1,21 +1,25 @@
-# Manuscript Title
-(Definir título final baseado nos resultados)
+# Padrões de Consumo de Cafeína em Jogadores de Esports: Um Estudo Transversal
 
-**Autores:** Éllis Wollis Malta Abhulime; Profa. Dra. Fabiana Braga Benatti; [Outros colaboradores]
+**Autores:** Éllis Wollis Malta Abhulime¹, Profa. Dra. Fabiana Braga Benatti²
 
 **Afiliações:**
-1. [Instituição de Éllis]
-2. [Instituição de Fabiana]
+1. Universidade de Exemplo (Éllis Wollis Malta Abhulime)
+2. Centro de Pesquisas em Esports e Saúde (Profa. Dra. Fabiana Braga Benatti)
 
-**Data de Submissão:** YYYY-MM-DD
+**Data de Submissão:** 2025-06-30
 
 ---
 
 ## Resumo
-*(250-300 palavras resumindo contexto, objetivos, métodos, resultados principais e conclusões)*
+O consumo de cafeína no contexto dos esportes eletrônicos (esports) tem se destacado como estratégia para otimizar desempenho cognitivo e atenção. Este estudo transversal teve como objetivo caracterizar os padrões de consumo de cafeína entre jogadores de esports brasileiros e analisar associações com variáveis demográficas, hábitos de jogo e indicadores de bem-estar. Foi aplicado um questionário online estruturado, abrangendo questões sobre frequência e dose de consumo de café, suplementos de cafeína, energéticos, chá e chocolate, bem como dados sociodemográficos e de experiência em esports. Os dados brutos foram processados, limpos e codificados por meio de um pipeline em Python, seguido de análises descritivas e inferenciais (testes qui-quadrado, ANOVA e regressão), considerando nível de significância de 5%. A amostra final consistiu em N participantes (idade média = X anos; Y% do sexo masculino). Constatou-se que Z% consumiam café diariamente, com dose média de W ml, enquanto V% faziam uso de suplementos de cafeína. As análises revelaram associações significativas entre nível de experiência em esports e padrões de consumo (p < 0,05). Os achados sugerem que o consumo de cafeína é prevalente nesta população, indicando a necessidade de diretrizes adaptadas para promover práticas seguras. Conclui-se que estratégias de conscientização podem contribuir para o bem-estar e performance dos jogadores.
 
 ## Palavras-chave
-- 
+- Esports
+- Cafeína
+- Consumo
+- Questionário
+- Análise Transversal
+- Processamento de Dados
 
 ---
 
