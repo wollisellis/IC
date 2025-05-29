@@ -11,7 +11,7 @@ from statsmodels.formula.api import ols
 def carregar_dados(caminho_csv: str) -> pd.DataFrame:
     """Carrega os dados processados."""
     try:
-        df = pd.read_csv(caminho_csv, header=1)
+        df = pd.read_csv(caminho_csv)
         print(f"Dados carregados com sucesso de {caminho_csv}")
         print(f"Shape do DataFrame: {df.shape}")
         colunas_numericas_chave = ['MG_CAFEINA_TOTAL_DIA', 'HORAS_JOGO_PRINCIPAL_MEDIA_DIA']
@@ -51,29 +51,27 @@ def analisar_h1(df: pd.DataFrame):
     niveis_no_csv = df_h1['NIVEL_JOGADOR_COD'].unique()
     print(f"Níveis de jogador encontrados no CSV para H1: {niveis_no_csv}")
 
-    # Estes são os valores que esperamos encontrar na coluna NIVEL_JOGADOR_COD
-    # Se sua coluna NIVEL_JOGADOR_COD tiver outros valores (ex: 1, 2, 3), ajuste este mapa
-    # ou ajuste seu script de processamento de dados para que NIVEL_JOGADOR_COD use estes textos.
+    # Mapear códigos numéricos de NIVEL_JOGADOR_COD para rótulos
     map_nivel_jogador_esperado = {
-        'Amador/Casual': 'Amador/Casual',
-        'Semi-Profissional': 'Semi-Profissional',
-        'Profissional': 'Profissional'
+        1: 'Amador/Casual',
+        2: 'Semi-Profissional',
+        3: 'Profissional'
     }
 
     grupos_para_teste = []
     nomes_dos_grupos = []
 
-    for nome_esperado in map_nivel_jogador_esperado.keys():
-        if nome_esperado in niveis_no_csv:
-            dados_do_grupo = df_h1[df_h1['NIVEL_JOGADOR_COD'] == nome_esperado]['MG_CAFEINA_TOTAL_DIA']
+    for codigo, nome in map_nivel_jogador_esperado.items():
+        if codigo in niveis_no_csv:
+            dados_do_grupo = df_h1[df_h1['NIVEL_JOGADOR_COD'] == codigo]['MG_CAFEINA_TOTAL_DIA']
             if not dados_do_grupo.empty:
                 grupos_para_teste.append(dados_do_grupo)
-                nomes_dos_grupos.append(nome_esperado)
-                print(f"Grupo '{nome_esperado}': N={len(dados_do_grupo)}, Média Cafeína={dados_do_grupo.mean():.2f} mg, DP={dados_do_grupo.std():.2f} mg")
+                nomes_dos_grupos.append(nome)
+                print(f"Grupo '{nome}': N={len(dados_do_grupo)}, Média Cafeína={dados_do_grupo.mean():.2f} mg, DP={dados_do_grupo.std():.2f} mg")
             else:
-                print(f"Grupo '{nome_esperado}' encontrado mas vazio após filtro de NaN para cafeína.")
+                print(f"Grupo '{nome}' encontrado mas vazio após filtro de NaN para cafeína.")
         else:
-            print(f"Nível esperado '{nome_esperado}' não encontrado diretamente nos dados de NIVEL_JOGADOR_COD.")
+            print(f"Nível esperado '{nome}' não encontrado diretamente nos dados de NIVEL_JOGADOR_COD.")
 
     if len(grupos_para_teste) < 2:
         print("Não foi possível formar pelo menos dois grupos para o teste H1. Verifique os valores em NIVEL_JOGADOR_COD.")

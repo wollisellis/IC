@@ -1,5 +1,135 @@
-Resultados das Análises Estatísticas Inferenciais\nData da Análise: 2025-05-29 00:20:22.616600
+Resultados das Análises Estatísticas Inferenciais
+Data da Análise: 2025-05-29 00:35:26.896220
 Arquivo de Dados: IC_Dados_Processados.csv
-Shape do DataFrame Carregado: (181, 343)
-\n--- Verificação Inicial dos Dados para Análise ---\nNIVEL_JOGADOR_COD: Valores únicos (primeiros 10 se houver muitos): [1 2 3]\nNIVEL_JOGADOR_COD: Tipos de dados: int64\nNIVEL_JOGADOR_COD: Presença de NaNs: 0 / 181\nMG_CAFEINA_DIA: Valores únicos (primeiros 10 se houver muitos): [134.66 250.04 203.07 412.26 155.61  48.   108.09 158.67 283.46 104.03]\nMG_CAFEINA_DIA: Tipos de dados: float64\nMG_CAFEINA_DIA: Presença de NaNs: 0 / 181\nHORAS_JOGO_PRINCIPAL_MEDIA_DIA: Valores únicos (primeiros 10 se houver muitos): [1.5 7.  5.  3.  nan 0.5]\nHORAS_JOGO_PRINCIPAL_MEDIA_DIA: Tipos de dados: float64\nHORAS_JOGO_PRINCIPAL_MEDIA_DIA: Presença de NaNs: 6 / 181\nAVISO IMPORTANTE: Coluna 'EFEITO_ADVERSO_INSONIA_BIN' NÃO encontrada no DataFrame.\nAVISO IMPORTANTE: Coluna 'EFEITO_ADVERSO_NERVOSISMO_BIN' NÃO encontrada no DataFrame.\nEFEITO_ADVERSO_FREQUENCIA_DESCRITA_COD: Valores únicos (primeiros 10 se houver muitos): [ 1  2  3  4  5  6  7  8  9 10]\nEFEITO_ADVERSO_FREQUENCIA_DESCRITA_COD: Tipos de dados: int64\nEFEITO_ADVERSO_FREQUENCIA_DESCRITA_COD: Presença de NaNs: 0 / 181\n--------------------------------------------------\n\n--- Análise H1: Consumo de Cafeína (MG_CAFEINA_DIA) vs. Nível do Jogador (NIVEL_JOGADOR_COD) ---\nNíveis de jogador encontrados (NIVEL_JOGADOR_COD): [np.int64(1), np.int64(2), np.int64(3)]\nGrupo 'Amador/Casual (Cód 1)': N=146, Média Cafeína=281.40 mg, DP=203.34 mg\nGrupo 'Semi-Profissional (Cód 2)': N=31, Média Cafeína=210.66 mg, DP=215.40 mg\nGrupo 'Profissional (Cód 3)' com N=4 insuficiente para análise ou vazio após filtro.\nTeste Mann-Whitney U entre 'Amador/Casual (Cód 1)' e 'Semi-Profissional (Cód 2)': Estatística U=2853.00, p-valor=0.0229\nResultado H1: Diferença estatisticamente significativa encontrada entre os grupos.\n\n--- Análise H2: Consumo de Cafeína (MG_CAFEINA_DIA) vs. Horas de Jogo (HORAS_JOGO_PRINCIPAL_MEDIA_DIA) ---\nCorrelação de Spearman: rho=0.068, p-valor=0.3693, N=175\nResultado (Spearman) H2: Nenhuma correlação estatisticamente significativa.\nFigura 3 salva em: notebooks/outputs\figura3_cafeina_vs_horas_jogo.png
-\n--- Análise H3: Efeitos Adversos vs. Dose de Cafeína (MG_CAFEINA_DIA) ---\n  Coluna de efeito binário EFEITO_ADVERSO_INSONIA_BIN não encontrada.\n  Coluna de efeito binário EFEITO_ADVERSO_NERVOSISMO_BIN não encontrada.\n  Analisando frequência geral de efeitos (EFEITO_ADVERSO_FREQUENCIA_DESCRITA_COD)\n    Correlação de Spearman entre MG_CAFEINA_DIA e EFEITO_ADVERSO_FREQUENCIA_DESCRITA_COD: rho=0.080, p-valor=0.2818, N=181\n    Resultado H3 (Frequência Geral): Nenhuma correlação estatisticamente significativa.\n
+Shape do DataFrame Carregado: (181, 349)
+
+--- Verificação Inicial dos Dados para Análise ---
+NIVEL_JOGADOR_COD: Valores únicos (primeiros 10 se houver muitos): [1 2 3]
+NIVEL_JOGADOR_COD: Tipos de dados: int64
+NIVEL_JOGADOR_COD: Presença de NaNs: 0 / 181
+MG_CAFEINA_DIA: Valores únicos (primeiros 10 se houver muitos): [134.66 250.04 203.07 412.26 155.61  48.   108.09 158.67 283.46 104.03]
+MG_CAFEINA_DIA: Tipos de dados: float64
+MG_CAFEINA_DIA: Presença de NaNs: 0 / 181
+HORAS_JOGO_PRINCIPAL_MEDIA_DIA: Valores únicos (primeiros 10 se houver muitos): [1.5 7.  5.  3.  nan 0.5]
+HORAS_JOGO_PRINCIPAL_MEDIA_DIA: Tipos de dados: float64
+HORAS_JOGO_PRINCIPAL_MEDIA_DIA: Presença de NaNs: 6 / 181
+EFEITO_ADVERSO_INSONIA_BIN: Valores únicos (primeiros 10 se houver muitos): [0]
+EFEITO_ADVERSO_INSONIA_BIN: Tipos de dados: int64
+EFEITO_ADVERSO_INSONIA_BIN: Presença de NaNs: 0 / 181
+EFEITO_ADVERSO_NERVOSISMO_BIN: Valores únicos (primeiros 10 se houver muitos): [0]
+EFEITO_ADVERSO_NERVOSISMO_BIN: Tipos de dados: int64
+EFEITO_ADVERSO_NERVOSISMO_BIN: Presença de NaNs: 0 / 181
+EFEITO_ADVERSO_FREQUENCIA_DESCRITA_COD: Valores únicos (primeiros 10 se houver muitos): [0]
+EFEITO_ADVERSO_FREQUENCIA_DESCRITA_COD: Tipos de dados: int64
+EFEITO_ADVERSO_FREQUENCIA_DESCRITA_COD: Presença de NaNs: 0 / 181
+--------------------------------------------------
+
+--- Análise H1: Consumo de Cafeína (MG_CAFEINA_DIA) vs. Nível do Jogador (NIVEL_JOGADOR_COD) ---
+Níveis de jogador encontrados (NIVEL_JOGADOR_COD): [np.int64(1), np.int64(2), np.int64(3)]
+Grupo 'Amador/Casual (Cód 1)': N=146, Média Cafeína=281.40 mg, DP=203.34 mg
+Grupo 'Semi-Profissional (Cód 2)': N=31, Média Cafeína=210.66 mg, DP=215.40 mg
+Grupo 'Profissional (Cód 3)' com N=4 insuficiente para análise ou vazio após filtro.
+Teste Mann-Whitney U entre 'Amador/Casual (Cód 1)' e 'Semi-Profissional (Cód 2)': Estatística U=2853.00, p-valor=0.0229
+Resultado H1: Diferença estatisticamente significativa encontrada entre os grupos.
+
+--- Análise H2: Consumo de Cafeína (MG_CAFEINA_DIA) vs. Horas de Jogo (HORAS_JOGO_PRINCIPAL_MEDIA_DIA) ---
+Correlação de Spearman: rho=0.068, p-valor=0.3693, N=175
+Resultado (Spearman) H2: Nenhuma correlação estatisticamente significativa.
+Figura 3 salva em: notebooks/outputs\figura3_cafeina_vs_horas_jogo.png
+
+--- Análise H3: Efeitos Adversos vs. Dose de Cafeína (MG_CAFEINA_DIA) ---
+  Analisando efeito específico: Insônia (coluna: EFEITO_ADVERSO_INSONIA_BIN)
+    Não há dados suficientes em ambos os grupos (COM e SEM Insônia, N_min=5) para o teste.
+      N_COM=0, N_SEM=181
+  Analisando efeito específico: Nervosismo (coluna: EFEITO_ADVERSO_NERVOSISMO_BIN)
+    Não há dados suficientes em ambos os grupos (COM e SEM Nervosismo, N_min=5) para o teste.
+      N_COM=0, N_SEM=181
+  Analisando frequência geral de efeitos (EFEITO_ADVERSO_FREQUENCIA_DESCRITA_COD)
+    Correlação de Spearman entre MG_CAFEINA_DIA e EFEITO_ADVERSO_FREQUENCIA_DESCRITA_COD: rho=nan, p-valor=nan, N=181
+    Resultado H3 (Frequência Geral): Nenhuma correlação estatisticamente significativa.
+Não foi possível realizar a análise H3 (específica ou geral) com as colunas disponíveis ou dados suficientes.
+
+--- Análise Adicional: Consumo de Energéticos vs. Horas de Jogo ---
+Grupo Consome Energéticos (N=99): Média Horas Jogo=2.54 (DP=1.79)
+Grupo NÃO Consome Energéticos (N=76): Média Horas Jogo=2.40 (DP=1.58)
+Teste Mann-Whitney U: Estatística U=3837.50, p-valor=0.8141
+Resultado: Nenhuma diferença estatisticamente significativa.
+
+--- Análise Adicional: Gênero vs. Hábitos de Consumo ---
+  Analisando GENERO_COD vs. CONSUMO_CAFE_BIN
+    Tabela de Contingência:
+CONSUMO_CAFE_BIN   0    1
+GENERO_COD               
+1                 33  103
+2                  8   29
+3                  1    2
+4                  1    4
+    AVISO: Tabela de contingência contém células com contagem < 5. O Teste Qui-Quadrado pode não ser preciso.
+    Teste Qui-Quadrado: chi2=0.30, p-valor=0.9594, graus de liberdade=3
+    Resultado: Nenhuma associação estatisticamente significativa encontrada.
+  Analisando GENERO_COD vs. CONSUMO_ENERGETICOS_BIN
+    Tabela de Contingência:
+CONSUMO_ENERGETICOS_BIN   0   1
+GENERO_COD                     
+1                        62  74
+2                        15  22
+3                         1   2
+4                         1   4
+    AVISO: Tabela de contingência contém células com contagem < 5. O Teste Qui-Quadrado pode não ser preciso.
+    Teste Qui-Quadrado: chi2=1.62, p-valor=0.6549, graus de liberdade=3
+    Resultado: Nenhuma associação estatisticamente significativa encontrada.
+  Analisando GENERO_COD vs. CONSUMO_CHA_BIN
+    Tabela de Contingência:
+CONSUMO_CHA_BIN   0   1
+GENERO_COD             
+1                85  51
+2                13  24
+3                 2   1
+4                 3   2
+    AVISO: Tabela de contingência contém células com contagem < 5. O Teste Qui-Quadrado pode não ser preciso.
+    Teste Qui-Quadrado: chi2=9.02, p-valor=0.0290, graus de liberdade=3
+    Resultado: Associação estatisticamente significativa encontrada.
+
+--- Análise Adicional: Nível Educacional vs. Consumo de Cafeína (MG_CAFEINA_DIA) ---
+  Grupo Nível Educacional EducCód_1: N=20, Média Cafeína=246.76 mg (DP=242.68) mg
+  Grupo Nível Educacional EducCód_2: N=89, Média Cafeína=256.48 mg (DP=191.99) mg
+  Grupo Nível Educacional EducCód_3: N=29, Média Cafeína=296.56 mg (DP=265.10) mg
+  Grupo Nível Educacional EducCód_4: N=41, Média Cafeína=320.41 mg (DP=230.77) mg
+  Teste Kruskal-Wallis entre os 4 grupos: H-estatística=2.85, p-valor=0.4147
+  Resultado: Nenhuma diferença estatisticamente significativa encontrada.
+
+--- Análise de Regressão Linear Múltipla: Horas de Jogo ---
+  Sumário da Regressão Linear (OLS) para HORAS_JOGO_PRINCIPAL_MEDIA_DIA:
+                                  OLS Regression Results                                  
+==========================================================================================
+Dep. Variable:     HORAS_JOGO_PRINCIPAL_MEDIA_DIA   R-squared:                       0.150
+Model:                                        OLS   Adj. R-squared:                  0.130
+Method:                             Least Squares   F-statistic:                     7.387
+Date:                            Thu, 29 May 2025   Prob (F-statistic):           1.68e-05
+Time:                                    00:35:28   Log-Likelihood:                -318.49
+No. Observations:                             172   AIC:                             647.0
+Df Residuals:                                 167   BIC:                             662.7
+Df Model:                                       4                                         
+Covariance Type:                        nonrobust                                         
+=====================================================================================
+                        coef    std err          t      P>|t|      [0.025      0.975]
+-------------------------------------------------------------------------------------
+const                 1.5144      0.640      2.365      0.019       0.250       2.778
+MG_CAFEINA_DIA        0.0004      0.001      0.793      0.429      -0.001       0.002
+NIVEL_JOGADOR_COD     1.3864      0.273      5.073      0.000       0.847       1.926
+GENERO_COD           -0.1521      0.202     -0.754      0.452      -0.550       0.246
+IDADE                -0.0249      0.018     -1.349      0.179      -0.061       0.012
+==============================================================================
+Omnibus:                       27.695   Durbin-Watson:                   1.995
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):               36.855
+Skew:                           0.964   Prob(JB):                     9.93e-09
+Kurtosis:                       4.194   Cond. No.                     1.98e+03
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+[2] The condition number is large, 1.98e+03. This might indicate that there are
+strong multicollinearity or other numerical problems.
+
+--- Análise de Regressão Logística: Presença de Efeitos Adversos ---
+Variável resposta 'EFEITO_ADVERSO_PRESENTE_BIN' não tem pelo menos duas classes únicas após dropna. Pulando Regressão Logística.

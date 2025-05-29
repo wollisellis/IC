@@ -649,32 +649,71 @@ def process_all(input_path: str, output_csv: str, codebook_txt: str) -> pd.DataF
         df['CHOCOLATE_PORCAO_COD'] = pd.NA
 
     # --- Efeitos Adversos ---
-    # 2.5.2. "Para os efeitos colaterais que você sentiu ao consumir cafeína, Com que frequência eles aparecem?" -> EFEITO_ADVERSO_FREQUENCIA_DESCRITA_COD
-    # Esta também é uma coluna de texto livre e qualitativa.
-    # Exemplo de mapeamento - SUBSTITUIR/EXPANDIR CONFORME SEU RELATÓRIO!
+    # Pergunta original sobre ter sentido ou não ALGUM efeito:
+    col_efeitos_adv_geral_raw = "Você já experimentou algum dos seguintes efeitos adversos após consumir cafeína?Insônia, taquicardia (coração acelerado), nervosismo, tremores, dor no estômago ou outro sintoma"
+    
+    df['EFEITO_ADVERSO_PRESENTE_BIN'] = pd.NA # Inicializar a coluna
+    if col_efeitos_adv_geral_raw in df.columns:
+        # Mapear diretamente "Sim" para 1 e "Não" para 0
+        sim_nao_map = {'sim': 1, 'não': 0, 'nao': 0} # Adicionado 'nao' para cobrir variações
+        df['EFEITO_ADVERSO_PRESENTE_BIN'] = df[col_efeitos_adv_geral_raw].astype(str).str.lower().str.strip().map(sim_nao_map)
+        # Garantir que o tipo seja Int64 após o mapeamento, mesmo que hajam NAs (se o map não cobrir todos os casos)
+        df['EFEITO_ADVERSO_PRESENTE_BIN'] = df['EFEITO_ADVERSO_PRESENTE_BIN'].astype('Int64')
+    
+    # REMOÇÃO DA LÓGICA ANTERIOR PARA EFEITOS_BINARIOS_MAP E CRIAÇÃO DAS COLUNAS _BIN ESPEFÍFICAS
+    # As colunas EFEITO_ADVERSO_INSONIA_BIN, EFEITO_ADVERSO_TAQUICARDIA_BIN, etc., não são mais criadas aqui
+    # pois a pergunta original não detalha OS TIPOS de efeitos, apenas se ALGUM foi sentido.
+    # Se o script de análise inferencial ainda esperar essas colunas, elas precisarão ser removidas de lá
+    # ou uma fonte de dados alternativa para elas precisará ser identificada.
+    # Para evitar KeyErrors imediatos no script de análise, vamos criá-las como NA.
+    # (Idealmente, o script de análise seria atualizado para não depender mais delas).
+    efeitos_especificos_obsoletos = [
+        'EFEITO_ADVERSO_INSONIA_BIN', 'EFEITO_ADVERSO_TAQUICARDIA_BIN', 
+        'EFEITO_ADVERSO_NERVOSISMO_BIN', 'EFEITO_ADVERSO_TREMORES_BIN',
+        'EFEITO_ADVERSO_DOR_ESTOMAGO_BIN', 'EFEITO_ADVERSO_ANSIEDADE_BIN',
+        'EFEITO_ADVERSO_DOR_CABECA_BIN'
+    ]
+    for col_obsoleta in efeitos_especificos_obsoletos:
+        if col_obsoleta not in df.columns: # Apenas se não existir (improvável agora)
+            df[col_obsoleta] = pd.NA
+            df[col_obsoleta] = df[col_obsoleta].astype('Int64')
+        else: # Se já existe (criada antes no script ou no CSV de entrada), garantir que seja NA
+            df[col_obsoleta] = pd.NA
+            df[col_obsoleta] = df[col_obsoleta].astype('Int64')
+
+    # "Para os efeitos colaterais que você sentiu ao consumir cafeína, Com que frequência eles aparecem?" -> EFEITO_ADVERSO_FREQUENCIA_DESCRITA_COD
     efeito_adverso_freq_map = {
-        'raramente': 1,
-        'ocasionalmente': 2,
-        'frequentemente': 3,
-        'sempre': 4,
-        'nunca': 0,
-        'se eu tomar a noite café acabo tento insônia, porém evito isso': 5, # Categoria específica?
-        'aparecem raramente, geralmente quando o consumo está associado ao jejum': 6,
-        # ... Adicionar todas as variações e seus códigos
-        'outro': 99
+        'raramente (menos de 1 vez por semana)': 1,
+        'pouco frequente (1-2 vezes por semana)': 2,
+        'frequente (3-4 vezes por semana)': 3,
+        'muito frequente (5-6 vezes por semana)': 4,
+        'sempre (todos os dias que consumo cafeína)': 5,
+        'não se aplica / não sinto efeitos colaterais': 0,
+        'não se aplica / não sinto efeitos colaterais.': 0
     }
-    col_efeito_adverso_freq = 'Para os efeitos colaterais que você sentiu ao consumir cafeína, Com que frequência eles aparecem?'
-    if col_efeito_adverso_freq in df.columns:
-        df['EFEITO_ADVERSO_FREQ_NORMALIZADA'] = df[col_efeito_adverso_freq].astype(str).str.lower().str.strip()
+    col_efeito_adverso_freq_raw = 'Para os efeitos colaterais que você sentiu ao consumir cafeína, Com que frequência eles aparecem?'
+    
+    df['EFEITO_ADVERSO_FREQUENCIA_DESCRITA_COD'] = pd.NA # Inicializar
+    if col_efeito_adverso_freq_raw in df.columns:
+        df['EFEITO_ADVERSO_FREQ_NORMALIZADA'] = df[col_efeito_adverso_freq_raw].astype(str).str.lower().str.strip()
+        # Usar encode_column que lida com o mapeamento e conversão para Int64
         df = encode_column(df, 'EFEITO_ADVERSO_FREQ_NORMALIZADA', efeito_adverso_freq_map, 'EFEITO_ADVERSO_FREQUENCIA_DESCRITA_COD')
         df.drop(columns=['EFEITO_ADVERSO_FREQ_NORMALIZADA'], inplace=True, errors='ignore')
-        # Esta codificação pode depender de uma flag geral de ter sentido efeitos adversos.
-    else:
-        df['EFEITO_ADVERSO_FREQUENCIA_DESCRITA_COD'] = pd.NA
 
-    # Continuar com as demais codificações...
-    # (Exemplo: Pontuação original para float)
-    df['PONTUACAO_ORIGINAL'] = pd.to_numeric(df['Pontuação'].astype(str).str.replace(',','.', regex=False), errors='coerce')
+    # Condicionar EFEITO_ADVERSO_FREQUENCIA_DESCRITA_COD com base em EFEITO_ADVERSO_PRESENTE_BIN
+    if 'EFEITO_ADVERSO_FREQUENCIA_DESCRITA_COD' in df.columns and 'EFEITO_ADVERSO_PRESENTE_BIN' in df.columns:
+        # Se não há efeito presente (0), a frequência codificada deve ser 0
+        df.loc[df['EFEITO_ADVERSO_PRESENTE_BIN'] == 0, 'EFEITO_ADVERSO_FREQUENCIA_DESCRITA_COD'] = 0
+        # Se a presença de efeito é indeterminada (NA), a frequência também deve ser NA
+        df.loc[df['EFEITO_ADVERSO_PRESENTE_BIN'].isna(), 'EFEITO_ADVERSO_FREQUENCIA_DESCRITA_COD'] = pd.NA
+        # Se EFEITO_ADVERSO_PRESENTE_BIN == 1, EFEITO_ADVERSO_FREQUENCIA_DESCRITA_COD mantém o valor do mapeamento original da pergunta de frequência.
+    
+    # A lógica anterior que criava EFEITO_ADVERSO_PRESENTE_BIN com base em colunas _BIN específicas foi removida
+    # assim como a criação das colunas _BIN específicas baseada em keywords.
+
+    # 2.5.2. Qual foi o seu consumo diário total de cafeína estimado (mg/dia)? Usar MG_CAFEINA_DIA processado
+    # Nota: pode-se adicionar SUPLEM_DOSE_CAFEINA_MG se necessário
+    df['MG_CAFEINA_TOTAL_DIA'] = df['MG_CAFEINA_DIA']
 
     # --- Fim da Implementação Detalhada da Codificação ---
 
@@ -692,11 +731,6 @@ def process_all(input_path: str, output_csv: str, codebook_txt: str) -> pd.DataF
     if col_choc in df.columns:
         df['CHOCOLATE_PORCAO_COD'] = pd.factorize(df[col_choc].astype(str).str.lower().str.strip())[0] + 1
         df['CHOCOLATE_PORCAO_COD'] = df['CHOCOLATE_PORCAO_COD'].astype('Int64')
-    # Dynamic encoding for adverse effect frequency
-    col_eff = 'Para os efeitos colaterais que você sentiu ao consumir cafeína, Com que frequência eles aparecem?'
-    if col_eff in df.columns:
-        df['EFEITO_ADVERSO_FREQUENCIA_DESCRITA_COD'] = pd.factorize(df[col_eff].astype(str).str.lower().str.strip())[0] + 1
-        df['EFEITO_ADVERSO_FREQUENCIA_DESCRITA_COD'] = df['EFEITO_ADVERSO_FREQUENCIA_DESCRITA_COD'].astype('Int64')
 
     # --- Create dummy variables for multiple-choice questions ---
     multicols = [
@@ -706,12 +740,49 @@ def process_all(input_path: str, output_csv: str, codebook_txt: str) -> pd.DataF
         ('Em quais momentos do dia você costuma consumir o seu suplemento?', 'SUPLEM_MOMENTO'),
         ('Que tipo(s) de chocolate você consome mais frequentemente?', 'CHOC_TIPO'),
         ('Qual(is) outro(s) você joga?', 'OUTROJOGO'),
-        ('Você já experimentou algum dos seguintes efeitos adversos após consumir cafeína?Insônia, taquicardia (coração acelerado), nervosismo, tremores, dor no estômago ou outro sintoma', 'EFEITO_ADVERSO_TIPO'),
     ]
     for col, prefix in multicols:
         if col in df.columns:
             df = create_dummies(df, col, prefix)
 
+    # Debug prints antes de exportar
+    print("\n--- DEBUG: Verificando colunas de Efeitos Adversos antes da exportação ---")
+    cols_to_debug = [
+        'EFEITO_ADVERSO_PRESENTE_BIN', 
+        'EFEITO_ADVERSO_INSONIA_BIN', 
+        'EFEITO_ADVERSO_NERVOSISMO_BIN',
+        'EFEITO_ADVERSO_TAQUICARDIA_BIN', 
+        'EFEITO_ADVERSO_TREMORES_BIN',
+        'EFEITO_ADVERSO_DOR_ESTOMAGO_BIN',
+        'EFEITO_ADVERSO_ANSIEDADE_BIN',
+        'EFEITO_ADVERSO_DOR_CABECA_BIN',
+        'EFEITO_ADVERSO_FREQUENCIA_DESCRITA_COD'
+    ]
+    for col_debug in cols_to_debug:
+        if col_debug in df.columns:
+            print(f"Coluna: {col_debug}, Existe: True, Tipo: {df[col_debug].dtype}, Nulos: {df[col_debug].isnull().sum()}")
+            print(f"Valores (primeiros 5 não nulos): {df[col_debug].dropna().head().tolist()}")
+        else:
+            print(f"Coluna: {col_debug}, Existe: False")
+    print("--- FIM DEBUG ---\n")
+
     # Export outputs
     export_processed(df, output_csv, codebook_txt)
     return df 
+
+if __name__ == '__main__':
+    pass
+    input_path = 'IC_Dados_Curados - Worksheet (1).csv'
+    output_csv = 'IC_Dados_Processados.csv'
+    codebook_txt = 'docs/codebook.txt'
+    print(f"--- INÍCIO DA EXECUÇÃO DIRETA DE data_processing.py ---")
+    print(f"Lendo de: {input_path}")
+    print(f"Salvando processado em: {output_csv}")
+    print(f"Salvando codebook em: {codebook_txt}")
+    df_processed = process_all(input_path, output_csv, codebook_txt)
+    if df_processed is not None:
+        print(f"Shape do DataFrame após processamento: {df_processed.shape}")
+        print(f"Dados processados e codebook gerados com sucesso em execução direta.")
+    else:
+        print(f"Falha no processamento em execução direta.")
+    print(f"--- FIM DA EXECUÇÃO DIRETA DE data_processing.py ---") 
