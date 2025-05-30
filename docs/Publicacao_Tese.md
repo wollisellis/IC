@@ -267,4 +267,16 @@ Agradecemos ao Comitê de Ética em Pesquisa da Universidade Estadual de Campina
 O questionário estruturado, contendo todas as questões sociodemográficas, de consumo de cafeína e de efeitos adversos, está disponível em `docs/RelatorioFinal_Éllis.md`.
 
 ## Apêndice B: Código de Processamento de Dados
-O script completo de processamento de dados, incluindo funções de limpeza, codificação e geração do livro de códigos, está disponível em `src/data_processing.py`. 
+O script completo de processamento de dados, incluindo funções de limpeza, codificação e geração do livro de códigos, está disponível em `src/data_processing.py`.
+
+## Apêndice C: Análises Suplementares
+- Análise de poder para H1: Cohen's d = 0.2244, poder = 0.2039.
+- Regressão linear múltipla (log(cafeína diária)):
+  - R² ajustado = 0.102 (R² = 0.129).
+  - Coeficientes:
+    - const = 4.5760 (p < 0.001)
+    - Horas_Jogo = 0.0198 (p = 0.816)
+    - Perf_Intencao = 1.1513 (p = 0.001)
+    - Nivel_Semi = -0.7211 (p = 0.049)
+    - Nivel_Prof = 1.7317 (p = 0.053)
+    - Genero_Fem = 0.3470 (p = 0.285) 
