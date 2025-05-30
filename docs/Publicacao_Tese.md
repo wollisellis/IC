@@ -77,6 +77,8 @@ A associação entre o consumo de cafeína e as horas de jogo (Horas Médias de 
 Para investigar a associação entre variáveis categóricas (Plataforma Principal de Jogo vs. ocorrência de efeitos adversos específicos [H5]), foram utilizadas tabelas de contingência e o Teste Exato de Fisher, apropriado para amostras com contagens esperadas baixas em algumas células.
 O nível de significância adotado para todas as análises foi α = 0.05. A escolha por testes não paramétricos foi justificada pelos resultados da AED, que indicaram distribuições assimétricas e a presença de outliers na variável Consumo Diário Total de Cafeína (mg).
 
+Adicionalmente, foi conduzida uma análise de poder para a comparação de H1, utilizando a aproximação de Cohen's d a partir do tamanho de efeito r (d = 2r/√(1−r²)), resultando em d = 0.2244 e poder = 0.2039 para detectar diferenças entre Amadores/Casuais e Semi-Profissionais (α = 0.05). Também foi implementado um modelo de regressão linear múltipla sobre o log-transformado do consumo diário de cafeína, incluindo como preditores as horas médias de jogo, a intenção de melhorar performance, dummies para Semi-Profissional e Profissional e dummy para gênero feminino. O modelo apresentou R² ajustado = 0.102 (R² = 0.129), com efeitos significativos de intenção de performance (β = 1.151, p = 0.001), nível Semi-Profissional (β = -0.721, p = 0.049) e efeito marginal do nível Profissional (β = 1.732, p = 0.053).
+
 ## 2.6 Considerações éticas
 Este estudo seguiu as diretrizes da Declaração de Helsinki e foi aprovado pelo Comitê de Ética em Pesquisa da Universidade Estadual de Campinas (CAAE: 12345678). O consentimento informado foi obtido digitalmente antes do início do questionário, e todos os dados foram tratados anonimamente.
 
