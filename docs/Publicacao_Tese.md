@@ -1,10 +1,10 @@
 # Padrões de Consumo de Cafeína em Jogadores de Esports: Um Estudo Transversal
-
++Trabalho resultado de projeto de Iniciação Científica (IC) no Laboratório de Modelagem e Simulação (LabMAS), Faculdade de Ciências Aplicadas (FCA), Universidade Estadual de Campinas (UNICAMP), 2023–2025.
 **Autores:** Éllis Wollis Malta Abhulime¹, Profa. Dra. Fabiana Braga Benatti²
 
 **Afiliações:**
-1. Universidade Estadual de Campinas (Campinas, SP, Brasil) — Éllis Wollis Malta Abhulime
-2. Centro de Pesquisas em Esports e Saúde, Universidade Estadual de Campinas (Campinas, SP, Brasil) — Profa. Dra. Fabiana Braga Benatti
+- 1. Laboratório de Modelagem e Simulação (LabMAS), Faculdade de Ciências Aplicadas, Universidade Estadual de Campinas (Campinas, SP, Brasil) — Éllis Wollis Malta Abhulime (Bolsista de IC, 2023–2025)
+- 2. Profa. Dra. Orientadora de IC, Laboratório de Modelagem e Simulação (LabMAS), Faculdade de Ciências Aplicadas, Universidade Estadual de Campinas (Campinas, SP, Brasil) — Fabiana Braga Benatti
 
 **Data de Submissão:** 2025-06-30
 
