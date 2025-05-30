@@ -242,6 +242,23 @@ Agradecemos ao Comitê de Ética em Pesquisa da Universidade Estadual de Campina
 
 11. Souza, D. B., Del Coso, J., Casonatto, J., & Polito, M. D. (2017). Dietary Supplement Use by Competitive Female Futsal Players. International Journal of Sport Nutrition and Exercise Metabolism, 27(1), 59-65.
 
+12. Institute of Medicine. (2001). Caffeine for the Sustainment of Mental Task Performance: Formulations for Military Operations. Washington, DC: The National Academies Press.
+13. U.S. Department of Agriculture. FoodData Central. Retrieved May 2025, from https://fdc.nal.usda.gov/
+14. European Food Safety Authority (EFSA). (2018). Opinion on the safety of caffeine. EFSA Journal, 16(8), 5399.
+15. Red Bull GmbH. (2024). Nutrition Information: Red Bull Energy Drink. Retrieved May 2025, from https://www.redbull.com/
+16. Monster Energy Company. (2024). Nutrition Facts: Monster Energy. Retrieved May 2025, from https://www.monsterenergy.com/
+17. Nestlé Brasil. (2024). Nescafé Classic: Informações Nutricionais. Retrieved May 2025, from https://www.nestle.com.br/
+18. National Coffee Association USA. (2023). Coffee Drinking Trends. Retrieved May 2025, from https://www.ncausa.org/
+19. The Coca-Cola Company. (2024). Coca-Cola Classic: Ingredients and Nutrition Facts. Retrieved May 2025, from https://www.coca-cola.com/
+20. Associação Brasileira da Indústria de Chocolate (ABIC). (2023). Caderno Técnico de Chocolate: Teores de Cafeína. São Paulo: ABIC.
+
+21. Mann, H. B., & Whitney, D. R. (1947). On a Test of whether one of two Random Variables is Stochastically Larger than the Other. The Annals of Mathematical Statistics, 18(1), 50–60.
+22. Kruskal, W. H., & Wallis, W. A. (1952). Use of Ranks in One-Criterion Variance Analysis. Journal of the American Statistical Association, 47(260), 583–621.
+23. Shapiro, S. S., & Wilk, M. B. (1965). An Analysis of Variance Test for Normality (Complete Samples). Biometrika, 52(3–4), 591–611.
+24. Spearman, C. (1904). The Proof and Measurement of Association Between Two Things. The American Journal of Psychology, 15(1), 72–101.
+25. Virtanen, P., et al. (2020). SciPy 1.0: Fundamental Algorithms for Scientific Computing in Python. Nature Methods, 17(3), 261–272.
+26. Dinno, A. (2017). scikit-posthocs: Pairwise Multiple Comparison Tests in Python. Journal of Open Source Software, 2(13), 254.
+
 ## Apêndices (Opcional)
 
 ## Apêndice A: Questionário Completo
