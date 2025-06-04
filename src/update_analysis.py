@@ -1,6 +1,8 @@
 import pandas as pd
 import numpy as np
 from scipy.stats import mannwhitneyu, spearmanr, shapiro, kruskal
+import statsmodels.api as sm
+from statsmodels.stats.power import TTestIndPower
 
 # Load processed data with encoded variables and recalculated caffeine
 df_proc = pd.read_csv("IC_Dados_Processados.csv", encoding='utf-8-sig')
@@ -102,4 +104,27 @@ print(f"Caffeine log1p: W = {w_log:.4f}, p = {p_shapiro_log:.4f}")
 print()
 print("Spearman correlation (Caffeine vs Hours Played):")
 print(f"rho = {rho_H2:.4f}, p = {p_H2:.4f}, N = {mask_h2.sum()} (hours_map applied)")
-print(f"rho log1p = {rho_H2_log:.4f}, p_log = {p_H2_log:.4f}") 
+print(f"rho log1p = {rho_H2_log:.4f}, p_log = {p_H2_log:.4f}")
+
+# -- Power Analysis for H1 --
+# Convert Mann-Whitney r to Cohen's d approximation: d = 2r / sqrt(1 - r^2)
+d_H1 = 2 * r_H1 / np.sqrt(1 - r_H1**2) if abs(r_H1) < 1 else np.nan
+power_calc = TTestIndPower().power(effect_size=d_H1, nobs1=len(am_values), ratio=len(sp_values)/len(am_values), alpha=0.05)
+print()
+print(f"Power analysis H1: Cohen's d = {d_H1:.4f}, power = {power_calc:.4f}")
+
+# -- Multiple Linear Regression on log-transformed caffeine intake --
+print()
+Y = np.log1p(df[col_cafe])
+# Prepare predictors: experience level, gender, performance intention, hours played
+X = pd.DataFrame({
+    'Horas_Jogo': df_hours_num,
+    'Perf_Intencao': df['MELHORAR_PERFORMANCE_MOTIVO_BIN'],
+    'Nivel_Semi': (df[col_level] == 'Semi-Profissional').astype(int),
+    'Nivel_Prof': (df[col_level] == 'Profissional').astype(int),
+    'Genero_Fem': (df[col_gender] == 'Feminino').astype(int)
+})
+X = sm.add_constant(X)
+model = sm.OLS(Y, X, missing='drop').fit()
+print("Multiple linear regression on log(caffeine intake):")
+print(model.summary()) 

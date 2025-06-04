@@ -1,5 +1,5 @@
 Resultados das Análises Estatísticas Inferenciais
-Data da Análise: 2025-05-29 05:15:55.811400
+Data da Análise: 2025-05-30 11:39:15.729058
 Arquivo de Dados: IC_Dados_Processados.csv
 Shape do DataFrame Carregado: (181, 237)
 
@@ -35,17 +35,21 @@ Grupo 'Semi-Profissional (Cód 2)': N=31, Média Cafeína=210.66 mg, DP=215.40 m
 Grupo 'Profissional (Cód 3)' com N=4 insuficiente para análise ou vazio após filtro.
 Teste Mann-Whitney U entre 'Amador/Casual (Cód 1)' e 'Semi-Profissional (Cód 2)': Estatística U=2853.00, p-valor=0.0229
 Resultado H1: Diferença estatisticamente significativa encontrada entre os grupos.
+Figura H1 salva em: notebooks/outputs\figura_h1_cafeina_vs_nivel_jogador.png
 
 --- Análise H2: Consumo de Cafeína (MG_CAFEINA_DIA) vs. Horas de Jogo (HORAS_JOGO_PRINCIPAL_MEDIA_DIA) ---
-Correlação de Spearman: rho=0.068, p-valor=0.3693, N=175
+Correlação de Spearman: rho=0.064, p-valor=0.4026, N=172
 Resultado (Spearman) H2: Nenhuma correlação estatisticamente significativa.
-Figura 3 salva em: notebooks/outputs\figura3_cafeina_vs_horas_jogo.png
+NOTA H2: 14 pontos omitidos da visualização do gráfico por serem outliers (IQR * 1.5 critério) em Cafeína ou Horas de Jogo.
+         A análise estatística (correlação de Spearman) UTILIZA todos os 172 pontos (incluindo outliers).
+Figura 3 (com idade e filtro visual de outliers) salva em: notebooks/outputs\figura3_cafeina_vs_horas_jogo_idade.png
 
 --- Análise H3: Efeitos Adversos vs. Dose de Cafeína (MG_CAFEINA_DIA) ---
   Analisando efeito específico: Insônia (coluna: EFEITO_ADVERSO_INSONIA_BIN)
     Grupo COM Insônia (N=94): Média Cafeína=300.54 mg (DP=212.74) mg
     Grupo SEM Insônia (N=87): Média Cafeína=250.26 mg (DP=223.23) mg
     Teste Mann-Whitney U (unilateral: COM Insônia > SEM Insônia): Estatística U=4852.00, p-valor=0.0152
+    Figura H3 (Insônia) salva em: notebooks/outputs\figura_h3_cafeina_vs_insônia.png
     Resultado H3 (Insônia): Consumo de cafeína é significativamente MAIOR no grupo COM Insônia.
   Analisando efeito específico: Nervosismo (coluna: EFEITO_ADVERSO_NERVOSISMO_BIN)
     Não há dados suficientes para EFEITO_ADVERSO_NERVOSISMO_BIN após remover NaNs.
@@ -54,6 +58,7 @@ Figura 3 salva em: notebooks/outputs\figura3_cafeina_vs_horas_jogo.png
 Grupo Consome Energéticos (N=99): Média Horas Jogo=2.54 (DP=1.79)
 Grupo NÃO Consome Energéticos (N=76): Média Horas Jogo=2.40 (DP=1.58)
 Teste Mann-Whitney U: Estatística U=3837.50, p-valor=0.8141
+Figura AD1 salva em: notebooks/outputs\figura_ad1_energetico_vs_horas_jogo.png
 Resultado: Nenhuma diferença estatisticamente significativa.
 
 --- Análise Adicional: Gênero vs. Hábitos de Consumo ---
@@ -67,6 +72,7 @@ GENERO_COD
 4                  1    4
     AVISO: Tabela de contingência contém células com contagem < 5. O Teste Qui-Quadrado pode não ser preciso.
     Teste Qui-Quadrado: chi2=0.30, p-valor=0.9594, graus de liberdade=3
+    Figura AD2 (CONSUMO_CAFE_BIN) salva em: notebooks/outputs\figura_ad2_genero_vs_consumo_cafe_bin.png
     Resultado: Nenhuma associação estatisticamente significativa encontrada.
   Analisando GENERO_COD vs. CONSUMO_ENERGETICOS_BIN
     Tabela de Contingência:
@@ -78,6 +84,7 @@ GENERO_COD
 4                         1   4
     AVISO: Tabela de contingência contém células com contagem < 5. O Teste Qui-Quadrado pode não ser preciso.
     Teste Qui-Quadrado: chi2=1.62, p-valor=0.6549, graus de liberdade=3
+    Figura AD2 (CONSUMO_ENERGETICOS_BIN) salva em: notebooks/outputs\figura_ad2_genero_vs_consumo_energeticos_bin.png
     Resultado: Nenhuma associação estatisticamente significativa encontrada.
   Analisando GENERO_COD vs. CONSUMO_CHA_BIN
     Tabela de Contingência:
@@ -89,6 +96,7 @@ GENERO_COD
 4                 3   2
     AVISO: Tabela de contingência contém células com contagem < 5. O Teste Qui-Quadrado pode não ser preciso.
     Teste Qui-Quadrado: chi2=9.02, p-valor=0.0290, graus de liberdade=3
+    Figura AD2 (CONSUMO_CHA_BIN) salva em: notebooks/outputs\figura_ad2_genero_vs_consumo_cha_bin.png
     Resultado: Associação estatisticamente significativa encontrada.
 
 --- Análise Adicional: Nível Educacional vs. Consumo de Cafeína (MG_CAFEINA_DIA) ---
@@ -97,6 +105,7 @@ GENERO_COD
   Grupo Nível Educacional EducCód_3: N=29, Média Cafeína=296.56 mg (DP=265.10) mg
   Grupo Nível Educacional EducCód_4: N=41, Média Cafeína=320.41 mg (DP=230.77) mg
   Teste Kruskal-Wallis entre os 4 grupos: H-estatística=2.85, p-valor=0.4147
+  Figura AD3 salva em: notebooks/outputs\figura_ad3_educacao_vs_cafeina.png
   Resultado: Nenhuma diferença estatisticamente significativa encontrada.
 
 --- Análise de Regressão Linear Múltipla: Horas de Jogo ---
@@ -106,8 +115,8 @@ GENERO_COD
 Dep. Variable:     HORAS_JOGO_PRINCIPAL_MEDIA_DIA   R-squared:                       0.150
 Model:                                        OLS   Adj. R-squared:                  0.130
 Method:                             Least Squares   F-statistic:                     7.387
-Date:                            Thu, 29 May 2025   Prob (F-statistic):           1.68e-05
-Time:                                    05:15:56   Log-Likelihood:                -318.49
+Date:                            Fri, 30 May 2025   Prob (F-statistic):           1.68e-05
+Time:                                    11:39:18   Log-Likelihood:                -318.49
 No. Observations:                             172   AIC:                             647.0
 Df Residuals:                                 167   BIC:                             662.7
 Df Model:                                       4                                         
@@ -139,8 +148,8 @@ strong multicollinearity or other numerical problems.
 Dep. Variable:     EFEITO_ADVERSO_PRESENTE_BIN   No. Observations:                  181
 Model:                                   Logit   Df Residuals:                      177
 Method:                                    MLE   Df Model:                            3
-Date:                         Thu, 29 May 2025   Pseudo R-squ.:                 0.07256
-Time:                                 05:15:56   Log-Likelihood:                -109.05
+Date:                         Fri, 30 May 2025   Pseudo R-squ.:                 0.07256
+Time:                                 11:39:18   Log-Likelihood:                -109.05
 converged:                                True   LL-Null:                       -117.59
 Covariance Type:                     nonrobust   LLR p-value:                 0.0006856
 ===========================================================================================
@@ -158,3 +167,24 @@ const                    0.783059  0.420522  1.458144
 MG_CAFEINA_DIA           1.000184  0.998607  1.001764
 CONSUMO_ENERGETICOS_BIN  1.770597  0.899209  3.486416
 CONSUMO_CHA_BIN          3.545199  1.790715  7.018669
+
+--- Análise Adicional: Correlações com IDADE ---
+
+  Analisando Correlação: IDADE vs. Consumo Diário Total de Cafeína (mg) (MG_CAFEINA_DIA)
+    Correlação de Spearman (IDADE vs. MG_CAFEINA_DIA): rho=0.221, p-valor=0.0030, N=178
+    Resultado: Correlação estatisticamente significativa entre IDADE e Consumo Diário Total de Cafeína (mg).
+    NOTA: 11 pontos omitidos da visualização por serem outliers (IQR * 1.5).
+            A análise estatística (correlação) UTILIZA todos os 178 pontos.
+    Figura AD_IDADE (MG_CAFEINA_DIA) salva em: notebooks/outputs\figura_ad_idade_vs_mg_cafeina_dia.png
+
+  Analisando Correlação: IDADE vs. Horas Médias de Jogo Principal por Dia (HORAS_JOGO_PRINCIPAL_MEDIA_DIA)
+    Correlação de Spearman (IDADE vs. HORAS_JOGO_PRINCIPAL_MEDIA_DIA): rho=-0.016, p-valor=0.8322, N=172
+    Resultado: Nenhuma correlação estatisticamente significativa entre IDADE e Horas Médias de Jogo Principal por Dia.
+    NOTA: 14 pontos omitidos da visualização por serem outliers (IQR * 1.5).
+            A análise estatística (correlação) UTILIZA todos os 172 pontos.
+    Figura AD_IDADE (HORAS_JOGO_PRINCIPAL_MEDIA_DIA) salva em: notebooks/outputs\figura_ad_idade_vs_horas_jogo_principal_media_dia.png
+
+--- Comparação com Literatura: Consumo Diário de Cafeína ---
+Soffner et al. 2023 (Alemanha): t=0.02, p-value=0.9836
+DiFrancisco-Donoghue et al. 2019 (EUA): t=1.18, p-value=0.2406
+Trotter et al. 2020 (Austrália): t=4.20, p-value=0.0000

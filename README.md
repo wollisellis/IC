@@ -1,72 +1,75 @@
-# IC Data Processing
+# Projeto IC - Análises Estatísticas de Consumo de Cafeína em E-Sports
 
-![CI](https://github.com/wollisellis/IC/actions/workflows/ci.yml/badge.svg)
-![Coverage](https://img.shields.io/badge/coverage-80%25-brightgreen)
+Este repositório contém scripts em Python para:
 
-This project processes raw questionnaire data from `IC_Dados_Curados - Worksheet (1).csv` into a numerically coded format suitable for rigorous statistical analysis. The primary script, `src/data_processing.py`, handles data loading, cleaning, PII removal, date transformations, and categorical encoding according to a defined methodology.
+- Calcular estatísticas descritivas e gerar visualizações.
+- Executar análises estatísticas inferenciais (testes de hipóteses e regressões).
+- Gerar relatórios em arquivos Markdown e TXT para inclusão na tese.
 
-The main outputs are:
-- `IC_Dados_Processados.csv`: The processed dataset with UTF-8 encoding and comma delimiters.
-- `Livro_de_Codigos.txt`: A comprehensive codebook detailing each variable's transformation and encoding scheme.
-
-## Project Structure
-
+## Estrutura de Diretórios
 ```
 IC/
-├── src/
-│   └── data_processing.py  # Main data processing script
-├── tests/
-│   └── test_data_processing.py # Pytest tests for data_processing.py
-├── IC_Dados_Curados - Worksheet (1).csv # Raw input data
-├── RelatórioFinal_Éllis.md # Project methodology and detailed codebook
-├── requirements.txt      # Project dependencies
-└── README.md             # This file
+├── notebooks/
+│   ├── analise_estatistica_inferencial.py   # Análises inferenciais e geração de resultados
+│   ├── gerar_descritivas.py                 # Estatísticas descritivas e geração de figuras
+│   ├── test_analises.py                     # Testes com pytest para funções de análise
+│   ├── outputs/                             # Diretório de saída (figuras e relatórios)
+│   └── archived_notebooks/                  # Notebooks exploratórios arquivados
+├── requirements.txt                         # Dependências do projeto
+└── README.md                                # Documentação de uso
 ```
 
-## Setup
+## Pré-requisitos
 
-Install dependencies:
-```
+- Python 3.8 ou superior
+- Ambiente virtual (recomendado: venv ou virtualenv)
+
+## Instalação
+```bash
+# No Windows PowerShell
+python -m venv venv
+venv\Scripts\activate
+
+# No macOS/Linux
+python3 -m venv venv
+source venv/bin/activate
+
+pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-## Usage
+## Execução dos Scripts
 
-```python
-from src.data_processing import process_all
-
-# Provide paths
-data_path = 'IC_Dados_Curados - Worksheet (1).csv'
-output_csv = 'IC_Dados_Processados.csv'
-codebook = 'Livro_de_Codigos.txt'
-
-# Run full pipeline
-df = process_all(data_path, output_csv, codebook)
-```
-
-## Tests
-
-Run pytest with coverage:
+### 1. Estatísticas Descritivas
 ```bash
-pytest --maxfail=1 --disable-warnings -q --cov=src --cov-report=term-missing --cov-fail-under=80
+python notebooks/gerar_descritivas.py
+```
+- Gera `notebooks/outputs/estatisticas_descritivas.md` com tabelas em Markdown.
+- Salva figuras em `notebooks/outputs/` (ex.: `figura1_distribuicao_cafeina.png`).
+
+### 2. Análises Inferenciais
+```bash
+python notebooks/analise_estatistica_inferencial.py
+```
+- Gera `notebooks/outputs/resultados_inferenciais.txt` com resultados dos testes.
+- Salva figuras em `notebooks/outputs/` (ex.: `figura3_cafeina_vs_horas_jogo.png`).
+
+## Testes Automatizados
+Para garantir a qualidade do código e as transformações de dados:
+```bash
+pytest --cov=notebooks --cov-report=term-missing --cov-fail-under=80
 ```
 
-## Documentação
+## Observações
 
-Para facilitar a navegação e manter a organização do projeto, seguem os principais documentos:
+- Atualize `requirements.txt` com versões específicas após instalar dependências:
+  ```bash
+  pip freeze > requirements.txt
+  ```
+- Notebooks exploratórios estão arquivados em `notebooks/archived_notebooks/` e não fazem parte do pipeline de produção.
 
-### Projetos e Relatórios
-- [Metodologia e Relatório Final](docs/RelatórioFinal_Éllis.md)
-- [Processamento e Metodologia de Dados](docs/Processamento%20CSV%20para%20Análise%20Estatística_.md)
-- [Dados Tabulados para Análise Estatística (PDF)](Dados tabulados para análise estatística_.pdf)
+## Contribuição
+Contribuições são bem-vindas! Abra issues ou pull requests para melhorias.
 
-### Planos e Roadmaps
-- [Roadmap de Publicação do Artigo](docs/ROADMAP_ARTIGO.md)
-- [Plano de Análise Estatística Focada](docs/PLANO_ANALISE_EFICIENCIA.md)
-
-### Manuscrito
-- [Esqueleto do Manuscrito](docs/Publicacao_Tese.md)
-
-### Documentação Técnica
-- [Visão Geral do Projeto (README)](README.md)
-- [Código de Processamento de Dados](src/data_processing.py)
+## Licença
+Este projeto está licenciado sob [INSERIR LICENÇA AQUI].

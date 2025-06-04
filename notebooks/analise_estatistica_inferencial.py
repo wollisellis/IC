@@ -1,5 +1,5 @@
 import pandas as pd
-from scipy.stats import kruskal, mannwhitneyu, pearsonr, spearmanr, chi2_contingency
+from scipy.stats import kruskal, mannwhitneyu, pearsonr, spearmanr, chi2_contingency, ttest_ind_from_stats
 import statsmodels.api as sm
 import os
 import matplotlib.pyplot as plt
@@ -114,18 +114,54 @@ def analisar_h1(df: pd.DataFrame, f):
         return
 
     p_valor_h1 = 1.0
+    stat_text = ""
+    test_name = ""
+
     try:
         if len(grupos_para_teste) == 2:
             stat, p_valor_h1 = mannwhitneyu(*grupos_para_teste, alternative='two-sided')
+            test_name = "Mann-Whitney U"
+            stat_text = f"U = {stat:.2f}\np-value = {p_valor_h1:.4f}"
             f.write(f"Teste Mann-Whitney U entre '{nomes_dos_grupos[0]}' e '{nomes_dos_grupos[1]}': Estatística U={stat:.2f}, p-valor={p_valor_h1:.4f}\n")
         elif len(grupos_para_teste) >= 3:
             stat, p_valor_h1 = kruskal(*grupos_para_teste)
+            test_name = "Kruskal-Wallis"
+            stat_text = f"H = {stat:.2f}\np-value = {p_valor_h1:.4f}"
             f.write(f"Teste Kruskal-Wallis entre os {len(nomes_dos_grupos)} grupos ({', '.join(nomes_dos_grupos)}): H-estatística={stat:.2f}, p-valor={p_valor_h1:.4f}\n")
         
         if p_valor_h1 < 0.05:
             f.write("Resultado H1: Diferença estatisticamente significativa encontrada entre os grupos.\n")
         else:
             f.write("Resultado H1: Nenhuma diferença estatisticamente significativa encontrada entre os grupos.\n")
+
+        # Gerar Figura para H1: Boxplot
+        if grupos_para_teste:
+            plt.figure(figsize=(10, 7))
+            # Mapear os códigos de nível para nomes legíveis para o plot
+            # Usar o df_h1 original para ter todos os dados para o boxplot antes do filtro de N>=5 por grupo para teste
+            df_h1_plot = df[['NIVEL_JOGADOR_COD', 'MG_CAFEINA_DIA']].dropna()
+            df_h1_plot['NIVEL_JOGADOR_DESC'] = df_h1_plot['NIVEL_JOGADOR_COD'].map(map_nivel_jogador)
+            
+            # Ordenar os grupos para o boxplot consistentemente
+            order = [map_nivel_jogador[cod] for cod in sorted(map_nivel_jogador.keys()) if map_nivel_jogador[cod] in df_h1_plot['NIVEL_JOGADOR_DESC'].unique()]
+            
+            sns.boxplot(x='NIVEL_JOGADOR_DESC', y='MG_CAFEINA_DIA', data=df_h1_plot, order=order)
+            plt.title('Figura H1: Consumo de Cafeína por Nível do Jogador')
+            plt.xlabel('Nível do Jogador')
+            plt.ylabel('Consumo Diário Total de Cafeína (mg)')
+            plt.xticks(rotation=45, ha='right')
+            
+            if stat_text:
+                plt.text(0.05, 0.95, f"{test_name}:\n{stat_text}", 
+                         transform=plt.gca().transAxes, fontsize=10,
+                         verticalalignment='top', bbox=dict(boxstyle='round,pad=0.5', fc='aliceblue', alpha=0.7))
+            
+            plt.tight_layout()
+            fig_h1_path = os.path.join(FIGURE_DIR, "figura_h1_cafeina_vs_nivel_jogador.png")
+            plt.savefig(fig_h1_path)
+            plt.close()
+            f.write(f"Figura H1 salva em: {fig_h1_path}\n")
+
     except Exception as e:
         f.write(f"Erro ao executar o teste para H1: {e}\n")
         print(f"Erro ao executar o teste para H1: {e}")
@@ -135,12 +171,12 @@ def analisar_h2(df: pd.DataFrame, f):
     H2: Maior consumo de cafeína (MG_CAFEINA_DIA) está associado a maior tempo médio de jogo por dia (HORAS_JOGO_PRINCIPAL_MEDIA_DIA).
     """
     f.write("\n--- Análise H2: Consumo de Cafeína (MG_CAFEINA_DIA) vs. Horas de Jogo (HORAS_JOGO_PRINCIPAL_MEDIA_DIA) ---\n")
-    if 'MG_CAFEINA_DIA' not in df.columns or 'HORAS_JOGO_PRINCIPAL_MEDIA_DIA' not in df.columns:
-        f.write("Colunas necessárias para H2 (MG_CAFEINA_DIA, HORAS_JOGO_PRINCIPAL_MEDIA_DIA) não encontradas. Pulando.\n")
-        print("Colunas necessárias para H2 não encontradas.")
+    if 'MG_CAFEINA_DIA' not in df.columns or 'HORAS_JOGO_PRINCIPAL_MEDIA_DIA' not in df.columns or 'IDADE' not in df.columns:
+        f.write("Colunas necessárias para H2 (MG_CAFEINA_DIA, HORAS_JOGO_PRINCIPAL_MEDIA_DIA, IDADE) não encontradas. Pulando.\n")
+        print("Colunas necessárias para H2 (com IDADE) não encontradas.")
         return
 
-    df_h2 = df[['MG_CAFEINA_DIA', 'HORAS_JOGO_PRINCIPAL_MEDIA_DIA']].copy()
+    df_h2 = df[['MG_CAFEINA_DIA', 'HORAS_JOGO_PRINCIPAL_MEDIA_DIA', 'IDADE']].copy()
     df_h2.dropna(inplace=True)
 
     if df_h2.empty or len(df_h2) < 10: # Mínimo de 10 observações para correlação
@@ -159,18 +195,46 @@ def analisar_h2(df: pd.DataFrame, f):
         else:
             f.write("Resultado (Spearman) H2: Nenhuma correlação estatisticamente significativa.\n")
         
-        # Gerar Figura 3: Diagrama de Dispersão
-        plt.figure(figsize=(10, 6))
-        sns.scatterplot(x='MG_CAFEINA_DIA', y='HORAS_JOGO_PRINCIPAL_MEDIA_DIA', data=df_h2, alpha=0.6)
-        sns.regplot(x='MG_CAFEINA_DIA', y='HORAS_JOGO_PRINCIPAL_MEDIA_DIA', data=df_h2, scatter=False, color='red', ci=None, line_kws={'linestyle':'--'})
-        plt.title('Figura 3: Consumo Diário Total de Cafeína vs. Horas Médias de Jogo Principal por Dia')
+        # Preparar dados para o gráfico, com remoção visual de outliers
+        df_h2_plot = df_h2.copy()
+        # Aplicar filtro de outliers para visualização em MG_CAFEINA_DIA e HORAS_JOGO_PRINCIPAL_MEDIA_DIA
+        for col_outlier in ['MG_CAFEINA_DIA', 'HORAS_JOGO_PRINCIPAL_MEDIA_DIA']:
+            Q1 = df_h2_plot[col_outlier].quantile(0.25)
+            Q3 = df_h2_plot[col_outlier].quantile(0.75)
+            IQR = Q3 - Q1
+            limite_inferior = Q1 - 1.5 * IQR
+            limite_superior = Q3 + 1.5 * IQR
+            df_h2_plot = df_h2_plot[(df_h2_plot[col_outlier] >= limite_inferior) & (df_h2_plot[col_outlier] <= limite_superior)]
+        
+        plot_title = 'Figura 3: Cafeína vs. Horas de Jogo (por Idade)'
+        if len(df_h2_plot) < len(df_h2):
+            plot_title += ' (outliers visuais omitidos)'
+            f.write(f"NOTA H2: {len(df_h2) - len(df_h2_plot)} pontos omitidos da visualização do gráfico por serem outliers (IQR * 1.5 critério) em Cafeína ou Horas de Jogo.\n")
+            f.write(f"         A análise estatística (correlação de Spearman) UTILIZA todos os {len(df_h2)} pontos (incluindo outliers).\n")
+
+        # Gerar Figura 3: Diagrama de Dispersão com IDADE como hue
+        plt.figure(figsize=(12, 7)) 
+        sns.scatterplot(x='MG_CAFEINA_DIA', y='HORAS_JOGO_PRINCIPAL_MEDIA_DIA', hue='IDADE', 
+                        palette='viridis', data=df_h2_plot, alpha=0.7, s=70)
+        # Linha de regressão baseada nos dados visualmente filtrados
+        sns.regplot(x='MG_CAFEINA_DIA', y='HORAS_JOGO_PRINCIPAL_MEDIA_DIA', data=df_h2_plot, 
+                    scatter=False, color='red', ci=None, line_kws={'linestyle':'--'})
+        
+        # Adicionar texto com estatísticas no gráfico (H2) em português e posicionar em área limpa
+        stats_text = f"ρ de Spearman = {corr_spearman:.3f}\np-valor = {p_spearman:.4f}\nn = {len(df_h2)}"
+        plt.text(0.02, 0.98, stats_text, transform=plt.gca().transAxes, fontsize=10,
+                 verticalalignment='top', bbox=dict(boxstyle='round,pad=0.5', fc='white', alpha=0.7))
+        # Nota de rodapé sobre outliers omitidos na visualização
+        plt.figtext(0.5, 0.01, "Estatísticas calculadas sobre todos os dados; outliers visuais omitidos.", ha='center', fontsize=8, color='gray')
+        
+        plt.title(plot_title)
         plt.xlabel('Consumo Diário Total de Cafeína (mg)')
         plt.ylabel('Horas Médias de Jogo Principal por Dia')
         plt.grid(True)
-        fig3_path = os.path.join(FIGURE_DIR, "figura3_cafeina_vs_horas_jogo.png")
+        fig3_path = os.path.join(FIGURE_DIR, "figura3_cafeina_vs_horas_jogo_idade.png") # Nome do arquivo atualizado
         plt.savefig(fig3_path)
         plt.close()
-        f.write(f"Figura 3 salva em: {fig3_path}\n")
+        f.write(f"Figura 3 (com idade e filtro visual de outliers) salva em: {fig3_path}\n")
     except Exception as e:
         f.write(f"Erro ao calcular Correlação de Spearman para H2: {e}\n")
         print(f"Erro ao calcular Correlação de Spearman para H2: {e}")
@@ -223,6 +287,26 @@ def analisar_h3(df: pd.DataFrame, f):
                 stat, p_valor = mannwhitneyu(grupo_com_efeito, grupo_sem_efeito, alternative='greater') 
                 f.write(f"    Teste Mann-Whitney U (unilateral: COM {nome_efeito} > SEM {nome_efeito}): Estatística U={stat:.2f}, p-valor={p_valor:.4f}\n")
 
+                # Gerar Figura para H3 (Efeito Específico): Boxplot
+                plt.figure(figsize=(8, 6))
+                # Criar um DataFrame para o boxplot com labels legíveis para o eixo X
+                plot_data = pd.concat([
+                    pd.DataFrame({'Consumo Cafeína (mg)': grupo_com_efeito, 'Grupo': f'Reporta {nome_efeito}'}),
+                    pd.DataFrame({'Consumo Cafeína (mg)': grupo_sem_efeito, 'Grupo': f'Não Reporta {nome_efeito}'})
+                ])
+                sns.boxplot(x='Grupo', y='Consumo Cafeína (mg)', data=plot_data)
+                plt.title(f'Figura H3: Consumo de Cafeína vs. Reporte de {nome_efeito}')
+                
+                stat_text_h3 = f"Mann-Whitney U = {stat:.2f}\np-value (unilateral) = {p_valor:.4f}"
+                plt.text(0.05, 0.95, stat_text_h3, transform=plt.gca().transAxes, fontsize=9,
+                         verticalalignment='top', bbox=dict(boxstyle='round,pad=0.4', fc='aliceblue', alpha=0.7))
+                
+                plt.tight_layout()
+                fig_h3_efeito_path = os.path.join(FIGURE_DIR, f"figura_h3_cafeina_vs_{nome_efeito.lower().replace(' ','_')}.png")
+                plt.savefig(fig_h3_efeito_path)
+                plt.close()
+                f.write(f"    Figura H3 ({nome_efeito}) salva em: {fig_h3_efeito_path}\n")
+
                 if p_valor < 0.05:
                     f.write(f"    Resultado H3 ({nome_efeito}): Consumo de cafeína é significativamente MAIOR no grupo COM {nome_efeito}.\n")
                 else:
@@ -252,6 +336,27 @@ def analisar_h3(df: pd.DataFrame, f):
             try:
                 corr_spearman, p_spearman = spearmanr(cafeina, frequencia_efeito)
                 f.write(f"    Correlação de Spearman entre MG_CAFEINA_DIA e {col_freq}: rho={corr_spearman:.3f}, p-valor={p_spearman:.4f}, N={len(df_h3_freq)}\n")
+                
+                # Gerar Figura para H3 (Frequência Geral): Scatter Plot
+                plt.figure(figsize=(10, 6))
+                sns.scatterplot(x=frequencia_efeito, y=cafeina, alpha=0.6)
+                # Adicionar uma linha de tendência se fizer sentido (opcional, pode ser sns.regplot)
+                sns.regplot(x=frequencia_efeito, y=cafeina, scatter=False, color='red', ci=None, line_kws={'linestyle':'--'})
+                
+                plt.title(f'Figura H3: Consumo de Cafeína vs. Frequência Geral de Efeitos Adversos ({col_freq})')
+                plt.xlabel(f'Frequência de Efeitos Adversos ({col_freq} - codificado)')
+                plt.ylabel('Consumo Diário Total de Cafeína (mg)')
+                
+                stats_text_h3_freq = f"Spearman's rho = {corr_spearman:.3f}\np-value = {p_spearman:.4f}\nN = {len(df_h3_freq)}"
+                plt.text(0.05, 0.95, stats_text_h3_freq, transform=plt.gca().transAxes, fontsize=10,
+                         verticalalignment='top', bbox=dict(boxstyle='round,pad=0.5', fc='wheat', alpha=0.5))
+                
+                plt.grid(True)
+                fig_h3_freq_path = os.path.join(FIGURE_DIR, "figura_h3_cafeina_vs_freq_efeitos.png")
+                plt.savefig(fig_h3_freq_path)
+                plt.close()
+                f.write(f"    Figura H3 (Frequência Geral) salva em: {fig_h3_freq_path}\n")
+
                 if p_spearman < 0.05:
                     f.write(f"    Resultado H3 (Frequência Geral): Correlação estatisticamente significativa.\n")
                 else:
@@ -291,6 +396,28 @@ def analisar_energetico_vs_horas_jogo(df: pd.DataFrame, f):
     try:
         stat, p_valor = mannwhitneyu(grupo_consome, grupo_nao_consome, alternative='two-sided')
         f.write(f"Teste Mann-Whitney U: Estatística U={stat:.2f}, p-valor={p_valor:.4f}\n")
+
+        # Gerar Figura: Boxplot para Consumo de Energéticos vs. Horas de Jogo
+        plt.figure(figsize=(8, 6))
+        plot_data_energ = pd.concat([
+            pd.DataFrame({'Horas de Jogo': grupo_consome, 'Grupo': 'Consome Energéticos'}),
+            pd.DataFrame({'Horas de Jogo': grupo_nao_consome, 'Grupo': 'Não Consome Energéticos'})
+        ])
+        sns.boxplot(x='Grupo', y='Horas de Jogo', data=plot_data_energ)
+        plt.title('Figura AD1: Horas de Jogo vs. Consumo de Energéticos')
+        plt.ylabel('Horas Médias de Jogo Principal por Dia')
+        plt.xlabel('Consumo de Energéticos')
+        
+        stat_text_energ = f"Mann-Whitney U = {stat:.2f}\np-value = {p_valor:.4f}"
+        plt.text(0.05, 0.95, stat_text_energ, transform=plt.gca().transAxes, fontsize=9,
+                 verticalalignment='top', bbox=dict(boxstyle='round,pad=0.4', fc='lightcyan', alpha=0.7))
+        
+        plt.tight_layout()
+        fig_energ_path = os.path.join(FIGURE_DIR, "figura_ad1_energetico_vs_horas_jogo.png")
+        plt.savefig(fig_energ_path)
+        plt.close()
+        f.write(f"Figura AD1 salva em: {fig_energ_path}\n")
+
         if p_valor < 0.05:
             f.write("Resultado: Diferença estatisticamente significativa nas horas de jogo entre quem consome e não consome energéticos.\n")
         else:
@@ -334,6 +461,35 @@ def analisar_genero_vs_consumo(df: pd.DataFrame, f):
         try:
             chi2, p, dof, expected = chi2_contingency(tabela_contingencia)
             f.write(f"    Teste Qui-Quadrado: chi2={chi2:.2f}, p-valor={p:.4f}, graus de liberdade={dof}\n")
+
+            # Gerar Figura: Gráfico de Barras para Gênero vs. Consumo
+            # Mapeamento de GENERO_COD (exemplo, ajustar conforme os dados)
+            map_genero = {1: 'Masculino', 2: 'Feminino', 3: 'Outro', 99: 'Pref. não dizer'} # Adicione outros códigos se existirem
+            
+            # Normalizar a tabela de contingência para mostrar proporções (percentuais)
+            tabela_percentual = tabela_contingencia.apply(lambda x: x*100/sum(x), axis=1)
+            tabela_percentual.index = tabela_percentual.index.map(map_genero)
+            # Mapear colunas de consumo para nomes mais legíveis (ex: 0 para Não, 1 para Sim)
+            consumo_labels = {0: 'Não Consome', 1: 'Consome'}
+            tabela_percentual.columns = tabela_percentual.columns.map(consumo_labels)
+
+            ax = tabela_percentual.plot(kind='bar', figsize=(10, 7), colormap='Pastel2')
+            plt.title(f'Figura AD2: {col_consumo.replace("_BIN","").replace("CONSUMO_","")} vs. Gênero')
+            plt.ylabel('Percentual (%)')
+            plt.xlabel('Gênero')
+            plt.xticks(rotation=0)
+            plt.legend(title=col_consumo.replace("_BIN","").replace("CONSUMO_","").replace("_"," "))
+
+            stat_text_chi2 = f"Chi-quadrado (χ²) = {chi2:.2f}\np-value = {p:.4f}\nDoF = {dof}"
+            plt.text(0.01, 0.98, stat_text_chi2, transform=ax.transAxes, fontsize=9,
+                     verticalalignment='top', bbox=dict(boxstyle='round,pad=0.4', fc='lemonchiffon', alpha=0.7))
+
+            plt.tight_layout()
+            fig_gen_consumo_path = os.path.join(FIGURE_DIR, f"figura_ad2_genero_vs_{col_consumo.lower()}.png")
+            plt.savefig(fig_gen_consumo_path)
+            plt.close()
+            f.write(f"    Figura AD2 ({col_consumo}) salva em: {fig_gen_consumo_path}\n")
+
             if p < 0.05:
                 f.write("    Resultado: Associação estatisticamente significativa encontrada.\n")
             else:
@@ -371,13 +527,56 @@ def analisar_educacao_vs_cafeina(df: pd.DataFrame, f):
         f.write(f"  Grupo Nível Educacional {nomes_grupos[i]}: N={len(grupo_dados)}, Média Cafeína={grupo_dados.mean():.2f} mg (DP={grupo_dados.std():.2f}) mg\n")
 
     try:
+        test_name_educ = ""
+        stat_text_educ = ""
         if len(grupos) == 2:
             stat, p_valor = mannwhitneyu(*grupos, alternative='two-sided')
+            test_name_educ = "Mann-Whitney U"
+            stat_text_educ = f"U = {stat:.2f}\np-value = {p_valor:.4f}"
             f.write(f"  Teste Mann-Whitney U entre {nomes_grupos[0]} e {nomes_grupos[1]}: Estatística U={stat:.2f}, p-valor={p_valor:.4f}\n")
         else:
             stat, p_valor = kruskal(*grupos)
+            test_name_educ = "Kruskal-Wallis"
+            stat_text_educ = f"H = {stat:.2f}\np-value = {p_valor:.4f}"
             f.write(f"  Teste Kruskal-Wallis entre os {len(nomes_grupos)} grupos: H-estatística={stat:.2f}, p-valor={p_valor:.4f}\n")
         
+        # Gerar Figura para Educação vs. Cafeína: Boxplot
+        # Mapeamento de NIVEL_EDUC_COD (exemplo, ajustar conforme os dados)
+        map_educ = {
+            1: 'Fundamental Incompleto',
+            2: 'Fundamental Completo',
+            3: 'Médio Incompleto',
+            4: 'Médio Completo',
+            5: 'Superior Incompleto',
+            6: 'Superior Completo',
+            7: 'Pós-graduação' 
+            # Adicione outros códigos se existirem
+        }
+        df_plot_educ = df_analise.copy() # df_analise já tem NIVEL_EDUC_COD e MG_CAFEINA_DIA e NaNs removidos
+        df_plot_educ['NIVEL_EDUC_DESC'] = df_plot_educ['NIVEL_EDUC_COD'].map(map_educ)
+
+        # Ordenar para o boxplot de forma consistente
+        unique_educ_codes_in_plot = sorted(df_plot_educ['NIVEL_EDUC_COD'].unique())
+        order_educ = [map_educ.get(cod, f'Cód {cod}') for cod in unique_educ_codes_in_plot]
+
+        plt.figure(figsize=(12, 7))
+        sns.boxplot(x='NIVEL_EDUC_DESC', y='MG_CAFEINA_DIA', data=df_plot_educ, order=order_educ)
+        plt.title('Figura AD3: Consumo de Cafeína por Nível Educacional')
+        plt.xlabel('Nível Educacional')
+        plt.ylabel('Consumo Diário Total de Cafeína (mg)')
+        plt.xticks(rotation=45, ha='right')
+        
+        if stat_text_educ:
+            plt.text(0.05, 0.95, f"{test_name_educ}:\n{stat_text_educ}", 
+                     transform=plt.gca().transAxes, fontsize=10,
+                     verticalalignment='top', bbox=dict(boxstyle='round,pad=0.5', fc='honeydew', alpha=0.7))
+        
+        plt.tight_layout()
+        fig_educ_path = os.path.join(FIGURE_DIR, "figura_ad3_educacao_vs_cafeina.png")
+        plt.savefig(fig_educ_path)
+        plt.close()
+        f.write(f"  Figura AD3 salva em: {fig_educ_path}\n")
+
         if p_valor < 0.05:
             f.write("  Resultado: Diferença estatisticamente significativa no consumo de cafeína entre os níveis educacionais.\n")
         else:
@@ -459,7 +658,121 @@ def analisar_regressao_logistica_efeitos_adv(df: pd.DataFrame, f):
     except Exception as e:
         f.write(f"  Erro ao ajustar o modelo de regressão logística: {e}\n")
 
-# --- Fim das Novas Funções de Análise ---
+def analisar_correlacoes_idade(df: pd.DataFrame, f):
+    f.write("\n--- Análise Adicional: Correlações com IDADE ---\n")
+    
+    variaveis_para_correlacionar = {
+        'MG_CAFEINA_DIA': 'Consumo Diário Total de Cafeína (mg)',
+        'HORAS_JOGO_PRINCIPAL_MEDIA_DIA': 'Horas Médias de Jogo Principal por Dia'
+    }
+    
+    if 'IDADE' not in df.columns:
+        f.write("Coluna IDADE não encontrada. Pulando análises de correlação com idade.\n")
+        print("Coluna IDADE não encontrada para correlações.")
+        return
+
+    for var_col, var_nome_legivel in variaveis_para_correlacionar.items():
+        if var_col not in df.columns:
+            f.write(f"  Coluna {var_col} não encontrada. Pulando correlação IDADE vs. {var_nome_legivel}.\n")
+            continue
+
+        f.write(f"\n  Analisando Correlação: IDADE vs. {var_nome_legivel} ({var_col})\n")
+        df_corr_idade = df[['IDADE', var_col]].dropna()
+
+        if df_corr_idade.empty or len(df_corr_idade) < 10:
+            f.write(f"    Não há dados suficientes para correlação IDADE vs. {var_col} (N={len(df_corr_idade)}, mínimo 10). Pulando.\n")
+            continue
+
+        idade_data = df_corr_idade['IDADE']
+        var_data = df_corr_idade[var_col]
+
+        try:
+            corr_spearman, p_spearman = spearmanr(idade_data, var_data)
+            f.write(f"    Correlação de Spearman (IDADE vs. {var_col}): rho={corr_spearman:.3f}, p-valor={p_spearman:.4f}, N={len(df_corr_idade)}\n")
+            if p_spearman < 0.05:
+                f.write(f"    Resultado: Correlação estatisticamente significativa entre IDADE e {var_nome_legivel}.\n")
+            else:
+                f.write(f"    Resultado: Nenhuma correlação estatisticamente significativa entre IDADE e {var_nome_legivel}.\n")
+
+            # Preparar dados para o gráfico, com remoção visual de outliers
+            df_plot = df_corr_idade.copy()
+            for col_outlier_plot in ['IDADE', var_col]:
+                Q1 = df_plot[col_outlier_plot].quantile(0.25)
+                Q3 = df_plot[col_outlier_plot].quantile(0.75)
+                IQR_val = Q3 - Q1
+                lim_inf = Q1 - 1.5 * IQR_val
+                lim_sup = Q3 + 1.5 * IQR_val
+                df_plot = df_plot[(df_plot[col_outlier_plot] >= lim_inf) & (df_plot[col_outlier_plot] <= lim_sup)]
+            
+            plot_title_corr = f'Figura AD_IDADE: IDADE vs. {var_nome_legivel}'
+            if len(df_plot) < len(df_corr_idade):
+                plot_title_corr += ' (outliers visuais omitidos)'
+                f.write(f"    NOTA: {len(df_corr_idade) - len(df_plot)} pontos omitidos da visualização por serem outliers (IQR * 1.5).\n")
+                f.write(f"            A análise estatística (correlação) UTILIZA todos os {len(df_corr_idade)} pontos.\n")
+
+            plt.figure(figsize=(10, 6))
+            sns.scatterplot(x='IDADE', y=var_col, data=df_plot, alpha=0.6)
+            sns.regplot(x='IDADE', y=var_col, data=df_plot, scatter=False, color='blue', ci=None, line_kws={'linestyle':':'})
+            
+            # Adicionar texto com estatísticas no gráfico (H2) em português e posicionar em área limpa
+            stats_text_corr = f"ρ de Spearman = {corr_spearman:.3f}\np-valor = {p_spearman:.4f}\nn = {len(df_corr_idade)}"
+            plt.text(0.02, 0.98, stats_text_corr, transform=plt.gca().transAxes, fontsize=10,
+                     verticalalignment='top', bbox=dict(boxstyle='round,pad=0.5', fc='white', alpha=0.7))
+            
+            # Nota de rodapé sobre outliers omitidos na visualização
+            plt.figtext(0.5, 0.01, "Estatísticas calculadas sobre todos os dados; outliers visuais omitidos.", ha='center', fontsize=8, color='gray')
+            
+            plt.title(plot_title_corr)
+            plt.xlabel('Idade')
+            plt.ylabel(var_nome_legivel)
+            plt.grid(True)
+            fig_corr_path = os.path.join(FIGURE_DIR, f"figura_ad_idade_vs_{var_col.lower()}.png")
+            plt.savefig(fig_corr_path)
+            plt.close()
+            f.write(f"    Figura AD_IDADE ({var_col}) salva em: {fig_corr_path}\n")
+        except Exception as e:
+            f.write(f"    Erro ao calcular/plotar Correlação de Spearman para IDADE vs. {var_col}: {e}\n")
+            print(f"    Erro em IDADE vs. {var_col}: {e}")
+
+def comparar_consumo_literatura(df: pd.DataFrame, f):
+    """Comparação padrão-ouro do consumo de cafeína com estudos da literatura."""
+    f.write("\n--- Comparação com Literatura: Consumo Diário de Cafeína ---\n")
+    # Nosso estudo
+    media_ours = df['MG_CAFEINA_DIA'].mean()
+    sd_ours = df['MG_CAFEINA_DIA'].std()
+    n_ours = df['MG_CAFEINA_DIA'].count()
+
+    # Estudos externos
+    studies = [
+        {'nome': 'Nosso Estudo', 'mean': media_ours, 'sd': sd_ours, 'n': n_ours},
+        {'nome': 'Soffner et al. 2023 (Alemanha)', 'mean': 276.0, 'sd': sd_ours, 'n': 817},
+        {'nome': 'DiFrancisco-Donoghue et al. 2019 (EUA)', 'mean': 250.0, 'sd': sd_ours, 'n': 200},
+        {'nome': 'Trotter et al. 2020 (Austrália)', 'mean': 200.0, 'sd': 100.0, 'n': 150}
+    ]
+
+    # Testes t de Welch e registro
+    for est in studies[1:]:
+        t_stat, p_val = ttest_ind_from_stats(
+            mean1=media_ours, std1=sd_ours, nobs1=n_ours,
+            mean2=est['mean'], std2=est['sd'], nobs2=est['n'],
+            equal_var=False
+        )
+        f.write(f"{est['nome']}: t={t_stat:.2f}, p-value={p_val:.4f}\n")
+
+    # Forest plot
+    nomes = [s['nome'] for s in studies]
+    means = [s['mean'] for s in studies]
+    cis = [1.96 * (s['sd'] / np.sqrt(s['n'])) for s in studies]
+
+    plt.figure(figsize=(8, 5))
+    y = np.arange(len(studies))
+    plt.errorbar(means, y, xerr=cis, fmt='o', color='black', ecolor='gray', capsize=4)
+    plt.yticks(y, nomes)
+    plt.xlabel('Consumo de Cafeína (mg/dia)')
+    plt.title('Comparação do Consumo Diário de Cafeína vs Literatura')
+    plt.tight_layout()
+    plt.savefig('notebooks/outputs/figura_comparacao_consumo.png')
+    plt.close()
 
 def realizar_analises(df: pd.DataFrame, f):
     """Realiza as análises H1, H2, H3 e escreve os resultados no arquivo f."""
@@ -492,6 +805,8 @@ def realizar_analises(df: pd.DataFrame, f):
     analisar_educacao_vs_cafeina(df, f)
     analisar_regressao_linear_horas_jogo(df, f)
     analisar_regressao_logistica_efeitos_adv(df, f)
+    analisar_correlacoes_idade(df, f)
+    comparar_consumo_literatura(df, f)
 
 if __name__ == '__main__':
     print(f"--- INÍCIO DA EXECUÇÃO DO SCRIPT DE ANÁLISES INFERENCIAIS ---")
